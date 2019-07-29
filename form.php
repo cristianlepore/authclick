@@ -427,7 +427,7 @@ foreach($files as $file){ // iterate files
       Numero copie:
     </div>
     <div class="col-25 w3-left">
-      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroCopie" name="numeroCopie" placeholder=" es: 10">
+      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroCopie" name="numeroCopie" value="0" placeholder=" es: 10">
     </div>
   </div>
   <div class="row">
@@ -465,7 +465,7 @@ foreach($files as $file){ // iterate files
       Numero esemplare:
     </div>
     <div class="col-25 w3-left">
-      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroEsemplare" name="numeroEsemplare" placeholder=" es: 2">
+      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroEsemplare" name="numeroEsemplare" value="0" placeholder=" es: 2">
     </div>
   </div>
   <div class="row">
@@ -666,19 +666,7 @@ function validateform(){
   var targa=document.myForm.targa.value;
   var codeIdentificativo=document.myForm.code.value;
 
-// VERIFICO CHE NEL FORM NON CI SIANO CAMPI VUOTI.
-  if (name==null || name==""){  
-    alert("Il campo NOME non può essere lasciato vuoto.");  
-    return false;  
-  }else if (cognome==null || cognome==""){  
-    alert("Il campo COGNOME non può essere lasciato vuoto.");  
-    return false;  
-  }else if (luogoNascita==null || luogoNascita==""){  
-    alert("Il campo LUOGO DI NASCITA non può essere lasciato vuoto.");  
-    return false;  
-  }
-
-// VERIFICO CHE NEL FORM CI SIANO CARATTERI AMMISSIBILI.
+// VERIFICO CHE NEL FORM CI SIANO SOLO CARATTERI AMMISSIBILI.
   if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(name)){
     alert("Il campo NOME contiene caratteri non ammessi.");  
     return false; 
@@ -697,7 +685,7 @@ function validateform(){
 
   // VERIFICO IL CONTENUTO DEI CAMPI OPZIONALI RELATIVI ALL'AUTORE.
   if(luogoMorte!='' ){
-    if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(luogoMorte)){
+    if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(luogoMorte)){
       alert("Il campo LUOGO DI MORTE contiene caratteri non ammessi.");
       return false; 
     }
@@ -716,7 +704,7 @@ function validateform(){
   }
 
   // VERIFICO LA CORRETTEZZA DELLA DATA DEL DECESSO
-  if(annoMorte!=''){
+  if(annoMorte!='')
     if(/^\d{4}$/.test(annoMorte)){
       alert("ATTENZIONE, l'anno del decesso non è corretto.");
       return false;
@@ -784,15 +772,15 @@ function validateform(){
   }
 
   // CONTROLLO SUL NUMERO COPIE
-  if(numeroCopie!=''){
+  if(numeroCopie!=0){
     if(!/^\d+$/.test(numeroCopie)){
-      alert("Il campo NUMERO COPIE in Tiratura può contenere solo un numero intero.");
+      alert("Il campo NUMERO COPIE (in Tiratura) può contenere solo un numero intero.");
       return false;
     }
   }
 
   // CONTROLLO SUL NUMERO DELL'ESEMPLARE DELLA FOTOGRAFIA
-  if(numeroEsemplare!=''){
+  if(numeroEsemplare!=0){
     if(!/^\d+$/.test(numeroEsemplare)){
       alert("Il campo NUMERO ESEMPLARE in Esemplare può contenere solo un numero intero.");
       return false;

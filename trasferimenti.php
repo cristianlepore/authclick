@@ -1061,7 +1061,7 @@
       <label for="prezzo"><i class="fa fa-euro"></i> Prezzo di vendita (EUR)</label>
     </div>
     <div class="col-75" style="margin-top:16px;">
-      <input type="numeric" id="prezzo" style="width:100%;" name="prezzo" placeholder="es: 200.50 -- Usare il punto . per separare i decimali.">
+      <input type="numeric" id="prezzo" style="width:100%;" name="prezzo" placeholder=" es: 200.50 -- Usare il punto . per separare i decimali.">
     </div>
   </div>
   <br>
@@ -1082,7 +1082,7 @@
   </div>
   <div class="col-75">
     <div class="w3-padding-16">
-      <input style="margin-top:-12px;" type="date" name="dataCessione">
+      <input style="margin-top:-12px;" type="date" value="0" name="dataCessione">
     </div>
   </div>
 </div>
@@ -1094,51 +1094,22 @@
   </div>
   <div class="col-75" style="margin-top:12px;">
     <label class="switch">
-      <input type="checkbox" id="myCheck" name="prestito" onclick="myFunctionToggle()">
+      <input type="checkbox" id="myCheck" name="cessioneDiritti" onclick="myFunctionToggle()">
       <div class="slider round">
         <div class="w3-row" id="text" style="margin-top:3px;width:200px;font-size:16px;margin-left:150px;color:black;display:none">
-          <i class="fa fa-check"></i> L'opera è in prestito.
+          <i class="fa fa-check"></i> Cessione dei diritti.
         </div>
       </div>
     </label>
     <!-- INSERIRE LA DATA DEL PRESTITO -->
-    <div id="dataFirma">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-      <div class="w3-col m2">
-        <select style="width:60%;" id="giornoCessione" name="giornoCessione">
-          <option value="-- --">-- --</option>
-          <?php for ($giornoCessione=1; $giornoCessione <= 31; $giornoCessione++): ?>
-            <option value="<?=$giornoCessione;?>"><?=$giornoCessione;?></option>
-          <?php endfor; ?>
-        </select>
-      </div>
-      <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-      <div class="w3-col m3">
-        <select style="width:80%;" id="meseCessione" name="meseCessione">
-          <option value=""> -- -- </option>
-          <option value="Gennaio">Gennaio</option>
-          <option value="Febbraio">Febbraio</option>
-          <option value="Marzo">Marzo</option>
-          <option value="Aprile">Aprile</option>
-          <option value="Maggio">Maggio</option>
-          <option value="Giugno">Giugno</option>
-          <option value="Luglio">Luglio</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Settembre">Settembre</option>
-          <option value="Ottobre">Ottobre</option>
-          <option value="Novembre">Novembre</option>
-          <option value="Dicembre">Dicembre</option>
-        </select>
-      </div>
-      <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-      <div class="w3-col m3">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoCessione" name="annoCessione" placeholder=" es: 2018" required>
+    <div id="dataFineCessione" style="display:none;">
+      <div class="col-75">
+        <div class="w3-padding-16">
+          <input style="margin-top:-12px;" type="date" value="0" name="dataFineCessione">
+        </div>
       </div>
     </div>
-    <input id="textTimbro" name="prestito" class="col-50" type="text" style="display:none;" placeholder=" es: Timbrata con timbro dell'artista">
   </div>
-</div>
-<form>
 <br>
 </div>
 
@@ -1400,15 +1371,14 @@ for (i = 0; i < coll.length; i++) {
 function myFunctionToggle() {
   var checkBox = document.getElementById("myCheck");
   var text = document.getElementById("text");
+  var dataFirma = document.getElementById("dataFineCessione");
+
   if (checkBox.checked == true){
     text.style.display = "block";
+    dataFirma.style.display = "block";
+    $("#dataFineCessione").slideDown("slow");
   } else {
     text.style.display = "none";
-  }
-  var dataFirma = document.getElementById("dataFirma");
-  if (checkBox.checked == true){
-    dataFirma.style.display = "block";
-  } else {
     dataFirma.style.display = "none";
   }
 }

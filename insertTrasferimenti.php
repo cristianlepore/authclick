@@ -158,7 +158,26 @@ $civico_residenza = (int)$_POST['residenzaCivico'];
 $prezzo = $_POST['prezzo'];
 $codIdentificativo = $_POST['codIdentificativo'];
 
-$dataCessione = $_POST['dataCessione'];
+// DATA DI VENDITA
+$dataCessione = date('Y-m-d', strtotime($_POST['dataCessione']));
+
+// CESSIONE DIRITTI
+$cessioneDiritti = $_POST['cessioneDiritti'];
+$dataFineCessione = date('Y-m-d', strtotime($_POST['dataFineCessione']));
+
+
+// SETTO IL FLAG DI CESSIONE DIRITTI CORRETTAMENTE
+if($cessioneDiritti=="on"){
+  ;
+}else {
+  $cessioneDiritti = "off";
+}
+
+// SE IL CAMPO PREZZO È STATO LASCIATO VUOTO, LO SOSTITUISCO CON UNO ZERO
+if($prezzo==''){
+  $prezzo=0;
+}
+
 
 // DEFINISCO TUTTE LE FUNZIONI CHE MI SERVIRANNO
 // ***************************************************************
@@ -218,7 +237,7 @@ function insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId
 
 }
 
-function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione){
+function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti){
   include 'dbConfig.php';
 
   // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
@@ -231,9 +250,9 @@ function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCes
   $row = mysqli_fetch_row($result);
   $venditore_id = $row[0];
   $acquirente_id = $newOwnerId;
-
+  
   // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
-  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id)");
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti')");
   if($insert){
 
     // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
@@ -255,7 +274,7 @@ function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCes
 
   }
 
-  $out['statusMsg'] = $statusMsg;
+  $out['statusMsg'] = $statusMsgTrasferimento;
   return $out;
 
 }
@@ -282,6 +301,47 @@ function prepareStringForBlockchain($myData){
   
 }
 
+function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione){
+  include 'dbConfig.php';
+
+  // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
+  $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+  $row = mysqli_fetch_row($result);
+  $fotografia_id = $row[0];
+
+  // SELEZIONO L'ATTUALE PROPRIETARIO DELL'OPERA
+  $result = $db->query("SELECT `Utente_id` FROM `Possiede` WHERE `Fotografia_id`='$fotografia_id'");
+  $row = mysqli_fetch_row($result);
+  $venditore_id = $row[0];
+  $acquirente_id = $newOwnerId;
+
+  // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`) VALUES ('Cessione', $prezzo, '$dataCessione', '$dataFineCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti')");
+  if($insert){
+
+    // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
+    $statusMsgTrasferimento = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al trasferimento avvenuto con successo.";
+
+    // MESSAGGIO DI OUTPUT
+    $out['response'] = "OK";
+
+  } else{
+
+    // MESSAGGIO DI INSERIMENTO CON ERRORE
+    $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
+
+    // MESSAGGIO DI OUTPUT
+    $out['response'] = "FAIL";
+
+  }
+
+  // AGGIUNGO IL MESSAGGIO ALL'OUTPUT
+  $out['statusMsg'] = $statusMsgTrasferimento;
+
+  return out;
+
+}
+
 // ***************************************************************
 // ***************************************************************
 
@@ -295,7 +355,7 @@ if($row = mysqli_num_rows($result) == 0){
 } else{
   // ALTRIMENTI SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
 
-  // CONTROLLO CHE QUELL'UTENTE NON ESISTA GIÀ NEL DATABASE E LO AGGIUNGO
+  // VERFICO SE L'UTENTE ESISTE NEL DATABASE
   $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE (`Nome`='$nome' && `Cognome`='$cognome') || `Codice_fiscale`='$codFiscale' ");
   
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
@@ -308,12 +368,39 @@ if($row = mysqli_num_rows($result) == 0){
     $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
     $row = mysqli_fetch_row($result);
     $ownerId = (int)$row[0];
+    
+    // SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
+    if($cessioneDiritti=="off"){
+      
+      // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
+      if($resultArray['response'] == "OK"){
+        // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
+        insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+        
+        // SE È UNA VENDITA, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
+        $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti);
+      }
+    
+    } else if($cessioneDiritti = "on") {
+      // SE SI TRATTA DI UNA CESSIONE DI DIRITTI
 
-    // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
-    insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+      // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
+      if($resultArray['response'] == "OK"){
+        // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
+        insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+        
+        // SE È UNA CESSIONE DI DIRITTI, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI
+        $resultArrayCessioneDiritti = insertCessioneDiritti($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione);
+      }
 
-    // SE È UNA VENDITA, AGGIORNO INSERISCO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
-    $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione);
+    }
+
+    // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
+    if($resultArrayTrasferimenti['response'] == "OK"){
+      $statusMsg = "<i class='fa fa-check'></i>"."Trasferimento avvenuto con successo";
+    } else {
+      $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. Il trasferimento non è avvenuto correttamente. Riprovare.";
+    }
 
   } else {
 
@@ -353,7 +440,7 @@ if($row = mysqli_num_rows($result) == 0){
 }
 
 // SE L'INSERIMENTO DEL PROPRIETARIO È AVVENUTO CORRETTAMENTE, PREPARO I DATI PER L'INSERIMENTO SULLA BLOCKCHAIN
-if($resultArray=="OK" && $resultArrayTrasferimenti="OK"){
+if( $resultArray['response']=="OK" && ( $resultArrayTrasferimenti['response']=="OK" || resultArrayCessioneDiritti['response']=="OK") ){
 
    // PRENDO I DATI RILEVANTI DA INSERIRE SULLA BLOCKCHAIN E LI METTO IN FORMATO JSON
    $result = $db->query("SELECT `id`,`Clausole_contratto`,`Tipologia`,`Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id` FROM `Trasferimento` WHERE `id_venditore`='$venditore_id' AND `id_acquirente`='$acquirente_id' AND `Fotografia_id`=$fotografia_id ");

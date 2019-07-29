@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 28, 2019 at 09:39 PM
+-- Generation Time: Jul 29, 2019 at 01:41 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.20
 
@@ -50,17 +50,6 @@ CREATE TABLE `File` (
   `Keywords` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `File`
---
-
-INSERT INTO `File` (`id`, `Last`, `Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Keywords`) VALUES
-(79, 0, 'Scheda', 'Prova1.docx', 349, 'uploads/mrt0001/Scheda/', NULL),
-(80, 0, 'Foto', 'Prova1.docx', 349, 'uploads/mrt0001/Foto/', NULL),
-(81, 0, 'Scheda', 'Prova1.pdf', 349, 'uploads/mrt0001/Scheda/', NULL),
-(82, 1, 'Scheda', 'Prova2.pdf', 349, 'uploads/mrt0001/Scheda/', NULL),
-(83, 1, 'Foto', 'Prova3.docx', 349, 'uploads/mrt0001/Foto/', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -101,13 +90,6 @@ CREATE TABLE `Fotografia` (
   `Keywords` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Fotografia`
---
-
-INSERT INTO `Fotografia` (`id`, `Open_edition`, `Artist_proof`, `Annotazioni`, `Acquistabile`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Proprietario_privato`, `Titolo`, `Visibile`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`) VALUES
-(349, 'off', 0, '', NULL, '0001', 'off', '', 'off', '', NULL, 'Tramonto', NULL, '20.10', '30.15', 2, '', 'mrt0001', 10, '', 'Pigmenti di colore', 0, '', 2016, 'Carta opaca', 0, '', 2015, 'digitale', 578, '');
-
 -- --------------------------------------------------------
 
 --
@@ -137,13 +119,6 @@ CREATE TABLE `Possiede` (
   `Keywords` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Dumping data for table `Possiede`
---
-
-INSERT INTO `Possiede` (`Utente_id`, `Fotografia_id`, `Keywords`) VALUES
-(578, 349, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -161,6 +136,7 @@ CREATE TABLE `Trasferimento` (
   `id_venditore` bigint(30) NOT NULL,
   `id_acquirente` bigint(30) NOT NULL,
   `Fotografia_id` bigint(30) NOT NULL,
+  `Cessione_diritti` text,
   `Keywords` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -187,14 +163,6 @@ CREATE TABLE `Utente` (
   `Tipologia` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `Keywords` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `Utente`
---
-
-INSERT INTO `Utente` (`id`, `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`, `Keywords`) VALUES
-(578, 'Mario', 'Rossi', 0, '', 1992, 'Varese', NULL, NULL, NULL, NULL, NULL, NULL, 'Autore', ''),
-(589, 'Mario', 'sdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'GRZFRC89D67F205V', '', 'Altro', NULL);
 
 --
 -- Indexes for dumped tables
@@ -270,13 +238,13 @@ ALTER TABLE `Fotografia`
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=264;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=590;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=599;
 
 --
 -- Constraints for dumped tables
