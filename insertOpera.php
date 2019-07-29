@@ -123,7 +123,7 @@ else
           // USO UNO SCRIPT PER REDIRIGERE ALLA HOME PAGE. PHP NON PUÒ FUNZIONARE DENTRO ALLA CONDIZIONE IF
           echo ("<SCRIPT LANGUAGE='JavaScript'>
                 setTimeout(function(){
-                  window.location.href = '/new/files.php';
+                  window.location.href = '/authclick/new/files.php';
                 }, 5000);
                 </SCRIPT>");
       ?>

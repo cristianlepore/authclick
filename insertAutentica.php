@@ -254,7 +254,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
 
         <div class="w3-row-padding w3-center">
-        <form action="/new/insertAutentica.php" method="post" >
+        <form action="/authclick/new/insertAutentica.php" method="post" >
           <div class="w3-col m6 w3-left w3-padding-16">
  
             <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
@@ -306,7 +306,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
 
           </form>
           </div>
-          <form action="/new/insertAutentica.php" method="post" >
+          <form action="/authclick/new/insertAutentica.php" method="post" >
           <div class="w3-col m6 w3-left w3-padding-16" style="margin:-22px 0px 8px 0px">
             <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
             <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
@@ -420,7 +420,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         // USO UNO SCRIPT PER REDIRIGERE ALLA HOME PAGE. PHP NON PUÒ FUNZIONARE DENTRO ALLA CONDIZIONE IF
         echo ("<SCRIPT LANGUAGE='JavaScript'>
                   setTimeout(function(){
-                    window.location.href = '/new/files.php';
+                    window.location.href = '/authclick/new/files.php';
                   }, 5000);
                </SCRIPT>");
 
@@ -428,7 +428,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
   ?>
   <h4 class="w3-center">Seleziona uno di questi utenti.</h4>
   <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
-    <form action="/new/insertOpera.php" method="post" >
+    <form action="/authclick/new/insertOpera.php" method="post" >
         
         <!-- INFORMAZIONI RELATIVE ALL'OPERA DA PASSARE AL PROSSIMO FILE -->
         <input type="hidden" name="titolo" value = '<?php echo "$titolo";?>' >

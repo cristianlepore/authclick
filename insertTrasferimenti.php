@@ -43,14 +43,14 @@ $statusMsg = '';
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="#" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -158,168 +158,228 @@ $civico_residenza = (int)$_POST['residenzaCivico'];
 $prezzo = $_POST['prezzo'];
 $codIdentificativo = $_POST['codIdentificativo'];
 
-$gionoCessione = $_POST['giornoCessione'];
-$meseCessione = $_POST['meseCessione'];
-$annoCessione = $_POST['annoCessione'];
+$dataCessione = $_POST['dataCessione'];
 
-// FACCIO UN CONTROLLO SE QUELL'UTENTE ESISTE GIÀ A DATABASE
-$result = $db->query("SELECT (`id`) FROM `Utente` WHERE(`Codice_fiscale`='$codFiscale')");
-// SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE
-if($row = mysqli_num_rows($result) == 0){
+// DEFINISCO TUTTE LE FUNZIONI CHE MI SERVIRANNO
+// ***************************************************************
+// ***************************************************************
+
+// FUNZIONE PER INSERIRE IL NUOVO PROPRIETARIO
+function insertOwner($nome, $cognome, $codFiscale, $partitaIVA){
+  include 'dbConfig.php';
+  // INSERISCO IL PROPRIETARIO
   $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro')");
-      if($insert){
-          $statusMsg = "Inserimento dei dati relativi all'acquirente avvenuto con successo.";
-          ?>
-          <div class="w3-center w3-padding-16 w3-padding-bottom">
-          <i class="fa fa-check"></i>
-          <?php echo $statusMsg;
-      }
 
-  // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
-  $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
-  $row = mysqli_fetch_row($result);
-  $autoreId = (int)$row[0];
+  if($insert){
+    // SE L'INSERIMENTO È ANDATO BENE, PREPARO IL MESSAGGIO DA STAMPARE A VIDEO
+    $statusMsg = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al proprietario avvenuto con successo.";
+    $out['response'] = "OK";
+  } else{
+    $statusMsg = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema nell'inserimento dei dati relativi al proprietario.";
+    $out['response'] = "FAIL";
+  }
+
+  $out['statusMsg'] = $statusMsg;
+  return $out;
+
+}
+
+// FUNZIONE PER INSERIRE ED AGGIORNARE GLI INDIRIZZI
+function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
+  include 'dbConfig.php';
+
+  // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
+  if($nazione != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
+  }
+  if($nazione_residenza != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza'");
+  }
+  if($nazione_domicilio != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
+  }
+
+}
+
+// FUNZIONE PER INSERIRE GLI INDIRIZZI NUOVI
+function insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
+  include 'dbConfig.php';
 
   // AGGIUNGO I DATI SUGLI INDIRIZZI, DOMICILIO E RESIDENZA DELL'ACQUIRENTE
   if($nazione != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
   if($nazione_residenza != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
   if($nazione_domicilio != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
 
-}else{
-    $row = mysqli_fetch_row($result);
-    $autoreId = $row[0];
-
-    // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
-    if($nazione != "")
-        $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
-        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Indirizzo'");
-    if($nazione_residenza != "")
-        $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
-        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Residenza'");
-    if($nazione_domicilio != "")
-        $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
-        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Domicilio'");
 }
 
-//  VERIFICO SE IL CODICE IDENTIFICATIVO RICEVUTO FA RIFERIMENTO ALLA VENDITA OPPURE AL PRESTITO.
-if($codIdentificativo!=''){
-    $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
-}else if($codePrestito!=''){
-    $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codePrestito'");
+function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione){
+  include 'dbConfig.php';
+
+  // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
+  $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+  $row = mysqli_fetch_row($result);
+  $fotografia_id = $row[0];
+
+  // SELEZIONO L'ATTUALE PROPRIETARIO DELL'OPERA
+  $result = $db->query("SELECT `Utente_id` FROM `Possiede` WHERE `Fotografia_id`='$fotografia_id'");
+  $row = mysqli_fetch_row($result);
+  $venditore_id = $row[0];
+  $acquirente_id = $newOwnerId;
+
+  // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id)");
+  if($insert){
+
+    // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
+    $statusMsgTrasferimento = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al trasferimento avvenuto con successo.";
+    
+    // AGGIORNO LA TABELLA POSSIEDE
+    $insert = $db->query("UPDATE `Possiede` SET `Utente_id`='$acquirente_id' WHERE `Fotografia_id`='$fotografia_id'");
+    if($insert)
+      $out['response'] = "OK";
+    else
+      $out['response'] = "FAIL";
+
+  } else{
+
+    // MESSAGGIO DI INSERIMENTO CON ERRORE
+    $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
+
+    $out['response'] = "FAIL";
+
+  }
+
+  $out['statusMsg'] = $statusMsg;
+  return $out;
+
 }
 
-// VERIFICO SE AL SISTEMA ESISTE UN'ALTRA FOTOGRAFIA CON QUEL CODICE IDENTIFICATIVO.
+// FUNZIONE PER PREPARARE LA STRINGA DI DATI PER L'INSERIMENTO SULLA BLOCKCHAIN
+function prepareStringForBlockchain($myData){
+
+  // DEFINISCO IL NUMERO DI ITERAZIONI PER PBKDF2
+  $iterations = 1000000;
+
+  // Generate a random IV using openssl_random_pseudo_bytes()
+  // random_bytes() or another suitable source of randomness
+  $salt = openssl_random_pseudo_bytes(32);
+
+  // HASH DEI DATI JSON
+  $myHashValue1 = hash('sha3-512', $myData);
+
+  // KDF DEI DATI JSON
+  $myHashValue2 = hash_pbkdf2("sha512", $myData, $salt, $iterations, 0);
+
+  $outHash['sha3'] = $myHashValue1;
+  $outHash['pbkdf2'] = $myHashValue2;
+  return $out;
+  
+}
+
+// ***************************************************************
+// ***************************************************************
+
+
+// INIZIO DEL PROGRAMMA
+// VERIFICO CHE QUEL CODICE IDENTIFICATIVO ESISTA GIA NEL DATABASE ALTRIMENTI MANDO UN WARNING ALL'UTENTE
+$result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
 if($row = mysqli_num_rows($result) == 0){
-    $statusMsg = "Non esiste alcuna fotografia con quel codice identificativo nel sistema.";
-    ?>
-    <div class="w3-center w3-padding-16 w3-padding-bottom">
-    <i class="fa fa-warning"></i>
-    <?php echo $statusMsg;
-    //Set Refresh header using PHP.
-    header( "refresh:5;url=/new/files.php" );
+    // SE NON ESISTE QUEL CODICE IDENTIFICATIVO
+    $statusMsg = "<i class='fa fa-warning'></i>"."ATTENZIONE. Il codice identificativo inserito non esiste nel sistema."."<p>"."Riprovare con un diverso codice identificativo."."</p>";
+} else{
+  // ALTRIMENTI SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
 
-    ?>
-    <!-- MESSAGGIO DI REINDIRIZZAMENTO VERSO LA HOME PAGE -->
-    <br><br><br>
-    <p class="w3-opacity w3-center">
-    <i>
-    ...pochi istanti ancora e potrai proseguire nella compilazione del form.
-    </i></p><br><?php
-}else if($row = mysqli_num_rows($result) == 1){ 
-    // SE AL SISTEMA ESISTE 1 FOTOGRAFIA CON QUEL CODICE IDENTIFICATIVO, USO QUELLA NELLA TABELLA TRASFERIMENTI E POSSIEDE
-    $row = mysqli_fetch_row($result);
-    $fotografia_id = $row[0];
+  // CONTROLLO CHE QUELL'UTENTE NON ESISTA GIÀ NEL DATABASE E LO AGGIUNGO
+  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE (`Nome`='$nome' && `Cognome`='$cognome') || `Codice_fiscale`='$codFiscale' ");
+  
+  // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
+  if($row = mysqli_fetch_row($result) == 0){
 
-    $result = $db->query("SELECT `Utente_id` FROM `Possiede` WHERE `Fotografia_id`='$fotografia_id'");
-    $row = mysqli_fetch_row($result);
-    $venditore_id = $row[0];
-    $acquirente_id = $autoreId;
+    // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
+    $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA);
     
-    if($codIdentificativo!=''){
-      $insert = $db->query("INSERT INTO `Trasferimento`(`Clausole_contratto`, `Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`) VALUES ('$clausoleContratto', 'Vendita', '$prezzo', '$data', $venditore_id, $acquirente_id, $fotografia_id)");
-      $insert = $db->query("UPDATE `Possiede` SET `Utente_id`='$acquirente_id' WHERE `Fotografia_id`='$fotografia_id'");
-    }else if($codePrestito!=''){
-        $insert = $db->query("INSERT INTO `Trasferimento`(`Clausole_contratto`, `Tipologia`, `Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`) VALUES ('$clausoleContrattoTrasferimento', 'Prestito', '$prezzoPrestito', '$dateInizioPrestito','$dateFinePrestito', $venditore_id, $acquirente_id, $fotografia_id)");
-    }
+    // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
+    $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
+    $row = mysqli_fetch_row($result);
+    $ownerId = (int)$row[0];
 
-    $statusMsg = "Trasferimento eseguito con successo.";
+    // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
+    insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+
+    // SE È UNA VENDITA, AGGIORNO INSERISCO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
+    $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione);
+
+  } else {
+
+    // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
+
+    /*
+    // AGGIORNO SOLO GLI UTENTI
+    $proprietarioId = $row[0];
+    $tipologia = $row[1];
+
+    // AGGIORNO I DATI DEL PROPRIETARIO
+    // SE L'UTENTE È GIÀ NEL DATABASE, VERIFICO SE È COME AUTORE O COME ALTRO
+    if($tipologia=='Autore'){
+      // SE È COME AUTORE, LO AGGIORNO E BASTA
+      $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Autore / Altro' WHERE `id`=$proprietarioId ");
+
+      // FUNZIONE PER AGGIUNGERE O AGGIORNARE GLI INDIRIZZI DEI PROPRIETARI.
+      updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $proprietarioId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+
+    }else if($tipologia=='Altro'){
+      // SE ERA GIÀ A SISTEMA COME UN ACQUIRENTE, AGGIORNO SOLO I SUOI DATI CON QUESTI NUOVI.
+      $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Altro' WHERE `id`=$proprietarioId ");
+
+      // FUNZIONE PER AGGIUNGERE O AGGIORNARE GLI INDIRIZZI DEI PROPRIETARI.
+      updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $proprietarioId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+
+    }
     
-    // PRENDO I DATI RILEVANTI DA INSERIRE SULLA BLOCKCHAIN E LI METTO IN UN JSON
-    $result = $db->query("SELECT `id`,`Clausole_contratto`,`Tipologia`,`Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id` FROM `Trasferimento` WHERE `id_venditore`='$venditore_id' AND `id_acquirente`='$acquirente_id' AND `Fotografia_id`=$fotografia_id ");
-    while($row = mysqli_fetch_array($result)){
-        $myObj->id_trasferimento = $row[0];
-        $myObj->clausoleContratto = $row[1];
-        $myObj->tipologia = $row[2];
-        $myObj->prezzo = $row[3];
-        $myObj->dataCessione = $row[4];
-        $myObj->fineCessione = $row[5];
-        $myObj->venditore_Id = $row[6];
-        $myObj->acquirente_Id = $row[7];
-        $myObj->fotografia_Id = $row[8];
-
-        $myJSON = json_encode($myObj);
+    // STAMPO I MESSAGGI DI AGGIORNAMENTO DELL'UTENTE E DEGLI INDIRIZZI
+    if($updateUser){
+        $statusMsg = "<i class='fa fa-check'></i>"."Aggiornamento dei dati relativi all'utente avvenuto con successo.";
     }
+    */
 
-    // RICHIAMO LA FUNZIONE PER PROCESSARE I DATI E PREPARALI ALL'INVIO SU BLOCKCHAIN
-    prepareStringForBlockchain($myJSON);
+  }
 
-    // FUNZIONE PER PREPARARE LA STRINGA DI DATI ALL'INSERIMENTO NELLA BLOCKCHAIN
-    function prepareStringForBlockchain($myData){
-
-      // DEFINISCO IL NUMERO DI ITERAZIONI PER PBKDF2
-      $iterations = 8000000;
-
-      // Generate a random IV using openssl_random_pseudo_bytes()
-      // random_bytes() or another suitable source of randomness
-      $salt = openssl_random_pseudo_bytes(32);
-
-      // HASH DEI DATI JSON
-      $myHashValue1 = hash('sha3-512', $myData);
-
-      // KDF DEI DATI JSON
-      $myHashValue2 = hash_pbkdf2("sha512", $myData, $salt, $iterations, 0);
-
-    }
-
-    ?>
-    <div class="w3-center w3-padding-16 w3-padding-bottom">
-        <i class="fa fa-check"></i>
-        <?php echo $statusMsg;
-        ?>
-    </div>
-    <hr class="horizontalLine">
-
-    <div class="w3-center w3-col m6" style="margin-top:25px;">
-        <h3>Scegli una delle seguenti opzioni.</h3>
-    </div>
-    <div class="w3-col m6 w3-center">
-        <button type="submit" onclick="getvalue()" style="width:70%;" class="w3-button w3-center w3-small w3-black w3-center">
-            <i class="fa fa-chain"></i> ULTIMO VALORE INSERITO SU BLOCKCHAIN
-        </button>
-        <br><br><br>
-        <div class="w3-center">
-            <input id="xvalue" type="hidden" value='<?php echo "$myHashValue";?>'/>
-            <button type="submit" style="background-color:green;color:white;width:70%;" onclick="setvalue()" class="w3-button w3-small w3-center">
-                <i class="fa fa-send"></i> INVIA SU BLOCKCHAIN
-            </button>
-        </div>
-    </div>
-    <div class="w3-padding-64"></div>
-    <hr class="horizontalLine">
-    <div id="xbalance" class="w3-center w3-padding-32"></div>
-    <div class="w3-padding-32 w3-center">
-      <button class="w3-black w3-button w3-small" onclick="window.location.href='/new/form.php'">
-        Torna alla HOME page
-      </button>
-    </div>
-<?php
 }
+
+// SE L'INSERIMENTO DEL PROPRIETARIO È AVVENUTO CORRETTAMENTE, PREPARO I DATI PER L'INSERIMENTO SULLA BLOCKCHAIN
+if($resultArray=="OK" && $resultArrayTrasferimenti="OK"){
+
+   // PRENDO I DATI RILEVANTI DA INSERIRE SULLA BLOCKCHAIN E LI METTO IN FORMATO JSON
+   $result = $db->query("SELECT `id`,`Clausole_contratto`,`Tipologia`,`Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id` FROM `Trasferimento` WHERE `id_venditore`='$venditore_id' AND `id_acquirente`='$acquirente_id' AND `Fotografia_id`=$fotografia_id ");
+   while($row = mysqli_fetch_array($result)){
+       $myObj->id_trasferimento = $row[0];
+       $myObj->clausoleContratto = $row[1];
+       $myObj->tipologia = $row[2];
+       $myObj->prezzo = $row[3];
+       $myObj->dataCessione = $row[4];
+       $myObj->fineCessione = $row[5];
+       $myObj->venditore_Id = $row[6];
+       $myObj->acquirente_Id = $row[7];
+       $myObj->fotografia_Id = $row[8];
+
+       $myJSON = json_encode($myObj);
+   }
+
+   // RICHIAMO LA FUNZIONE PER PROCESSARE I DATI E PREPARALI ALL'INVIO SU BLOCKCHAIN
+   $outHash = prepareStringForBlockchain($myJSON);
+
+}else {
+  $statusMsgBlockchain = "<i class='fa fa-warning'></i>"."ATTENZIONE! Non è stato possibile preparare i dati per l'inserimento su blockchain.";
+}
+
 ?>
 
-</div>
 <script>
 
 window.onload = function () {

@@ -107,7 +107,7 @@ if ($result->num_rows == 0) {
 
 if($unicoFile == 0) {
 //Set Refresh header using PHP.
-header( "refresh:5;url=/new/files.php" );
+header( "refresh:5;url=/authclick/new/files.php" );
 
 ?>
 
@@ -161,7 +161,7 @@ header( "refresh:5;url=/new/files.php" );
 <div class="w3-padding-16"></div>
 <div class="w3-center">
 <!-- BOTTONE PER TORNARE INDIETRO -->
-<button type="button" class="w3-black w3-button" style="background-color:green;" onclick="window.location.href='/new/files.php'">
+<button type="button" class="w3-black w3-button" style="background-color:green;" onclick="window.location.href='/authclick/new/files.php'">
   <i class="fa fa-backward"></i> INDIETRO
 </button>
 </div>
@@ -172,7 +172,7 @@ header( "refresh:5;url=/new/files.php" );
 }
 else if($unicoFile==1){
     //Set Refresh header using PHP.
-    header( "refresh:5;url=/new/files.php" );
+    header( "refresh:5;url=/authclick/new/files.php" );
 
 ?>
 

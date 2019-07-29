@@ -112,7 +112,7 @@ foreach($files as $file){ // iterate files
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
   
-  <form name="myForm" action="//insertAutentica.php" method="post" onsubmit="return validateform()">
+  <form name="myForm" action="/authclick/new/insertAutentica.php" method="post" onsubmit="return validateform()">
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
   <div class="row">
     <div class="col-25">

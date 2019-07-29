@@ -89,7 +89,7 @@
     <div class="w3-left w3-col m6 w3-medium w3-padding-16"><i class="fa fa-tag"></i>
       Codice identificativo fotografia
     </div>
-    <form name="myForm" action="/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
+    <form name="myForm" action="/authclick/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
     <div class="w3-col m6">
         <div class="w3-center">
           <input type="text" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
@@ -161,7 +161,7 @@
     <div class="w3-row w3-padding-16">
     <div class="w3-left w3-col m6 w3-medium w3-padding-16"><i class="fa fa-tag"></i> Codice identificativo fotografia
     </div>
-    <form name="myFormEsporta" action="/new/esportaFile.php" method="post" onsubmit="return validateformEsporta()">
+    <form name="myFormEsporta" action="/authclick/new/esportaFile.php" method="post" onsubmit="return validateformEsporta()">
       <div class="w3-col m6">
         <div class="w3-center">
           <input type="text" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>

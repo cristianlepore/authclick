@@ -177,7 +177,7 @@
     // USO UNO SCRIPT PER REDIRIGERE ALLA HOME PAGE. PHP NON PUÒ FUNZIONARE DENTRO ALLA CONDIZIONE IF
     echo ("<SCRIPT LANGUAGE='JavaScript'>
             setTimeout(function(){
-              window.location.href = '/new/files.php#panel_esporta';
+              window.location.href = '/authclick/new/files.php#panel_esporta';
             }, 5000);
           </SCRIPT>");
           
@@ -299,7 +299,7 @@
                     // COLONNA DI SINISTRA - PREVIEW DEL FILE
                     if($SubjectCode['foto']['name'] != ''){
                       $urlFoto=$SubjectCode['foto']['path'].$SubjectCode['foto']['name'];
-                      $urlFoto= "https://docs.google.com/gview?url=http://159.149.190.140/new/".$urlFoto."&embedded=true";
+                      $urlFoto= "https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/".$urlFoto."&embedded=true";
                   ?>
                     <iframe style="width:85%;height:340px;" src="<?php echo $urlFoto; ?>"></iframe>
                   <?php
@@ -313,7 +313,7 @@
                       // COLONNA DI DESTRA - PREVIEW DEL FILE
                       if($SubjectCode['scheda']['name'] != ''){
                         $urlScheda=$SubjectCode['scheda']['path'].$SubjectCode['scheda']['name'];
-                        $urlScheda= "https://docs.google.com/gview?url=http://159.149.190.140/new/".$urlScheda."&embedded=true";
+                        $urlScheda= "https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/".$urlScheda."&embedded=true";
                     ?>
                       <iframe style="width:85%;height:340px;" src="<?php echo $urlScheda; ?>"></iframe> 
                     <?php
@@ -345,7 +345,7 @@
 <div id="overlay_foto" class="w3-left animate-in" onclick="off_foto()">
   <div id="text"><i class="fa fa-trash"></i> Vuoi eliminare il file?</div>
   <input type="button" id="text_button_no" style="width:5%;background-color:red;" class="w3-huge w3-button" value="NO" onclick="off()" />
-  <form action="/new/esportaFile.php" method="post" >
+  <form action="/authclick/new/esportaFile.php" method="post" >
       <input type="hidden" name="delete" value = 'Foto' >
       <!-- IL CODICE IDENTIFICATIVO LO PASO AL SOLO SCOPO DI POTER RIPULIRE LE CARTELLE LASCIATE VUOTE -->
       <input type="hidden" name="codIdentificativoEsporta" value = '<?php echo "$codIdentificativo";?>' >
@@ -360,7 +360,7 @@
 <div id="overlay_scheda" class="w3-right animate-in" onclick="off_scheda()">
   <div id="text"><i class="fa fa-trash"></i> Vuoi eliminare il file?</div>
   <input type="button" id="text_button_no" style="width:5%;background-color:red;" class="w3-huge w3-button" value="NO" onclick="off()" />
-  <form action="/new/esportaFile.php" method="post" >
+  <form action="/authclick/new/esportaFile.php" method="post" >
       <input type="hidden" name="delete" value = 'Scheda' >
       <!-- IL CODICE IDENTIFICATIVO LO PASO AL SOLO SCOPO DI POTER RIPULIRE LE CARTELLE LASCIATE VUOTE -->
       <input type="hidden" name="codIdentificativoEsporta" value = '<?php echo "$codIdentificativo";?>' >
@@ -473,7 +473,7 @@
 <div class="w3-padding-16"></div>
 <!-- BOTTONO PER RITORNARE ALLA HOME PAGE -->
 <div class="col-25 submitButton">
-  <button type="submit" class="submitButton" onclick="window.location.href='/new/files.php'"><i class="fa fa-backward"></i> <i class="prova">TORNA</i></button>
+  <button type="submit" class="submitButton" onclick="window.location.href='/authclick/new/files.php'"><i class="fa fa-backward"></i> <i class="prova">TORNA</i></button>
 </div>
 <div class="w3-padding-16"></div>
 

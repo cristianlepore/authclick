@@ -162,103 +162,73 @@ $gionoCessione = $_POST['giornoCessione'];
 $meseCessione = $_POST['meseCessione'];
 $annoCessione = $_POST['annoCessione'];
 
-// VERIFICO CHE QUEL CODICE IDENTIFICATIVO ESISTA NEL DATABASE ALTRIMENTI MANDO UN WARNING ALL'UTENTE
-$result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+// FACCIO UN CONTROLLO SE QUELL'UTENTE ESISTE GIÀ A DATABASE
+$result = $db->query("SELECT (`id`) FROM `Utente` WHERE(`Codice_fiscale`='$codFiscale')");
+// SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE
 if($row = mysqli_num_rows($result) == 0){
-    // SE NON ESISTE QUEL CODICE IDENTIFICATIVO
-    $statusMsg = "<i class='fa fa-warning'></i>"."ATTENZIONE. Il codice identificativo inserito non esiste nel sistema."."<p>"."Riprovare con un diverso codice identificativo."."</p>";
-} else{
-    // SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
-    // CONTROLLO CHE QUELL'UTENTE NON ESISTA GIÀ NEL DATABASE E LO AGGIUNGO
-    $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
-    
-    // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE
-    if($row = mysqli_fetch_row($result) == 0){
-    $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro')");
-        if($insert){
-            $statusMsg = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi all'acquirente avvenuto con successo.";
-        }
-    
-    // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
-    // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
-    $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
-    $row = mysqli_fetch_row($result);
-    $autoreId = (int)$row[0];
+  $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro')");
+      if($insert){
+          $statusMsg = "Inserimento dei dati relativi all'acquirente avvenuto con successo.";
+          ?>
+          <div class="w3-center w3-padding-16 w3-padding-bottom">
+          <i class="fa fa-check"></i>
+          <?php echo $statusMsg;
+      }
 
-    // AGGIUNGO I DATI SUGLI INDIRIZZI, DOMICILIO E RESIDENZA DELL'ACQUIRENTE
+  // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
+  $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
+  $row = mysqli_fetch_row($result);
+  $autoreId = (int)$row[0];
+
+  // AGGIUNGO I DATI SUGLI INDIRIZZI, DOMICILIO E RESIDENZA DELL'ACQUIRENTE
+  if($nazione != "")
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
+  if($nazione_residenza != "")
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
+  if($nazione_domicilio != "")
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
+
+}else{
+    $row = mysqli_fetch_row($result);
+    $autoreId = $row[0];
+
+    // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
     if($nazione != "")
         $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
+        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Indirizzo'");
     if($nazione_residenza != "")
         $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
+        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Residenza'");
     if($nazione_domicilio != "")
         $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
-
-    } else {
-        // AGGIORNO SOLO GLI UTENTI
-        $autoreId = $row[0];
-        $tipologia = $row[1];
-
-        // SE L'UTENTE È GIÀ NEL DATABASE, VERIFICO SE È COME AUTORE O COME ALTRO
-        if($tipologia=='Autore'){
-            // SE È COME AUTORE, LO AGGIORNO E BASTA
-            $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Autore / Altro' WHERE `id`=$autoreId ");
-
-            updateIndirizzi($nazione, $città, $CAP, );
-
-            // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
-            if($nazione != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Indirizzo'");
-            if($nazione_residenza != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Residenza'");
-            if($nazione_domicilio != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Domicilio'");
-
-        }else if($tipologia=='Altro'){
-            // SE ERA GIÀ A SISTEMA COME UN ACQUIRENTE, AGGIORNO SOLO I SUOI DATI CON QUESTI NUOVI.
-            $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Altro' WHERE `id`=$autoreId ");
-
-            // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
-            if($nazione != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Indirizzo'");
-            if($nazione_residenza != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Residenza'");
-            if($nazione_domicilio != "")
-                $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $autoreId)");
-                $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Domicilio'");
-        
-        }
-        
-        // STAMPO I MESSAGGI DI AGGIORNAMENTO DELL'UTENTE E DEGLI INDIRIZZI
-        if($updateUser){
-            $statusMsg = "<i class='fa fa-check'></i>"."Aggiornamento dei dati relativi all'utente avvenuto con successo.";
-        }
-
-    }
-
-    //
-
-
+        $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$autoreId && `Tipologia`='Domicilio'");
 }
 
+//  VERIFICO SE IL CODICE IDENTIFICATIVO RICEVUTO FA RIFERIMENTO ALLA VENDITA OPPURE AL PRESTITO.
+if($codIdentificativo!=''){
+    $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+}else if($codePrestito!=''){
+    $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codePrestito'");
+}
 
+// VERIFICO SE AL SISTEMA ESISTE UN'ALTRA FOTOGRAFIA CON QUEL CODICE IDENTIFICATIVO.
+if($row = mysqli_num_rows($result) == 0){
+    $statusMsg = "Non esiste alcuna fotografia con quel codice identificativo nel sistema.";
+    ?>
+    <div class="w3-center w3-padding-16 w3-padding-bottom">
+    <i class="fa fa-warning"></i>
+    <?php echo $statusMsg;
+    //Set Refresh header using PHP.
+    header( "refresh:5;url=/new/files.php" );
 
-
-
-
-
-
-
-
-
-
-
-
-else if($row = mysqli_num_rows($result) == 1){ 
+    ?>
+    <!-- MESSAGGIO DI REINDIRIZZAMENTO VERSO LA HOME PAGE -->
+    <br><br><br>
+    <p class="w3-opacity w3-center">
+    <i>
+    ...pochi istanti ancora e potrai proseguire nella compilazione del form.
+    </i></p><br><?php
+}else if($row = mysqli_num_rows($result) == 1){ 
     // SE AL SISTEMA ESISTE 1 FOTOGRAFIA CON QUEL CODICE IDENTIFICATIVO, USO QUELLA NELLA TABELLA TRASFERIMENTI E POSSIEDE
     $row = mysqli_fetch_row($result);
     $fotografia_id = $row[0];
@@ -309,7 +279,7 @@ else if($row = mysqli_num_rows($result) == 1){
       // HASH DEI DATI JSON
       $myHashValue1 = hash('sha3-512', $myData);
 
-      // KDF
+      // KDF DEI DATI JSON
       $myHashValue2 = hash_pbkdf2("sha512", $myData, $salt, $iterations, 0);
 
     }

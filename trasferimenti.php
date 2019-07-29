@@ -110,7 +110,7 @@
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
 
-  <form name="myFormOpera" action="/new/prova.php" method="post" onsubmit="return validateform()">
+  <form name="myFormOpera" action="/authclick/new/insertTrasferimenti.php" method="post" onsubmit="return validateform()">
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
   <div class="row">
     <div class="col-25">
@@ -1081,36 +1081,8 @@
     <label for="dataCessione"><i class="fa fa-calendar-check-o"></i> Data cessione</label>
   </div>
   <div class="col-75">
-    <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-    <div class="w3-col m2">
-      <select style="width:60%;" id="giornoCessione" name="giornoCessione">
-        <option value="-- --">-- --</option>
-        <?php for ($giornoCessione=1; $giornoCessione <= 31; $giornoCessione++): ?>
-          <option value="<?=$giornoCessione;?>"><?=$giornoCessione;?></option>
-        <?php endfor; ?>
-      </select>
-    </div>
-    <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-    <div class="w3-col m3">
-      <select style="width:80%;" id="meseCessione" name="meseCessione">
-        <option value=""> -- -- </option>
-        <option value="Gennaio">Gennaio</option>
-        <option value="Febbraio">Febbraio</option>
-        <option value="Marzo">Marzo</option>
-        <option value="Aprile">Aprile</option>
-        <option value="Maggio">Maggio</option>
-        <option value="Giugno">Giugno</option>
-        <option value="Luglio">Luglio</option>
-        <option value="Agosto">Agosto</option>
-        <option value="Settembre">Settembre</option>
-        <option value="Ottobre">Ottobre</option>
-        <option value="Novembre">Novembre</option>
-        <option value="Dicembre">Dicembre</option>
-      </select>
-    </div>
-    <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-    <div class="w3-col m3">
-      <input type="numeric" style="width:80%;margin-top:8px;" id="annoCessione" name="annoCessione" placeholder=" es: 2018" required>
+    <div class="w3-padding-16">
+      <input style="margin-top:-12px;" type="date" name="dataCessione">
     </div>
   </div>
 </div>
@@ -1253,65 +1225,63 @@ function validateform(){
   }
 
   // VERIFICO LA PARTITA IVA
-  if(!/^[0-9]{4}-[0-9]{4}-[0-9]{3}$/.test(partitaIVA)){
+  if(!/^$|^[0-9]{4}-[0-9]{4}-[0-9]{3}$/.test(partitaIVA)){
     alert("Il campo PARTITA IVA deve contenere 11 cifre.");
     return false;
   }
 
   // VERIFICA LA CORRETTEZZA DEI CAMPI INDIRIZZO
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(indirizzoCittà)){
+  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(indirizzoCittà)){
     alert("Il campo CITTÀ (indirizzo) non è formattato correttamente.");  
     return false; 
   }
   
-  if(!/^\d{5}$/.test(indirizzoCAP)){
+  if(!/^$|^\d{5}$/.test(indirizzoCAP)){
     alert("Il campo CAP (indirizzo) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
     return false; 
   }
   
-  if(!/^\d{1,5}$/.test(indirizzoCivico)){
+  if(!/^$|^\d{1,5}$/.test(indirizzoCivico)){
     alert("Il campo CIVICO (indirizzo) non è formattato correttamente.");  
     return false; 
   }
 
   // VERIFICA LA CORRETTEZZA DEL CAMPO DOMICILIO
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(domicilioCittà)){
+  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(domicilioCittà)){
     alert("Il campo CITTÀ (domicilio) non è formattato correttamente.");  
     return false; 
   }
 
-  if(!/^\d{5}$/.test(domicilioCAP)){
+  if(!/^$|^\d{5}$/.test(domicilioCAP)){
     alert("Il campo CAP (domicilio) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
     return false; 
   }
   
-  if(!/^\d{1,5}$/.test(domicilioCivico)){
+  if(!/^$|^\d{1,5}$/.test(domicilioCivico)){
     alert("Il campo CIVICO (domicilio) non è formattato correttamente.");  
     return false; 
   }
   
   // VERIFICA LA CORRETTEZZA DEL CAMPO RESIDENZA
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(residenzaCittà)){
+  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(residenzaCittà)){
     alert("Il campo CITTÀ (residenza) non è formattato correttamente.");  
     return false; 
   }
 
-  if(!/^\d{5}$/.test(residenzaCAP)){
+  if(!/^$|^\d{5}$/.test(residenzaCAP)){
     alert("Il campo CAP (residenza) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
     return false; 
   }
 
-  if(!/^\d{1,5}$/.test(residenzaCivico)){
+  if(!/^$|^\d{1,5}$/.test(residenzaCivico)){
     alert("Il campo CIVICO (residenza) non è formattato correttamente.");  
     return false; 
   }
 
   // VERIFICO LA CORRETTEZZA DEL VALORE INSERITO NEL CAMPO PREZZO
-  if(prezzo!=''){
-    if(!/^\d{1,10}\.?\d{0,2}$/.test(prezzo)){
-      alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
-      return false; 
-    }
+  if(!/^$|^\d{1,10}\.?\d{0,2}$/.test(prezzo)){
+    alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
+    return false; 
   }
   
   // VERIFICO LA CORRETTEZZA DEL CODICE IDENTIFICATIVO INSERITO
