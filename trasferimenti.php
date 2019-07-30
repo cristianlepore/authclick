@@ -1101,15 +1101,21 @@
         </div>
       </div>
     </label>
+    </div>
+  </div>
+
+  <div id="dataFineCessione" style="display:none;">
+    <div class="col-25">
+      <label for="dataFineCessione"><i class="fa fa-calendar-check-o"></i> Data di fine cessione</label>
+    </div>
     <!-- INSERIRE LA DATA DEL PRESTITO -->
-    <div id="dataFineCessione" style="display:none;">
       <div class="col-75">
         <div class="w3-padding-16">
           <input style="margin-top:-12px;" type="date" value="0" name="dataFineCessione">
         </div>
       </div>
     </div>
-  </div>
+  <div class="w3-padding-16"></div>
 <br>
 </div>
 
@@ -1175,7 +1181,9 @@ function validateform(){
   
   var prezzo=document.myFormOpera.prezzo.value;
   var codIdentificativo=document.myFormOpera.codIdentificativo.value;
-  var annoCessione=document.myFormOpera.annoCessione.value;
+  var dataCessione=document.myFormOpera.dataCessione.value;
+  var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
+  var dataFineCessione=document.myFormOpera.dataFineCessione.value;
 
   // VERIFICA SUL CAMPO NOME
   if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(nome)){
@@ -1212,7 +1220,7 @@ function validateform(){
     return false; 
   }
   
-  if(!/^$|^\d{1,5}$/.test(indirizzoCivico)){
+  if(!/^$|^\d{1,10}$/.test(indirizzoCivico)){
     alert("Il campo CIVICO (indirizzo) non è formattato correttamente.");  
     return false; 
   }
@@ -1228,7 +1236,7 @@ function validateform(){
     return false; 
   }
   
-  if(!/^$|^\d{1,5}$/.test(domicilioCivico)){
+  if(!/^$|^\d{1,10}$/.test(domicilioCivico)){
     alert("Il campo CIVICO (domicilio) non è formattato correttamente.");  
     return false; 
   }
@@ -1244,7 +1252,7 @@ function validateform(){
     return false; 
   }
 
-  if(!/^$|^\d{1,5}$/.test(residenzaCivico)){
+  if(!/^$|^\d{1,10}$/.test(residenzaCivico)){
     alert("Il campo CIVICO (residenza) non è formattato correttamente.");  
     return false; 
   }
@@ -1255,22 +1263,20 @@ function validateform(){
     return false; 
   }
   
-  // VERIFICO LA CORRETTEZZA DEL CODICE IDENTIFICATIVO INSERITO
-  if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codeIdentificativo)){
+  // Verifico il codice identificativo.
+  if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
     alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
     return false;
   }
 
-  // VERIFICO LA CORRETTEZZA DELLA DATA DI CESSIONE
-  if(!/^\d{4}$/.test(annoCessione)){
-    alert("ATTENZIONE, l'anno di cessione dell'opera non è corretto.");
-    return false;
+  // VERIFICO CHE LA DATA DI FINE CESSIONE SIA SUCCESSIVA ALLA DATA DI INIZIO CESSIONE
+  if(cessioneDirittiIsChecked){
+    if(dataCessione > dataFineCessione){
+      alert("La data di cessione non può essere successiva alla data di fine cessione.");
+      return false;
+    }
   }
-
-  if(giornoCessione!="-- --" && meseCessione==''){
-    alert("Completare anche il campo MESE nella DATA DI CESSIONE dell'opera.");
-    return false;
-  }
+  
 
 }
 
