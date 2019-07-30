@@ -704,7 +704,7 @@ function validateform(){
   }
 
   // VERIFICO LA CORRETTEZZA DELLA DATA DEL DECESSO
-  if(annoMorte!='')
+  if(annoMorte!='') {
     if(/^\d{4}$/.test(annoMorte)){
       alert("ATTENZIONE, l'anno del decesso non è corretto.");
       return false;
