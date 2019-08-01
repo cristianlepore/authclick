@@ -98,6 +98,8 @@
     <div class="content" style="margin-left:30px;">
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Carica contratto</i></a>
     </div>
   </div>
 </div>
@@ -110,7 +112,7 @@
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
 
-  <form name="myFormOpera" action="/authclick/new/insertTrasferimenti.php" method="post" onsubmit="return validateform()">
+  <form name="myFormOpera" action="/authclick/new/insertTrasferimenti.php" method="POST" enctype="multipart/form-data" onsubmit="return validateform()">
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
   <div class="row">
     <div class="col-25">
@@ -1055,7 +1057,8 @@
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
-
+  <br>
+  
   <div class="row">
     <div class="col-25">
       <label for="prezzo"><i class="fa fa-euro"></i> Prezzo di vendita (EUR)</label>
@@ -1075,6 +1078,8 @@
     </div>
   </div>
   <br>
+  <hr class="horizontalLine">
+  <br>
 
 <div class="row">
   <div class="col-25">
@@ -1082,7 +1087,7 @@
   </div>
   <div class="col-75">
     <div class="w3-padding-16">
-      <input style="margin-top:-12px;" type="date" value="0" name="dataCessione">
+      <input style="margin-top:-12px;" type="date" value="0" name="dataCessione" required>
     </div>
   </div>
 </div>
@@ -1101,21 +1106,45 @@
         </div>
       </div>
     </label>
-    </div>
   </div>
+</div>
 
-  <div id="dataFineCessione" style="display:none;">
-    <div class="col-25">
-      <label for="dataFineCessione"><i class="fa fa-calendar-check-o"></i> Data di fine cessione</label>
-    </div>
-    <!-- INSERIRE LA DATA DEL PRESTITO -->
+  <div class="row" style="margin-top:0px;">
+    <div id="dataFineCessione" style="display:none;">
+      <div class="col-25">
+        <label for="dataFineCessione"><i class="fa fa-calendar-check-o"></i> Data di fine cessione</label>
+      </div>
+      <!-- INSERIRE LA DATA DEL PRESTITO -->
       <div class="col-75">
         <div class="w3-padding-16">
           <input style="margin-top:-12px;" type="date" value="0" name="dataFineCessione">
         </div>
       </div>
     </div>
-  <div class="w3-padding-16"></div>
+  </div>
+  <br>
+  <hr class="horizontalLine">
+  <br>
+
+  <div class="row w3-padding-16"> 
+    <div class="col-25"><i class="fa fa-file-o"></i>
+      Nome del file
+    </div>
+    <div class="col-75">
+        <div class="w3-left">
+          <input type="text" style="margin-top:-12px;width:113%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
+        </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-25">
+      <label><i class="fa fa-laptop"></i> Carica il contratto</label>
+    </div>
+    <div class="col-75">
+      <input type="file" name="contratto" id="contratto" class="w3-left w3-small" style="margin: 8px 0px 0px 0px" required>
+    </div>
+  </div>
 <br>
 </div>
 
@@ -1184,6 +1213,7 @@ function validateform(){
   var dataCessione=document.myFormOpera.dataCessione.value;
   var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
   var dataFineCessione=document.myFormOpera.dataFineCessione.value;
+  var nomeContratto=document.myForm.nomeContratto.value;
 
   // VERIFICA SUL CAMPO NOME
   if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(nome)){
@@ -1277,6 +1307,12 @@ function validateform(){
     }
   }
   
+  // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
+  if(nomeContratto.includes("'") || nomeContratto.includes("/") ||  nomeContratto.includes("#") ||  nomeContratto.includes("%") || nomeContratto.includes("§") ){
+    alert("Il campo NOME DEL CONTRATTO contiene caratteri non ammessi. Il nome non deve contenere i seguenti caratteri: ' / § # % ");
+    return false; 
+  }
+
 
 }
 

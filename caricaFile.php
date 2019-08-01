@@ -23,7 +23,7 @@ $statusMsg = '';
 <br><br>
 <?php
 
-// File upload path
+// QUESTA PARTE DEVE ESSERE MESSA DOPO CHE PRELEVO LA POST DA IDPHOTO -- RIGA SOPRA
 $codIdentificativo = $_POST['codIdentificativo'];
 $unicoFile = 0;
 
@@ -32,7 +32,7 @@ $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo
 $row = mysqli_fetch_row($result);
 $idPhoto = $row[0];
 
-// QUESTA PARTE DEVE ESSERE MESSA DOPO CHE PRELEVO LA POST DA IDPHOTO -- RIGA SOPRA
+// DEFINIZIONE DI COSTANTI
 $targetDir = "uploads/";
 $forwSlash = "/";
 
@@ -78,8 +78,8 @@ if ($result->num_rows == 0) {
               // CREO LA CARTELLA ANNIDATA
               $targetDir = $targetDir.$tipoFile.$forwSlash;
               mkdir($targetDir, 0777, true);
-
-              // LO SPOSTO TEMPORANEAMENTE IN /UPLOADS/ CON IL SUO NUOVO NOME
+              
+              // LO SPOSTO NELLA CARTELLA DI DESTINAZIONE CON IL NUOVO NOME ASSEGNATOGLI DALL'UTENTE
               if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetDir.$fileName)){
                 // AGGIORNO IL DATABASE
                 // SPOSTO IL FLAG DELL'ULTIMO FILE CARICATO IN PRECEDENZA SU OFF PER INDICARE CHE NON SARÀ PIÙ L'ULTIMO FILE.
@@ -90,18 +90,18 @@ if ($result->num_rows == 0) {
                   if($insert){
                     $statusMsg = "<i class='fa fa-check'></i> Il file <b>".$fileName. "</b> è stato caricato con successo.";
                   }else{
-                    $statusMsg = "ERRORE. Caricamento del file al database non riuscito.";
+                    $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. Caricamento del file al database non riuscito.";
                   }
                 }
               }else{
-                $statusMsg = "ERRORE nel caricamento del file.";
+                $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE nel caricamento del file.";
               }
             }
           }else{
             $statusMsg = 'Puoi caricare soltanto i file nei formati previsti. <div class="w3-padding-16">I formati previsti sono: <i> doc, docx, pdf, docm, dot, dotm, dotx, odt, jpg, jpeg, bmp, png, gif.</i></div>';
         }
     }else{
-        $statusMsg = 'Per proseguire è necessario selezionare un file da caricare.';
+        $statusMsg = "<i class='fa fa-warning'></i>"."Per proseguire è necessario selezionare un file da caricare.";
     }
 }
 

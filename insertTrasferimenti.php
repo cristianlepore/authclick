@@ -102,6 +102,8 @@ $statusMsg = '';
     <div class="content" style="margin-left:30px;">
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Carica contratto</i></a>
     </div>
   </div>
 </div>
@@ -164,6 +166,27 @@ $dataCessione = date('Y-m-d', strtotime($_POST['dataCessione']));
 // CESSIONE DIRITTI
 $cessioneDiritti = $_POST['cessioneDiritti'];
 $dataFineCessione = date('Y-m-d', strtotime($_POST['dataFineCessione']));
+
+// PRENDO IL NOME DEL FILE CARICATO AL SOLO SCOPO DI TROVARNE L'ESTENSIONE.
+$target_file = $target_dir . basename($_FILES["contratto"]["name"]);
+
+$fileName = basename($_FILES["contratto"]["name"]);
+$fileType = pathinfo($fileName,PATHINFO_EXTENSION);
+
+// LEGGO IL NOME PROPOSTO DALL'UTENTE AL FILE.
+$fileName = $_POST['nomeContratto'];
+// FORMATTO LA STRINGA IN MODO DA POTER MEMORIZZARE ANCHE CARATTERI DI ESCAPE SUL DATABASE.
+$fileName = mysqli_real_escape_string($db,$fileName);
+// AGGIUNGO L'ESTENSIONE LETTA PRIMA AL NOME FILE FORNITO DALL'UTENTE.
+$fileName = $fileName .".". $fileType;
+
+// DEFINISCO LE COSTANTI
+$targetDir = "uploads/";
+$forwSlash = "/";
+$tipoFile = "Contratto";
+
+// CREO IL PERCORSO PER LA CARTELLA
+$targetDir = $targetDir . $codIdentificativo . $forwSlash . $tipoFile . $forwSlash;
 
 
 // SETTO IL FLAG DI CESSIONE DIRITTI CORRETTAMENTE
@@ -345,10 +368,15 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
 // ***************************************************************
 // ***************************************************************
 
-
 // INIZIO DEL PROGRAMMA
 // VERIFICO CHE QUEL CODICE IDENTIFICATIVO ESISTA GIA NEL DATABASE ALTRIMENTI MANDO UN WARNING ALL'UTENTE
 $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+
+// TROVO L'ID DELLA FOTO CHE HA QUEL CODICE IDENTIFICATIVO. MI SERVIRÀ PER CARICARE I CONTRATTI
+$row = mysqli_fetch_row($result);
+$idPhoto = $row[0];
+
+// USO LA QUERY PRECEDENTE PER VERIFICARE QUANTO APPENA FATTO
 if($row = mysqli_num_rows($result) == 0){
     // SE NON ESISTE QUEL CODICE IDENTIFICATIVO
     $statusMsg = "<i class='fa fa-warning'></i>"."ATTENZIONE. Il codice identificativo inserito non esiste nel sistema."."<p>"."Riprovare con un diverso codice identificativo."."</p>";
@@ -368,9 +396,10 @@ if($row = mysqli_num_rows($result) == 0){
     $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
     $row = mysqli_fetch_row($result);
     $ownerId = (int)$row[0];
-    
+
     // SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
     if($cessioneDiritti=="off"){
+      // SE SI TRATTA DI UNA VENDITA E NON DI UNA SEMPLICA CESSIONE DIRITTI
       
       // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
       if($resultArray['response'] == "OK"){
@@ -400,6 +429,47 @@ if($row = mysqli_num_rows($result) == 0){
       $statusMsg = "<i class='fa fa-check'></i>"."Trasferimento avvenuto con successo";
     } else {
       $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. Il trasferimento non è avvenuto correttamente. Riprovare.";
+    }
+
+    // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
+    if($resultArrayCessioneDiritti['response'] == "OK"){
+      $statusMsg = "<i class='fa fa-check'></i>"."Cessione diritti avvenuta con successo";
+    } else {
+      $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. La cessione diritti non è avvenuta correttamente. Riprovare.";
+    }
+
+    // SOLO ORA SE TUTTO È ANDATO A BUON FINE, MEMORIZZO IL FILE DEL CONTRATTO
+    if($resultArrayTrasferimenti['response'] == "OK" || $resultArrayCessioneDiritti['response'] == "OK"){
+      // CREO LA CARTELLA IN CUI ANDRÒ A MEMORIZZARE I CONTRATTI
+      $targetDir = $targetDir . $ownerId . $forwSlash;
+      $targetFilePath = $targetDir . $fileName;
+
+      // PREPARO PER LO SPOSTAMENTO DEL FILE
+      move_uploaded_file($_FILES['contratto']['name'], $move);
+
+      // CREO LA CARTELLA PER SALVARVICI I DOCUMENTI (SE GIÀ NON ESISTEVA)
+      mkdir($targetDir);
+
+      // CREO LA CARTELLA ANNIDATA (SE GIÀ ESISTEVA)
+      mkdir($targetDir, 0777, true);
+
+      // CONTROLLO SE IL NOME DEL FILE ESISTE GIÀ NEL DATABASE PER LA STESSA FOTOGRAFIA E PER LA STESSA TIPOLOGIA (NON AMMISSIBILE).
+      $result = $db->query("SELECT `id` FROM `File` WHERE `Utente_id`= $ownerId AND `Nome` = '$fileName' AND `Tipologia` = '$tipoFile' ");
+      if ($result->num_rows > 0) {
+          $statusMsg = "<i class='fa fa-warning'></i>" . "Esiste già un file del tipo " .$tipoFile. " con il nome <b>" .$fileName. "</b> per lo stesso proprietario. <div class='w3-padding-16 w3-center'>Cambiare nome e ricaricarlo.</div>";
+      }else{
+
+        if(move_uploaded_file($_FILES["contratto"]["tmp_name"], $targetFilePath)){
+          // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
+          // AGGIUNGO IL NUOVO FILE AL DATABASE
+          $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+
+          $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i>" . "Contratto caricato correttamente.";
+        } else {
+          // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
+          $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i>" . "ERRORE nel caricamento del contratto.";
+        }
+      }
     }
 
   } else {
