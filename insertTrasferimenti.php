@@ -284,21 +284,20 @@ function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCes
     // AGGIORNO LA TABELLA POSSIEDE
     $insert = $db->query("UPDATE `Possiede` SET `Utente_id`='$acquirente_id' WHERE `Fotografia_id`='$fotografia_id'");
     if($insert)
-      $out['response'] = "OK";
+      $response = "OK";
     else
-      $out['response'] = "FAIL";
+      $response = "FAIL";
 
   } else{
 
     // MESSAGGIO DI INSERIMENTO CON ERRORE
     $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
 
-    $out['response'] = "FAIL";
+    $response = "FAIL";
 
   }
 
-  $out['statusMsg'] = $statusMsgTrasferimento;
-  return $out;
+  return array($response, $statusMsgTrasferimento);
 
 }
 
@@ -318,9 +317,7 @@ function prepareStringForBlockchain($myData){
   // KDF DEI DATI JSON
   $myHashValue2 = hash_pbkdf2("sha512", $myData, $salt, $iterations, 0);
 
-  $outHash['sha3'] = $myHashValue1;
-  $outHash['pbkdf2'] = $myHashValue2;
-  return $out;
+  return array($myHashValue1, $myHashValue2);
   
 }
 
@@ -346,7 +343,7 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
     $statusMsgTrasferimento = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al trasferimento avvenuto con successo.";
 
     // MESSAGGIO DI OUTPUT
-    $out['response'] = "OK";
+    $response = "OK";
 
   } else{
 
@@ -354,14 +351,11 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
     $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
 
     // MESSAGGIO DI OUTPUT
-    $out['response'] = "FAIL";
+    $response = "FAIL";
 
   }
 
-  // AGGIUNGO IL MESSAGGIO ALL'OUTPUT
-  $out['statusMsg'] = $statusMsgTrasferimento;
-
-  return out;
+  return array($response, $statusMsgTrasferimento);
 
 }
 
@@ -391,7 +385,7 @@ if($row = mysqli_num_rows($result) == 0){
 
     // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
     $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA);
-    
+
     // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
     $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
     $row = mysqli_fetch_row($result);
@@ -410,7 +404,8 @@ if($row = mysqli_num_rows($result) == 0){
         $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti);
       }
     
-    } else if($cessioneDiritti = "on") {
+    } else if($cessioneDiritti== "on") {
+
       // SE SI TRATTA DI UNA CESSIONE DI DIRITTI
 
       // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
@@ -425,21 +420,22 @@ if($row = mysqli_num_rows($result) == 0){
     }
 
     // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
-    if($resultArrayTrasferimenti['response'] == "OK"){
+    if($resultArrayTrasferimenti[0] == "OK"){
       $statusMsg = "<i class='fa fa-check'></i>"."Trasferimento avvenuto con successo";
     } else {
       $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. Il trasferimento non è avvenuto correttamente. Riprovare.";
     }
 
     // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
-    if($resultArrayCessioneDiritti['response'] == "OK"){
+    if($resultArrayCessioneDiritti[0] == "OK"){
       $statusMsg = "<i class='fa fa-check'></i>"."Cessione diritti avvenuta con successo";
     } else {
       $statusMsg = "<i class='fa fa-warning'></i>"."ERRORE. La cessione diritti non è avvenuta correttamente. Riprovare.";
     }
-
+    
     // SOLO ORA SE TUTTO È ANDATO A BUON FINE, MEMORIZZO IL FILE DEL CONTRATTO
-    if($resultArrayTrasferimenti['response'] == "OK" || $resultArrayCessioneDiritti['response'] == "OK"){
+    if($resultArrayTrasferimenti[0] == "OK" || $resultArrayCessioneDiritti[0] == "OK"){
+
       // CREO LA CARTELLA IN CUI ANDRÒ A MEMORIZZARE I CONTRATTI
       $targetDir = $targetDir . $ownerId . $forwSlash;
       $targetFilePath = $targetDir . $fileName;

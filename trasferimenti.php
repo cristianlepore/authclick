@@ -138,7 +138,7 @@
 
   <div class="row">
     <div class="col-25">
-      <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Fiscale</label>
+      <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Identificativo</label>
     </div>
     <div class="col-75">
       <input type="text" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
@@ -1109,7 +1109,7 @@
   </div>
 </div>
 
-  <div class="row" style="margin-top:0px;">
+  <div class="row" style="margin-top:20px;">
     <div id="dataFineCessione" style="display:none;">
       <div class="col-25">
         <label for="dataFineCessione"><i class="fa fa-calendar-check-o"></i> Data di fine cessione</label>
@@ -1148,16 +1148,15 @@
 <br>
 </div>
 
+<div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
+<div class="col-25 submitButton">
+  <button type="submit" name="submit" class="submitButton" ><i class="fa fa-send"></i> <i class="prova">INVIA</i></button>
+</div>
+</form>
 </div>
 </div>
 
 <div class="w3-padding-32"></div>
-
-<div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
-<div class="col-25 submitButton">
-  <button type="submit" class="submitButton"><i class="fa fa-send"></i> <i class="prova">INVIA</i></button>
-</div>
-</form>
 
 <!-- PARTE RELATIVA AGLI SCRIPT -->
 <script>
@@ -1191,6 +1190,7 @@ function topFunction() {
 
 // VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
 function validateform(){  
+
   var nome=document.myFormOpera.nome.value;
   var cognome=document.myFormOpera.cognome.value;
   var codFiscale=document.myFormOpera.codFiscale.value;
@@ -1199,21 +1199,22 @@ function validateform(){
   var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
   var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
   var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
-  
+
   var domicilioCittà=document.myFormOpera.domicilioCittà.value;
   var domicilioCAP=document.myFormOpera.domicilioCAP.value;
   var domicilioCivico=document.myFormOpera.domicilioCivico.value;
-  
+
   var residenzaCittà=document.myFormOpera.residenzaCittà.value;
   var residenzaCAP=document.myFormOpera.residenzaCAP.value;
   var residenzaCivico=document.myFormOpera.residenzaCivico.value;
-  
+
   var prezzo=document.myFormOpera.prezzo.value;
   var codIdentificativo=document.myFormOpera.codIdentificativo.value;
   var dataCessione=document.myFormOpera.dataCessione.value;
+
   var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
   var dataFineCessione=document.myFormOpera.dataFineCessione.value;
-  var nomeContratto=document.myForm.nomeContratto.value;
+  var nomeContratto=document.myFormOpera.nomeContratto.value;
 
   // VERIFICA SUL CAMPO NOME
   if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(nome)){
