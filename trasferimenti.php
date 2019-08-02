@@ -417,7 +417,7 @@
             </select>
     </div>
   </div>
-
+  
   <div class="row">
     <div class="col-25">
       <label for="indirizzoCittà"><i class="fa fa-institution"></i> Città</label>
@@ -453,6 +453,7 @@
       <input type="numeric" id="indirizzoCivico" style="width:100%;" name="indirizzoCivico" placeholder=" es: 12">
     </div>
   </div>
+  <br>
 </div>
 <br><br><br>
 
@@ -751,6 +752,7 @@
       <input type="numeric" id="domicilioCivico" style="width:100%;" name="domicilioCivico" placeholder=" es: 12">
     </div>
   </div>
+  <br>
 </div>
 <br><br><br>
 
@@ -1049,6 +1051,7 @@
       <input type="numeric" id="residenzaCivico" style="width:100%;" name="residenzaCivico" placeholder=" es: 12">
     </div>
   </div>
+  <br>
 </div>
 <br><br><br>
 
@@ -1086,8 +1089,8 @@
     <label for="dataCessione"><i class="fa fa-calendar-check-o"></i> Data cessione</label>
   </div>
   <div class="col-75">
-    <div class="w3-padding-16">
-      <input style="margin-top:-12px;" type="date" value="0" name="dataCessione" required>
+    <div class="w3-col m3 w3-padding-16">
+      <input style="margin-top:-12px;width:100%;" type="date" value="0" name="dataCessione" required>
     </div>
   </div>
 </div>
@@ -1102,22 +1105,22 @@
       <input type="checkbox" id="myCheck" name="cessioneDiritti" onclick="myFunctionToggle()">
       <div class="slider round">
         <div class="w3-row" id="text" style="margin-top:3px;width:200px;font-size:16px;margin-left:150px;color:black;display:none">
-          <i class="fa fa-check"></i> Cessione dei diritti.
+          <i class="fa fa-check"></i> Cessione diritti
         </div>
       </div>
     </label>
   </div>
 </div>
 
-  <div class="row" style="margin-top:20px;">
+  <div class="w3-row" style="margin-top:20px;">
     <div id="dataFineCessione" style="display:none;">
       <div class="col-25">
         <label for="dataFineCessione"><i class="fa fa-calendar-check-o"></i> Data di fine cessione</label>
       </div>
       <!-- INSERIRE LA DATA DEL PRESTITO -->
       <div class="col-75">
-        <div class="w3-padding-16">
-          <input style="margin-top:-12px;" type="date" value="0" name="dataFineCessione">
+        <div class="w3-padding-16 w3-col m3">
+          <input style="margin-top:-12px;width:100%;" type="date" value="0" name="dataFineCessione">
         </div>
       </div>
     </div>
@@ -1126,23 +1129,26 @@
   <hr class="horizontalLine">
   <br>
 
-  <div class="row w3-padding-16"> 
-    <div class="col-25"><i class="fa fa-file-o"></i>
-      Nome del file
+  <div class="row"> 
+    <div class="col-25">
+      <label for="nomeContratto"><i class="fa fa-file-o"></i> Nome file</label>
     </div>
     <div class="col-75">
-        <div class="w3-left">
-          <input type="text" style="margin-top:-12px;width:113%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
+        <div class="w3-col m5 w3-left">
+          <input type="text" style="width:100%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
         </div>
     </div>
   </div>
+  <br>
 
   <div class="row">
     <div class="col-25">
-      <label><i class="fa fa-laptop"></i> Carica il contratto</label>
+      <label><i class="fa fa-laptop"></i> Carica contratto</label>
     </div>
     <div class="col-75">
-      <input type="file" name="contratto" id="contratto" class="w3-left w3-small" style="margin: 8px 0px 0px 0px" required>
+      <div clasS="w3-col m5 w3-left">
+        <input type="file" name="contratto" id="contratto" class="w3-left w3-huge" style="width:100%;margin: 8px 0px 0px 0px" required>
+      </div>
     </div>
   </div>
 <br>

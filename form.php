@@ -149,19 +149,19 @@ foreach($files as $file){ // iterate files
       <label for="annoNascita"><i class="fa fa-calendar-check-o"></i> Data di nascita</label>
     </div>
     <div class="col-75">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-      <div class="w3-col m2">
-        <select style="width:60%;" id="giornoNascita" name="giornoNascita">
-          <option value="-- --">-- --</option>
+      <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
+      <div class="w3-col m3 w3-center">
+        <select style="width:80%;" id="giornoNascita" name="giornoNascita">
+          <option value="-- --">Giorno</option>
           <?php for ($giornoNascita=1; $giornoNascita <= 31; $giornoNascita++): ?>
             <option value="<?=$giornoNascita;?>"><?=$giornoNascita;?></option>
           <?php endfor; ?>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-      <div class="w3-col m3">
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
+      <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseNascita" name="meseNascita">
-          <option value=""> -- -- </option>
+          <option value=""> Mese </option>
           <option value="Gennaio">Gennaio</option>
           <option value="Febbraio">Febbraio</option>
           <option value="Marzo">Marzo</option>
@@ -176,9 +176,9 @@ foreach($files as $file){ // iterate files
           <option value="Dicembre">Dicembre</option>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-      <div class="w3-col m3">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoNascita" name="annoNascita" placeholder=" es: 1975" required>
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
+      <div class="w3-col m3 w3-center">
+        <input type="numeric" style="width:80%;margin-top:8px;" id="annoNascita" name="annoNascita" placeholder=" Anno -- yyyy" required>
       </div>
     </div>
   </div>
@@ -201,19 +201,19 @@ foreach($files as $file){ // iterate files
       <label for="annoMorte"><i class="fa fa-calendar-times-o"></i> Data del decesso</label>
       </div>
       <div class="col-75">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-      <div class="w3-col m2">
-        <select style="width:60%;" id="giornoDecesso" name="giornoDecesso">
-          <option value="-- --">-- --</option>
-          <?php for ($giornoDecesso=0; $giornoDecesso <= 31; $giornoDecesso++): ?>
+      <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
+      <div class="w3-col m3 w3-center">
+        <select style="width:80%;" id="giornoDecesso" name="giornoDecesso">
+          <option value="-- --"> Giorno </option>
+          <?php for ($giornoDecesso=1; $giornoDecesso <= 31; $giornoDecesso++): ?>
             <option value="<?=$giornoDecesso;?>"><?=$giornoDecesso;?></option>
           <?php endfor; ?>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-      <div class="w3-col m3">
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
+      <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseDecesso" name="meseDecesso">
-          <option value=""> -- -- </option>
+          <option value=""> Mese </option>
           <option value="Gennaio">Gennaio</option>
           <option value="Febbraio">Febbraio</option>
           <option value="Marzo">Marzo</option>
@@ -228,9 +228,9 @@ foreach($files as $file){ // iterate files
           <option value="Dicembre">Dicembre</option>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-      <div class="w3-col m3">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoDecesso" name="annoDecesso" placeholder=" es: 2018">
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
+      <div class="w3-col m3 w3-center">
+        <input type="numeric" style="width:80%;margin-top:8px;" id="annoDecesso" name="annoDecesso" placeholder=" Anno -- yyyy">
       </div>
     </div>
   </div>
@@ -274,19 +274,19 @@ foreach($files as $file){ // iterate files
       <label for="dataScatto"><i class="fa fa-calendar-check-o"></i> Data di scatto</label>
     </div>
     <div class="col-75">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-      <div class="w3-col m2">
-        <select style="width:60%;" id="giornoScatto" name="giornoScatto">
-          <option value="-- --">-- --</option>
-          <?php for ($giornoScatto=0; $giornoScatto <= 31; $giornoScatto++): ?>
+    <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
+      <div class="w3-col m3 w3-center">
+        <select style="width:80%;" id="giornoScatto" name="giornoScatto">
+          <option value="-- --"> Giorno </option>
+          <?php for ($giornoScatto=1; $giornoScatto <= 31; $giornoScatto++): ?>
             <option value="<?=$giornoScatto;?>"><?=$giornoScatto;?></option>
           <?php endfor; ?>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-      <div class="w3-col m3">
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
+      <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseScatto" name="meseScatto">
-          <option value=""> -- -- </option>
+          <option value=""> Mese </option>
           <option value="Gennaio">Gennaio</option>
           <option value="Febbraio">Febbraio</option>
           <option value="Marzo">Marzo</option>
@@ -301,9 +301,9 @@ foreach($files as $file){ // iterate files
           <option value="Dicembre">Dicembre</option>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-      <div class="w3-col m3">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoScatto" name="annoScatto" placeholder=" es: 2015" required>
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
+      <div class="w3-col m3 w3-center">
+        <input type="numeric" style="width:80%;margin-top:8px;" id="annoScatto" name="annoScatto" placeholder=" Anno -- yyyy" required >
       </div>
     </div>
   </div>
@@ -314,19 +314,19 @@ foreach($files as $file){ // iterate files
       <label for="dataStampa"><i class="fa fa-calendar-check-o"></i> Data di stampa</label>
     </div>
     <div class="col-75">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left">Giorno</div>
-      <div class="w3-col m2">
-        <select style="width:60%;" id="giornoStampa" name="giornoStampa">
-          <option value="-- --">-- --</option>
+      <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
+      <div class="w3-col m3 w3-center">
+        <select style="width:80%;" id="giornoStampa" name="giornoStampa">
+          <option value="-- --"> Giorno </option>
           <?php for ($giornoStampa=0; $giornoStampa <= 31; $giornoStampa++): ?>
             <option value="<?=$giornoStampa;?>"><?=$giornoStampa;?></option>
           <?php endfor; ?>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Mese</div>
-      <div class="w3-col m3">
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
+      <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseStampa" name="meseStampa">
-          <option value=""> -- -- </option>
+          <option value=""> Mese </option>
           <option value="Gennaio">Gennaio</option>
           <option value="Febbraio">Febbraio</option>
           <option value="Marzo">Marzo</option>
@@ -341,9 +341,9 @@ foreach($files as $file){ // iterate files
           <option value="Dicembre">Dicembre</option>
         </select>
       </div>
-      <div style="margin-top:12px;" class="w3-col m1">Anno</div>
-      <div class="w3-col m3">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoStampa" name="annoStampa" placeholder=" es: 2018" required>
+      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
+      <div class="w3-col m3 w3-center">
+        <input type="numeric" style="width:80%;margin-top:8px;" id="annoStampa" name="annoStampa" placeholder=" Anno -- yyyy" required>
       </div>
     </div>
   </div>
@@ -356,17 +356,11 @@ foreach($files as $file){ // iterate files
       <label for="dimensioni"><i class="fa fa-photo"></i> Dimensioni</label>
     </div>
     <div class="col-75">
-      <div class="w3-center col-25" style="margin: 15px 0 0;">
-        Lunghezza:
+      <div class="w3-col m6 w3-center">
+        <input type="numeric" style="width:50%;margin-top:8px; width:150px;" id="lunghezza" name="lunghezza" placeholder=" Lunghezza" required>
       </div>
-      <div class="col-25 w3-left">
-        <input type="numeric" style="margin-top:8px; width:150px;" id="lunghezza" name="lunghezza" placeholder=" es: 20,10" required>
-      </div>
-      <div class="w3-center col-25" style="margin: 15px 0 0;">
-        Larghezza:
-      </div>
-      <div class="w3-left col-25">
-        <input type="numeric" style="margin-top:8px;width:150px;" id="larghezza" name="larghezza" placeholder=" es: 40,25" required>
+      <div class="w3-center w3-col m6">
+        <input type="numeric" style="width:50%;margin-top:8px;width:150px;" id="larghezza" name="larghezza" placeholder=" Larghezza" required>
       </div>
     </div>
   </div>
@@ -423,11 +417,13 @@ foreach($files as $file){ // iterate files
     <div class="col-25">
       <label for="tiratura"><i class="fa fa-copy"></i> Tiratura</label>
     </div>
-    <div class="w3-left col-25" style="margin: 15px 0 0;">
-      Numero copie:
-    </div>
-    <div class="col-25 w3-left">
-      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroCopie" name="numeroCopie" value="0" placeholder=" es: 10">
+    <div class="col-75">
+      <div class="w3-left w3-col m4" style="margin: 15px 0 0;">
+        Numero copie:
+      </div>
+      <div class="w3-col m4 w3-left">
+        <input type="numeric" style="margin-top:8px; width:100%;" id="numeroCopie" name="numeroCopie" value="0" placeholder=" es: 10">
+      </div>
     </div>
   </div>
   <div class="row">
@@ -435,8 +431,8 @@ foreach($files as $file){ // iterate files
     <div class="w3-left col-25" style="margin: 15px 0 0;">
       <label for="noteNumeroCopie">Note aggiuntive:</label>
     </div>
-    <div class="col-50">
-      <input type="text" style="margin-top:6px;" id="noteNumeroCopie" name="noteNumeroCopie" placeholder="es: Due formati 30 x 40 e 20 x 30 + 8 AP ">
+    <div class="w3-col m6">
+      <input type="text" style="margin-top:6px;width:100%;" id="noteNumeroCopie" name="noteNumeroCopie" placeholder="es: Due formati 30 x 40 e 20 x 30 + 8 AP ">
     </div>
   </div>
   <div class="row">
@@ -445,8 +441,8 @@ foreach($files as $file){ // iterate files
       <label for="artistProof">Artist's proof:</label>
     </div>
     <div class="w3-col m2" style="margin-top:15px;">
-        <select style="width:60%;" id="artistProof" name="artistProof">
-          <option value="0">-- --</option>
+        <select style="width:70%;" id="artistProof" name="artistProof">
+          <option value="0"> Numero </option>
           <?php for ($artistProof=1; $artistProof <= 100; $artistProof++): ?>
             <option value="<?=$artistProof;?>"><?=$artistProof;?></option>
           <?php endfor; ?>
@@ -461,11 +457,13 @@ foreach($files as $file){ // iterate files
     <div class="col-25">
       <label for="esemplare"><i class="fa fa-photo"></i> Esemplare</label>
     </div>
-    <div class="w3-left col-25" style="margin: 15px 0 0;">
-      Numero esemplare:
-    </div>
-    <div class="col-25 w3-left">
-      <input type="numeric" style="margin-top:8px; width:150px;" id="numeroEsemplare" name="numeroEsemplare" value="0" placeholder=" es: 2">
+    <div class="col-75">
+      <div class="w3-left w3-col m4" style="margin: 15px 0 0;">
+        Numero esemplare:
+      </div>
+      <div class="w3-col m4 w3-left">
+        <input type="numeric" style="margin-top:8px;width:100%;" id="numeroEsemplare" name="numeroEsemplare" value="0" placeholder=" es: 2">
+      </div>
     </div>
   </div>
   <div class="row">
@@ -473,8 +471,8 @@ foreach($files as $file){ // iterate files
     <div class="w3-left col-25" style="margin: 15px 0 0;">
       <label for="noteNumeroEsemplare">Note aggiuntive:</label>
     </div>
-    <div class="col-50">
-      <input type="text" style="margin-top:6px;" id="noteNumeroEsemplare" name="noteNumeroEsemplare" placeholder="es: primo esemplare del formato 30 x 40" >
+    <div class="w3-col m6">
+      <input type="text" style="margin-top:6px;width:100%;" id="noteNumeroEsemplare" name="noteNumeroEsemplare" placeholder="es: primo esemplare del formato 30 x 40" >
     </div>
   </div>
   <br>
@@ -499,11 +497,11 @@ foreach($files as $file){ // iterate files
         <input type="checkbox" id="myCheck" name="timbro" onclick="myFunctionToggle()">
         <div class="slider round">
           <div class="w3-row" id="text" style="margin-top:3px;width:200px;font-size:16px;margin-left:150px;color:black;display:none">
-            <i class="fa fa-check"></i> L'opera è stata timbrata.
+            <i class="fa fa-check"></i> L'opera è stata timbrata
           </div>
         </div>
       </label>
-      <input id="textTimbro" name="noteTimbro" class="col-50" type="text" style="display:none;" placeholder=" es: Timbrata con timbro dell'artista">
+      <input id="textTimbro" name="noteTimbro" class="col-50" type="text" style="margin-top:18px;display:none;" placeholder=" es: Timbrata con timbro dell'artista">
     </div>
   </div>
   <br>
@@ -516,10 +514,10 @@ foreach($files as $file){ // iterate files
       <label class="switch">
         <input type="checkbox" id="myCheck2" name="firma" onclick="myFunctionToggle2()">
         <div class="slider round">
-          <div class="w3-row" id="text2" style="margin-top:3px;width:200px;font-size:16px;margin-left:80px;color:black;display:none"><i class="fa fa-check"></i> L'opera è stata firmata.</div>
+          <div class="w3-row" id="text2" style="margin-top:6px;width:200px;font-size:16px;margin-left:80px;color:black;display:none"><i class="fa fa-check"></i> L'opera è stata firmata</div>
         </div>
       </label>
-      <input id="textFirma" name="noteFirma" class="col-50" type="text" style="display:none;" placeholder=" es: Firmata con firma dell'artista">
+      <input id="textFirma" name="noteFirma" class="col-50" type="text" style="margin-top:18px;display:none;" placeholder=" es: Firmata con firma dell'artista">
     </div>
   </div>
   <br>
@@ -854,7 +852,7 @@ function closeNav2() {
   }
 }
 
-// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE.
+// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE TIMBRO.
 function myFunctionToggle() {
   var checkBox = document.getElementById("myCheck");
   var text = document.getElementById("text");
@@ -871,7 +869,7 @@ function myFunctionToggle() {
   }
 }
 
-// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE.
+// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE FIRMA.
 function myFunctionToggle2() {
   var checkBox2 = document.getElementById("myCheck2");
   var text2 = document.getElementById("text2");

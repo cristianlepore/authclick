@@ -86,11 +86,11 @@
   <hr class="horizontalLine">
 
   <div class="w3-row w3-padding-16"> 
-    <div class="w3-left w3-col m6 w3-medium w3-padding-16"><i class="fa fa-tag"></i>
+    <div class="w3-left w3-col m4 w3-medium w3-padding-16"><i class="fa fa-tag"></i>
       Codice identificativo fotografia
     </div>
     <form name="myForm" action="/authclick/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
-    <div class="w3-col m6">
+    <div class="w3-col m8 w3-right">
         <div class="w3-center">
           <input type="text" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
         </div>
@@ -98,13 +98,13 @@
   </div>
 
   <div class="w3-row w3-padding-16">
-    <div class="w3-left w3-col m6 w3-medium"><i class="fa fa-file"></i>
+    <div class="w3-left w3-col m4 w3-medium"><i class="fa fa-file"></i>
       Tipo di file
     </div>
-    <div class="w3-col m6">
+    <div class="w3-col m8">
         <div class="w3-center">
-          <div class="w3-center ">
-            <select name="tipo" style="width:200px;" id="tipo" class="w3-huge w3-button w3-content w3-left" required>
+          <div class="w3-center w3-col m4">
+            <select name="tipo" style="width:100%;" id="tipo" class="w3-huge w3-button w3-content w3-left" required>
               <option value="Scheda" class="w3-button w3-white w3-section w3-center">Scheda</option>
               <option value="Foto" class="w3-button w3-white w3-section w3-center">Miniatura</option>
             </select>
@@ -112,37 +112,42 @@
         </div>
     </div>
   </div>
-
-  <div class="w3-row w3-padding-16"> 
-    <div class="w3-left w3-col m6 w3-medium w3-padding-16"><i class="fa fa-folder"></i>
-      Nome da assegnare al file
-    </div>
-    <div class="w3-col m6">
-        <div class="w3-center">
-          <input type="text" placeholder="es: Certificato_authclick" id="nomeFile" name="nomeFile" required>
-        </div>
+  <div class="row">
+    <div class="w3-row w3-padding-16"> 
+      <div class="w3-left w3-col m4 w3-medium w3-padding-16"><i class="fa fa-folder"></i>
+        Nome da assegnare al documento
+      </div>
+      <div class="w3-col m8">
+          <div class="w3-center">
+            <input type="text" placeholder="es: Certificato_authclick" id="nomeFile" name="nomeFile" required>
+          </div>
+      </div>
     </div>
   </div>
 
   <div class="w3-row w3-padding-16">
-    <div class="w3-left w3-col m6 w3-medium w3-padding-16"><i class="fa fa-laptop"></i>
+    <div class="w3-left w3-col m4 w3-medium w3-padding-16"><i class="fa fa-laptop"></i>
       Seleziona il file dal pc
     </div>
-    <div class="w3-col m6">
-    <div div class="col-25 w3-content w3-left">
-      <input type="file" name="file" id="file" class="w3-left w3-small" style="margin: 6px 0px 0px 0px" onchange="uploadFile()" required>
+    <div class="w3-col m8">
+      <div div class="w3-col m7 w3-content w3-left">
+        <input type="file" name="file" id="file" class="w3-left w3-small" style="margin: 14px 0px 0px 0px;width:100%;" onchange="uploadFile()" required>
+      </div>
+      <div class="w3-col m3 w3-right" style="margin-top:20px;">
+        <button type="submit" class="caricaFileButton w3-huge" name="submit" style="margin-top:-14px;" onsubmit="return validateform()"><i class="fa fa-upload"></i> CARICA</button>
+      </div>
     </div>
-    <div class="col-25 w3-right" style="margin-top:20px;">
-      <button type="submit" class="caricaFileButton" name="submit" style="margin: -12px 0px 0px 0px" onsubmit="return validateform()"><i class="fa fa-upload"></i> CARICA</button>
+  </div>
+  <div class="row">
+    <div class="col-33"></div>
+    <div class="w3-col m8">
+      <div class="w3-col m7">
+        <progress id="progressBar" value="0" max="100" style="margin-top:0px;width:100%;"></progress>
+        <p id="loaded_n_total"></p>
+      </div>
     </div>
-    <div class="w3-col m6"></div>
-    <div class="w3-col m6 w3-center" style="margin-top:6px;">
-      <progress id="progressBar" value="0" max="100" style="margin-top:40px;width:200px;"></progress>
-      <p id="loaded_n_total"></p>
-    </div>
-    </div>
-    </form>
-    </div>
+  </div>
+  </form>
   </div>
 </div>
 
