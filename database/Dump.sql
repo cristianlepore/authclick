@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 31, 2019 at 02:25 PM
+-- Generation Time: Aug 02, 2019 at 05:10 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.20
 
@@ -80,11 +80,11 @@ CREATE TABLE `Fotografia` (
   `Note_tiratura` varchar(1000) DEFAULT NULL,
   `Tecnica_stampa` varchar(100) DEFAULT NULL,
   `Giorno_stampa` int(11) DEFAULT NULL,
-  `Mese_stampa` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Mese_stampa` int(11) DEFAULT NULL,
   `Anno_stampa` year(4) DEFAULT NULL,
   `Supporto` varchar(100) DEFAULT NULL,
   `Giorno_scatto` int(11) DEFAULT NULL,
-  `Mese_scatto` text,
+  `Mese_scatto` int(11) DEFAULT NULL,
   `Anno_scatto` year(4) DEFAULT NULL,
   `Tecnica_scatto` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `Autore_id` bigint(30) DEFAULT NULL,
@@ -152,11 +152,11 @@ CREATE TABLE `Utente` (
   `Nome` text,
   `Cognome` text,
   `Giorno_nascita` int(11) DEFAULT NULL,
-  `Mese_nascita` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Mese_nascita` int(11) DEFAULT NULL,
   `Anno_nascita` year(4) DEFAULT NULL,
   `Luogo_nascita` varchar(100) DEFAULT NULL,
   `Giorno_morte` int(11) DEFAULT NULL,
-  `Mese_morte` text,
+  `Mese_morte` int(11) DEFAULT NULL,
   `Anno_morte` year(4) DEFAULT NULL,
   `Luogo_morte` varchar(100) DEFAULT NULL,
   `Codice_fiscale` varchar(100) DEFAULT NULL,
@@ -229,25 +229,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=357;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=369;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=274;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=341;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=639;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
 
 --
 -- Constraints for dumped tables

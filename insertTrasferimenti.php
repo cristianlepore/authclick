@@ -359,6 +359,22 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
 
 }
 
+function checkContratto(){
+
+  if(isset($_POST["submit"]) && !empty($_FILES["contratto"]["name"])){
+    // DECIDO I FORMATI CHE POSSO IMPORTARE
+    $allowTypes = array('doc','docx','pdf', 'docm', 'dot', 'dotm', 'dotx', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif');
+    if(in_array($fileType, $allowTypes)){
+      $response="OK";
+    }else{
+      $response="FAIL";
+    }
+  }
+
+  return $response;
+
+}
+
 // ***************************************************************
 // ***************************************************************
 
@@ -377,11 +393,14 @@ if($row = mysqli_num_rows($result) == 0){
 } else{
   // ALTRIMENTI SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
 
+  // VERIFICO CHE IL FILE INSERITO SIA UNO DI QUELLI NEI FORMATI AMMESSI
+  $contrattoAmmissibile = checkContratto();
+
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
   $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE (`Nome`='$nome' && `Cognome`='$cognome') || `Codice_fiscale`='$codFiscale' ");
   
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
-  if($row = mysqli_fetch_row($result) == 0){
+  if($row = mysqli_fetch_row($result) == 0 && $contrattoAmmissibile=="OK"){
 
     // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
     $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA);
@@ -468,7 +487,7 @@ if($row = mysqli_num_rows($result) == 0){
       }
     }
 
-  } else {
+  } else if($row = mysqli_fetch_row($result) > 0 && $contrattoAmmissibile=="OK") {
 
     // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
 
@@ -501,6 +520,8 @@ if($row = mysqli_num_rows($result) == 0){
     }
     */
 
+  } else {
+    $statusMsg = 'Puoi caricare soltanto contratti nei formati previsti. <div class="w3-padding-16">I formati previsti sono: <i> doc, docx, pdf, docm, dot, dotm, dotx, odt, jpg, jpeg, bmp, png, gif.</i></div>';
   }
 
 }

@@ -10,6 +10,8 @@
 <link rel="stylesheet" href="css/style.css">
 <!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- INSERISCO LO SCRIPT AJAX PER LE DATE -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <style>
 
@@ -152,28 +154,13 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="giornoNascita" name="giornoNascita">
-          <option value="-- --">Giorno</option>
-          <?php for ($giornoNascita=1; $giornoNascita <= 31; $giornoNascita++): ?>
-            <option value="<?=$giornoNascita;?>"><?=$giornoNascita;?></option>
-          <?php endfor; ?>
+          <option value=0> Giorno </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseNascita" name="meseNascita">
           <option value=""> Mese </option>
-          <option value="Gennaio">Gennaio</option>
-          <option value="Febbraio">Febbraio</option>
-          <option value="Marzo">Marzo</option>
-          <option value="Aprile">Aprile</option>
-          <option value="Maggio">Maggio</option>
-          <option value="Giugno">Giugno</option>
-          <option value="Luglio">Luglio</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Settembre">Settembre</option>
-          <option value="Ottobre">Ottobre</option>
-          <option value="Novembre">Novembre</option>
-          <option value="Dicembre">Dicembre</option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -204,28 +191,13 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="giornoDecesso" name="giornoDecesso">
-          <option value="-- --"> Giorno </option>
-          <?php for ($giornoDecesso=1; $giornoDecesso <= 31; $giornoDecesso++): ?>
-            <option value="<?=$giornoDecesso;?>"><?=$giornoDecesso;?></option>
-          <?php endfor; ?>
+          <option value=0> Giorno </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseDecesso" name="meseDecesso">
           <option value=""> Mese </option>
-          <option value="Gennaio">Gennaio</option>
-          <option value="Febbraio">Febbraio</option>
-          <option value="Marzo">Marzo</option>
-          <option value="Aprile">Aprile</option>
-          <option value="Maggio">Maggio</option>
-          <option value="Giugno">Giugno</option>
-          <option value="Luglio">Luglio</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Settembre">Settembre</option>
-          <option value="Ottobre">Ottobre</option>
-          <option value="Novembre">Novembre</option>
-          <option value="Dicembre">Dicembre</option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -277,28 +249,13 @@ foreach($files as $file){ // iterate files
     <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="giornoScatto" name="giornoScatto">
-          <option value="-- --"> Giorno </option>
-          <?php for ($giornoScatto=1; $giornoScatto <= 31; $giornoScatto++): ?>
-            <option value="<?=$giornoScatto;?>"><?=$giornoScatto;?></option>
-          <?php endfor; ?>
+          <option value=0> Giorno </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseScatto" name="meseScatto">
           <option value=""> Mese </option>
-          <option value="Gennaio">Gennaio</option>
-          <option value="Febbraio">Febbraio</option>
-          <option value="Marzo">Marzo</option>
-          <option value="Aprile">Aprile</option>
-          <option value="Maggio">Maggio</option>
-          <option value="Giugno">Giugno</option>
-          <option value="Luglio">Luglio</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Settembre">Settembre</option>
-          <option value="Ottobre">Ottobre</option>
-          <option value="Novembre">Novembre</option>
-          <option value="Dicembre">Dicembre</option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -317,28 +274,13 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="giornoStampa" name="giornoStampa">
-          <option value="-- --"> Giorno </option>
-          <?php for ($giornoStampa=0; $giornoStampa <= 31; $giornoStampa++): ?>
-            <option value="<?=$giornoStampa;?>"><?=$giornoStampa;?></option>
-          <?php endfor; ?>
+          <option value=0> Giorno </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseStampa" name="meseStampa">
           <option value=""> Mese </option>
-          <option value="Gennaio">Gennaio</option>
-          <option value="Febbraio">Febbraio</option>
-          <option value="Marzo">Marzo</option>
-          <option value="Aprile">Aprile</option>
-          <option value="Maggio">Maggio</option>
-          <option value="Giugno">Giugno</option>
-          <option value="Luglio">Luglio</option>
-          <option value="Agosto">Agosto</option>
-          <option value="Settembre">Settembre</option>
-          <option value="Ottobre">Ottobre</option>
-          <option value="Novembre">Novembre</option>
-          <option value="Dicembre">Dicembre</option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -676,11 +618,6 @@ function validateform(){
     return false; 
   }
 
-  if(giornoNascita!="-- --" && meseNascita==''){
-    alert("Completare anche il campo MESE nella DATA DI NASCITA.");
-    return false;
-  }
-
   // VERIFICO IL CONTENUTO DEI CAMPI OPZIONALI RELATIVI ALL'AUTORE.
   if(luogoMorte!='' ){
     if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(luogoMorte)){
@@ -703,7 +640,7 @@ function validateform(){
 
   // VERIFICO LA CORRETTEZZA DELLA DATA DEL DECESSO
   if(annoMorte!='') {
-    if(/^\d{4}$/.test(annoMorte)){
+    if(!/^\d{4}$/.test(annoMorte)){
       alert("ATTENZIONE, l'anno del decesso non è corretto.");
       return false;
     }
@@ -724,21 +661,6 @@ function validateform(){
       return false;
     }
 
-    if(giornoMorte!="-- --" && meseMorte==''){
-      alert("Completare anche il campo MESE nella DATA DEL DECESSO.");
-      return false;
-    }
-  }
-
-  // COTROLLI SULLE DATE DI SCATTO E STAMPA DELL'OPERA
-  if(giornoScatto!="-- --" && meseScatto==''){
-    alert("Completare anche il campo MESE nella DATA DI SCATTO.");
-    return false;
-  }
-
-  if(giornoStampa!="-- --" && meseStampa==''){
-    alert("Completare anche il campo MESE nella DATA DI STAMPA.");
-    return false;
   }
 
   if(annoScatto > annoStampa){
@@ -931,6 +853,218 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+// FUNZIONE PER LA DATA DI NASCITA
+$(document).ready(function() {
+const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+
+  // FUNZIONE PER LA DATA DI NASCITA
+  var qntYears = 1000;
+  var selectYear = $("#annoNascita");
+  var selectMonth = $("#meseNascita");
+  var selectDay = $("#giornoNascita");
+
+  for (var m = 0; m < 12; m++){
+    let monthNum = new Date(2019, m).getMonth()
+    let month = monthNames[monthNum];
+    var monthElem = document.createElement("option");
+    monthElem.value = monthNum; 
+    monthElem.textContent = month;
+    selectMonth.append(monthElem);
+  }
+
+  var d = new Date();
+  var month = "";
+  var year = "";
+  var day = "";
+
+  selectYear.val(year); 
+  selectYear.on("change", AdjustDays);  
+  selectMonth.val(month);    
+  selectMonth.on("change", AdjustDays);
+
+  AdjustDays();
+  selectDay.val(day)
+
+  function AdjustDays(){
+    var year = selectYear.val();
+    var month = parseInt(selectMonth.val()) + 1;
+    selectDay.empty();
+    
+    //get the last day, so the number of days in that month
+    var days = new Date(year, month, 0).getDate(); 
+    
+    //lets create the days of that month
+    for (var d = 1; d <= days; d++){
+      var dayElem = document.createElement("option");
+      dayElem.value = d; 
+      dayElem.textContent = d;
+      selectDay.append(dayElem);
+    }
+  } 
+
+});
+
+
+// FUNZIONE PER LA DATA DI MORTE
+$(document).ready(function() {
+const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+
+ // FUNZIONE PER LA DATA DI MORTE
+ var selectYear = $("#annoDecesso");
+  var selectMonth = $("#meseDecesso");
+  var selectDay = $("#giornoDecesso");
+
+  for (var m = 0; m < 12; m++){
+    let monthNum = new Date(2019, m).getMonth()
+    let month = monthNames[monthNum];
+    var monthElem = document.createElement("option");
+    monthElem.value = monthNum; 
+    monthElem.textContent = month;
+    selectMonth.append(monthElem);
+  }
+
+  var d = new Date();
+  var month = "";
+  var year = "";
+  var day = "";
+
+  selectYear.val(year); 
+  selectYear.on("change", AdjustDays);  
+  selectMonth.val(month);    
+  selectMonth.on("change", AdjustDays);
+
+  AdjustDays();
+  selectDay.val(day)
+
+  function AdjustDays(){
+    var year = selectYear.val();
+    var month = parseInt(selectMonth.val()) + 1;
+    selectDay.empty();
+    
+    //get the last day, so the number of days in that month
+    var days = new Date(year, month, 0).getDate(); 
+    
+    //lets create the days of that month
+    for (var d = 1; d <= days; d++){
+      var dayElem = document.createElement("option");
+      dayElem.value = d; 
+      dayElem.textContent = d;
+      selectDay.append(dayElem);
+    }
+  } 
+
+});
+
+// FUNZIONE PER LA DATA DI SCATTO DELL'OPERA
+$(document).ready(function() {
+const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+
+  // FUNZIONE PER LA DATA DI SCATTO DELL'OPERA
+  var qntYears = 1000;
+  var selectYear = $("#annoScatto");
+  var selectMonth = $("#meseScatto");
+  var selectDay = $("#giornoScatto");
+
+  for (var m = 0; m < 12; m++){
+    let monthNum = new Date(2019, m).getMonth()
+    let month = monthNames[monthNum];
+    var monthElem = document.createElement("option");
+    monthElem.value = monthNum; 
+    monthElem.textContent = month;
+    selectMonth.append(monthElem);
+  }
+
+  var d = new Date();
+  var month = "";
+  var year = "";
+  var day = "";
+
+  selectYear.val(year); 
+  selectYear.on("change", AdjustDays);  
+  selectMonth.val(month);    
+  selectMonth.on("change", AdjustDays);
+
+  AdjustDays();
+  selectDay.val(day)
+
+  function AdjustDays(){
+    var year = selectYear.val();
+    var month = parseInt(selectMonth.val()) + 1;
+    selectDay.empty();
+    
+    //get the last day, so the number of days in that month
+    var days = new Date(year, month, 0).getDate(); 
+    
+    //lets create the days of that month
+    for (var d = 1; d <= days; d++){
+      var dayElem = document.createElement("option");
+      dayElem.value = d; 
+      dayElem.textContent = d;
+      selectDay.append(dayElem);
+    }
+  } 
+
+});
+
+// FUNZIONE PER LA DATA DI STAMPA DELL'OPERA
+$(document).ready(function() {
+const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+
+  // FUNZIONE PER LA DATA DI STAMPA DELL'OPERA
+  var qntYears = 1000;
+  var selectYear = $("#annoStampa");
+  var selectMonth = $("#meseStampa");
+  var selectDay = $("#giornoStampa");
+
+  for (var m = 0; m < 12; m++){
+    let monthNum = new Date(2019, m).getMonth()
+    let month = monthNames[monthNum];
+    var monthElem = document.createElement("option");
+    monthElem.value = monthNum; 
+    monthElem.textContent = month;
+    selectMonth.append(monthElem);
+  }
+
+  var d = new Date();
+  var month = "";
+  var year = "";
+  var day = "";
+
+  selectYear.val(year); 
+  selectYear.on("change", AdjustDays);  
+  selectMonth.val(month);    
+  selectMonth.on("change", AdjustDays);
+
+  AdjustDays();
+  selectDay.val(day)
+
+  function AdjustDays(){
+    var year = selectYear.val();
+    var month = parseInt(selectMonth.val()) + 1;
+    selectDay.empty();
+    
+    //get the last day, so the number of days in that month
+    var days = new Date(year, month, 0).getDate(); 
+    
+    //lets create the days of that month
+    for (var d = 1; d <= days; d++){
+      var dayElem = document.createElement("option");
+      dayElem.value = d; 
+      dayElem.textContent = d;
+      selectDay.append(dayElem);
+    }
+  } 
+
+});
 
 </script>
 

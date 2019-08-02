@@ -110,14 +110,14 @@ $luogoNascita = $_POST['luogoNascita'];
 $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
 
 $giornoNascita = (int)$_POST['giornoNascita'];
-$meseNascita = $_POST['meseNascita'];
+$meseNascita = (int)$_POST['meseNascita'];
 $annoNascita = (int)$_POST['annoNascita'];
 
 $luogoMorte = $_POST['luogoMorte'];
 $luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
 
 $giornoMorte = (int)$_POST['giornoDecesso'];
-$meseMorte = $_POST['meseDecesso'];
+$meseMorte = (int)$_POST['meseDecesso'];
 $annoMorte = (int)$_POST['annoDecesso'];
 
 $keywordsAutore = $_POST['keywords'];
@@ -128,11 +128,11 @@ $titolo = $_POST['titolo'];
 $titolo = mysqli_real_escape_string($db,$titolo);
 
 $giornoScatto = (int)$_POST['giornoScatto'];
-$meseScatto = $_POST['meseScatto'];
+$meseScatto = (int)$_POST['meseScatto'];
 $annoScatto = (int)$_POST['annoScatto'];
 
 $giornoStampa = (int)$_POST['giornoStampa'];
-$meseStampa = $_POST['meseStampa'];
+$meseStampa = (int)$_POST['meseStampa'];
 $annoStampa = (int)$_POST['annoStampa'];
 
 $lunghezza = $_POST['lunghezza'];
@@ -203,6 +203,19 @@ if($timbro=='off')
 if($firma=='off')
   $noteFirma="";
 
+// INCREMENTE DI 1 IL NUMERO DEL MESE PER FARLO CORRISPONDERE AL VALORE REALE
+if($meseNascita!="" || $meseNascita!=0){
+  $meseNascita=$meseNascita+1;
+}
+if($meseMorte!="" || $meseMorte!=0){
+  $meseMorte=$meseMorte+1;
+}
+if($meseScatto!="" || $meseScatto!=0){
+  $meseScatto=$meseScatto+1;
+}
+if($meseStampa!="" || $meseStampa!=0){
+  $meseStampa=$meseStampa+1;
+}
 
 // REGEX PER PRENDERE SOLTANTO CARATTERI ALFABETICI.
 $rgxOnlyString = "/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/";
