@@ -155,6 +155,18 @@
     </div>
   </div>
   <br>
+  <hr class="horizontalLine">
+  <br>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="keywordsProprietario"><i class="fa fa-bookmark"></i> Keywords proprietario</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="keywordsProprietario" name="keywordsProprietario" placeholder="es: Luigi, proprietario, ecc...">
+    </div>
+  </div>
+  <br>
 </div>
 <br><br><br>
 
@@ -1151,6 +1163,18 @@
       </div>
     </div>
   </div>
+  <br>
+  <hr class="horizontalLine">
+  <br>
+
+  <div class="row">
+    <div class="col-25">
+      <label for="keywordsContratto"><i class="fa fa-bookmark"></i> Keywords contratto</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="keywordsContratto" name="keywordsContratto" placeholder="es: Primo contratto, vendita, ecc...">
+    </div>
+  </div>
 <br>
 </div>
 
@@ -1201,6 +1225,7 @@ function validateform(){
   var cognome=document.myFormOpera.cognome.value;
   var codFiscale=document.myFormOpera.codFiscale.value;
   var partitaIVA=document.myFormOpera.partitaIVA.value;
+  var keywordsProprietario=document.myFormOpera.keywordsProprietario.value;
 
   var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
   var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
@@ -1221,15 +1246,16 @@ function validateform(){
   var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
   var dataFineCessione=document.myFormOpera.dataFineCessione.value;
   var nomeContratto=document.myFormOpera.nomeContratto.value;
+  var keywordsContratto=document.myFormOpera.keywordsContratto.value;
 
   // VERIFICA SUL CAMPO NOME
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(nome)){
+  if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nome)){
     alert("Il campo NOME contiene caratteri non ammessi.");  
     return false; 
   }
 
   // VERIFICA SUL CAMPO COGNOME
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(cognome)){
+  if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognome)){
     alert("Il campo COGNOME contiene caratteri non ammessi.");  
     return false; 
   }
@@ -1247,7 +1273,7 @@ function validateform(){
   }
 
   // VERIFICA LA CORRETTEZZA DEI CAMPI INDIRIZZO
-  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(indirizzoCittà)){
+  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(indirizzoCittà)){
     alert("Il campo CITTÀ (indirizzo) non è formattato correttamente.");  
     return false; 
   }
@@ -1263,7 +1289,7 @@ function validateform(){
   }
 
   // VERIFICA LA CORRETTEZZA DEL CAMPO DOMICILIO
-  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(domicilioCittà)){
+  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(domicilioCittà)){
     alert("Il campo CITTÀ (domicilio) non è formattato correttamente.");  
     return false; 
   }
@@ -1279,7 +1305,7 @@ function validateform(){
   }
   
   // VERIFICA LA CORRETTEZZA DEL CAMPO RESIDENZA
-  if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(residenzaCittà)){
+  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(residenzaCittà)){
     alert("Il campo CITTÀ (residenza) non è formattato correttamente.");  
     return false; 
   }
@@ -1319,7 +1345,6 @@ function validateform(){
     alert("Il campo NOME DEL CONTRATTO contiene caratteri non ammessi. Il nome non deve contenere i seguenti caratteri: ' / § # % ");
     return false; 
   }
-
 
 }
 

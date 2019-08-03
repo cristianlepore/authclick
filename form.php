@@ -607,20 +607,20 @@ function validateform(){
   var codeIdentificativo=document.myForm.code.value;
 
 // VERIFICO CHE NEL FORM CI SIANO SOLO CARATTERI AMMISSIBILI.
-  if(!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(name)){
+  if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(name)){
     alert("Il campo NOME contiene caratteri non ammessi.");  
     return false; 
-  }else if (!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(cognome)){
+  }else if (!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognome)){
     alert("Il campo COGNOME contiene caratteri non ammessi.");  
     return false; 
-  }else if (!/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(luogoNascita)){
+  }else if (!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(luogoNascita)){
     alert("Il campo LUOGO DI NASCITA contiene caratteri non ammessi.");  
     return false; 
   }
 
   // VERIFICO IL CONTENUTO DEI CAMPI OPZIONALI RELATIVI ALL'AUTORE.
   if(luogoMorte!='' ){
-    if(!/^$|^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/.test(luogoMorte)){
+    if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(luogoMorte)){
       alert("Il campo LUOGO DI MORTE contiene caratteri non ammessi.");
       return false; 
     }
@@ -664,7 +664,7 @@ function validateform(){
   }
 
   if(annoScatto > annoStampa){
-    alert("ATTENZIONE, la data dello scatto non può essere successiva alla data di stampa dell'opera.");
+    alert("ATTENZIONE, la data di stampa dell'opera deve essere successiva alla data di scatto.");
     return false;
   }
 

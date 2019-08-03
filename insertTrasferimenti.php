@@ -122,6 +122,8 @@ $cognome = mysqli_real_escape_string($db,$cognome);
 
 $codFiscale = $_POST['codFiscale'];
 $partitaIVA = $_POST['partitaIVA'];
+$keywordsProprietario = $_POST['keywordsProprietario'];
+$keywordsProprietario = mysqli_real_escape_string($db,$keywordsProprietario);
 
 // VALORI DA POST DI INDIRIZZO
 $nazione = $_POST['indirizzoNazione'];
@@ -188,6 +190,10 @@ $tipoFile = "Contratto";
 // CREO IL PERCORSO PER LA CARTELLA
 $targetDir = $targetDir . $codIdentificativo . $forwSlash . $tipoFile . $forwSlash;
 
+// KEYWORDS PER IL CONTRATTO
+$keywordsContratto = $_POST['keywordsContratto'];
+$keywordsContratto = mysqli_real_escape_string($db,$keywordsContratto);
+
 
 // SETTO IL FLAG DI CESSIONE DIRITTI CORRETTAMENTE
 if($cessioneDiritti=="on"){
@@ -207,10 +213,11 @@ if($prezzo==''){
 // ***************************************************************
 
 // FUNZIONE PER INSERIRE IL NUOVO PROPRIETARIO
-function insertOwner($nome, $cognome, $codFiscale, $partitaIVA){
+function insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario){
   include 'dbConfig.php';
+
   // INSERISCO IL PROPRIETARIO
-  $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro')");
+  $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`, `Keywords`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro', '$keywordsProprietario')");
 
   if($insert){
     // SE L'INSERIMENTO È ANDATO BENE, PREPARO IL MESSAGGIO DA STAMPARE A VIDEO
@@ -260,7 +267,7 @@ function insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId
 
 }
 
-function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti){
+function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $keywordsContratto){
   include 'dbConfig.php';
 
   // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
@@ -275,7 +282,7 @@ function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCes
   $acquirente_id = $newOwnerId;
   
   // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
-  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti')");
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`, `Keywords`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti', '$keywordsContratto')");
   if($insert){
 
     // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
@@ -321,7 +328,7 @@ function prepareStringForBlockchain($myData){
   
 }
 
-function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione){
+function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione, $keywordsContratto){
   include 'dbConfig.php';
 
   // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
@@ -336,7 +343,7 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
   $acquirente_id = $newOwnerId;
 
   // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
-  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`) VALUES ('Cessione', $prezzo, '$dataCessione', '$dataFineCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti')");
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`, `Keywords`) VALUES ('Cessione', $prezzo, '$dataCessione', '$dataFineCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti', '$keywordsContratto')");
   if($insert){
 
     // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
@@ -359,16 +366,15 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
 
 }
 
-function checkContratto(){
+function checkContratto($fileType){
 
-  if(isset($_POST["submit"]) && !empty($_FILES["contratto"]["name"])){
-    // DECIDO I FORMATI CHE POSSO IMPORTARE
-    $allowTypes = array('doc','docx','pdf', 'docm', 'dot', 'dotm', 'dotx', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif');
-    if(in_array($fileType, $allowTypes)){
-      $response="OK";
-    }else{
-      $response="FAIL";
-    }
+  // TIPI DI FILE AMMESSI
+  $allowTypes = array('doc','docx','pdf', 'docm', 'dot', 'dotm', 'dotx', 'odt', 'jpg', 'jpeg', 'bmp', 'png', 'gif');
+  
+  if(in_array($fileType, $allowTypes)){
+    $response="OK";
+  }else{
+    $response="FAIL";
   }
 
   return $response;
@@ -394,7 +400,7 @@ if($row = mysqli_num_rows($result) == 0){
   // ALTRIMENTI SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
 
   // VERIFICO CHE IL FILE INSERITO SIA UNO DI QUELLI NEI FORMATI AMMESSI
-  $contrattoAmmissibile = checkContratto();
+  $contrattoAmmissibile = checkContratto($fileType);
 
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
   $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE (`Nome`='$nome' && `Cognome`='$cognome') || `Codice_fiscale`='$codFiscale' ");
@@ -403,7 +409,7 @@ if($row = mysqli_num_rows($result) == 0){
   if($row = mysqli_fetch_row($result) == 0 && $contrattoAmmissibile=="OK"){
 
     // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
-    $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA);
+    $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
 
     // PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
     $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
@@ -433,7 +439,7 @@ if($row = mysqli_num_rows($result) == 0){
         insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
         
         // SE È UNA CESSIONE DI DIRITTI, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI
-        $resultArrayCessioneDiritti = insertCessioneDiritti($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione);
+        $resultArrayCessioneDiritti = insertCessioneDiritti($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione, $keywordsContratto);
       }
 
     }
