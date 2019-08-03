@@ -107,7 +107,7 @@ if ($result->num_rows == 0) {
 
 if($unicoFile == 0) {
 //Set Refresh header using PHP.
-// header( "refresh:5;url=/authclick/new/files.php" );
+header( "refresh:5;url=/authclick/new/files.php" );
 
 ?>
 
