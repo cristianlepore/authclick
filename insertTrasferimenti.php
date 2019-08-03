@@ -73,6 +73,7 @@ $statusMsg = '';
       <a style="font-size:14px;" href="trasferimenti.php#nome"><i>cognome</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Codice fiscale</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Partita IVA</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Keywords</i></a>
     </div>
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Indirizzo</a>
     <div class="content" style="margin-left:30px;">
@@ -103,7 +104,8 @@ $statusMsg = '';
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Keywords</i></a>
     </div>
   </div>
 </div>
