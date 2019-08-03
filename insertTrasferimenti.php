@@ -428,7 +428,7 @@ if($row = mysqli_num_rows($result) == 0){
         insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
         
         // SE È UNA VENDITA, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
-        $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti);
+        $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $keywordsContratto);
       }
     
     } else if($cessioneDiritti== "on") {

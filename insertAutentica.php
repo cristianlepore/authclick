@@ -218,7 +218,7 @@ if($meseStampa!="" || $meseStampa!=0){
 }
 
 // REGEX PER PRENDERE SOLTANTO CARATTERI ALFABETICI.
-$rgxOnlyString = "/^[a-zA-Z]+(?:[\s.]+[a-zA-Z]+)*$/";
+$rgxOnlyString = "/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/";
 
 // CONTROLLO SU VALORI DI NOME E COGNOME CHE SIANO SOLO CARATTERI ALFABETICI.
 if(preg_match($rgxOnlyString, $nome)){
@@ -376,7 +376,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     exit();
 }else if($nuovoAutore=='' || $nuovoAutore == 1) {
 
-    // SE I DATI DI MORTE NON SONO STATI INSERITI
+  // SE I DATI DI MORTE NON SONO STATI INSERITI
     if($luogoMorte == "" && $annoMorte == ''){
         $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita`, `Tipologia`, `Keywords`) VALUES ('$nome','$cognome',$giornoNascita,'$meseNascita',$annoNascita,'$luogoNascita', 'Autore', '$keywordsAutore')");
         if($insert){
