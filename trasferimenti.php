@@ -100,8 +100,8 @@
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Carica contratto</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Keywords</i></a>
     </div>
   </div>
 </div>
@@ -1110,7 +1110,7 @@
 </div>
 <br>
 
-<div class="row" id="contratto">
+<div class="row" id="contrattoForm">
   <div class="col-25">
     <label for="timbro"><i class="fa fa-trademark"></i> Cessione diritti di pubblicazione</label>
   </div>
@@ -1161,11 +1161,23 @@
     </div>
     <div class="col-75">
       <div clasS="w3-col m5 w3-left">
-        <input type="file" name="contratto" id="contratto" class="w3-left w3-huge" style="width:100%;margin: 8px 0px 0px 0px" required>
+        <input type="file" name="contratto" id="contratto" class="w3-left w3-small" style="width:100%;margin: 8px 0px 0px 0px" onchange="uploadFile()" required>
+      </div>
+      <div class="w3-col m5 w3-right">
+        <progress id="progressBar" class="w3-center" value="0" max="100" style="margin-top:15px;width:100%;"></progress>
+        <p id="loaded_n_total"></p>
       </div>
     </div>
   </div>
   <br>
+  <div class="row">
+    <div class="col-33"></div>
+    <div class="w3-col m8">
+      <div class="w3-col m7">
+        
+      </div>
+    </div>
+  </div>
   <hr class="horizontalLine">
   <br>
 
@@ -1457,6 +1469,50 @@ function myFunctionToggle() {
     text.style.display = "none";
     dataFirma.style.display = "none";
   }
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function _(el) {
+  return document.getElementById(el);
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function uploadFile() {
+  var file = _("contratto").files[0];
+  // alert(file.name+" | "+file.size+" | "+file.type);
+  var formdata = new FormData();
+  formdata.append("contratto", file);
+  var ajax = new XMLHttpRequest();
+  ajax.upload.addEventListener("progress", progressHandler, false);
+  ajax.addEventListener("load", completeHandler, false);
+  ajax.addEventListener("error", errorHandler, false);
+  ajax.addEventListener("abort", abortHandler, false);
+  ajax.open("POST", "file_upload_parser.php");
+  ajax.send(formdata);
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function progressHandler(event) {
+  //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
+  var percent = (event.loaded / event.total) * 100;
+  _("progressBar").value = Math.round(percent);
+  _("loaded_n_total").innerHTML = Math.round(percent) + "% caricati";
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function completeHandler(event) {
+  _("status").innerHTML = event.target.responseText;
+  _("progressBar").value = 0; //wil clear progress bar after successful upload
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function errorHandler(event) {
+  _("status").innerHTML = "Upload Failed";
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function abortHandler(event) {
+  _("status").innerHTML = "Upload Aborted";
 }
 
 </script>

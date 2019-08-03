@@ -104,8 +104,8 @@ $statusMsg = '';
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
       <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Carica contratto</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contratto"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Keywords</i></a>
     </div>
   </div>
 </div>
