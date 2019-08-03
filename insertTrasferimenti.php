@@ -479,7 +479,7 @@ if($row = mysqli_num_rows($result) == 0){
       // CONTROLLO SE IL NOME DEL FILE ESISTE GIÀ NEL DATABASE PER LA STESSA FOTOGRAFIA E PER LA STESSA TIPOLOGIA (NON AMMISSIBILE).
       $result = $db->query("SELECT `id` FROM `File` WHERE `Utente_id`= $ownerId AND `Nome` = '$fileName' AND `Tipologia` = '$tipoFile' ");
       if ($result->num_rows > 0) {
-          $statusMsg = "<i class='fa fa-warning'></i>" . "Esiste già un file del tipo " .$tipoFile. " con il nome <b>" .$fileName. "</b> per lo stesso proprietario. <div class='w3-padding-16 w3-center'>Cambiare nome e ricaricarlo.</div>";
+        $statusMsg = "<b>ATTENZIONE !</b><p style='color:red;'>"."<b>NOME del file già esistente.<br></b></p>Cambiare nome e ricaricarlo.";
       }else{
 
         if(move_uploaded_file($_FILES["contratto"]["tmp_name"], $targetFilePath)){
