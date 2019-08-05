@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="css/style.css">
 <!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
 
@@ -37,14 +39,14 @@
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="#" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -90,9 +92,10 @@
       Codice identificativo fotografia
     </div>
     <form name="myForm" action="/authclick/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
-    <div class="w3-col m8 w3-right">
-        <div class="w3-center">
-          <input type="text" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
+    <div class="w3-col m8">
+        <div class="search-box-codIdentificativo">
+          <input type="text" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
+          <div class="result" style="width:100%;"></div>
         </div>
     </div>
   </div>
@@ -118,8 +121,9 @@
         Nome da assegnare al documento
       </div>
       <div class="w3-col m8">
-          <div class="w3-center">
-            <input type="text" placeholder="es: Certificato_authclick" id="nomeFile" name="nomeFile" required>
+          <div class="search-box-nomeFile">
+            <input type="text" autocomplete="off" placeholder="es: Certificato_authclick" id="nomeFile" name="nomeFile" required>
+            <div class="result" style="width:100%;"></div>
           </div>
       </div>
     </div>
@@ -168,8 +172,9 @@
     </div>
     <form name="myFormEsporta" action="/authclick/new/esportaFile.php" method="post" onsubmit="return validateformEsporta()">
       <div class="w3-col m6">
-        <div class="w3-center">
-          <input type="text" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>
+        <div class="w3-center search-box-codIdentificativo">
+          <input type="text" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>
+          <div class="result" style="width:100%;"></div>
         </div>
       </div>
     </div>
@@ -187,161 +192,160 @@
 </div>
 <div class="w3-padding-32"></div>
 
-<!-- PARTE RELATIVA AGLI SCRIPT -->
 <script>
 
 // USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
 function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+    }
   }
-}
-
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction(); myFunction_progressBar();};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("myBtn").style.display = "block";
-  } else {
-    document.getElementById("myBtn").style.display = "none";
+  
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction(); myFunction_progressBar();};
+  
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("myBtn").style.display = "block";
+    } else {
+      document.getElementById("myBtn").style.display = "none";
+    }
   }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-
-// VERIFICO LA CORRETTEZZA DEI DATI INSERITI
-function validateform(){  
-  var codIdentificativo=document.myForm.codIdentificativo.value;  
-
-  // Verifico il codice identificativo.
-  if(codIdentificativo!=''){
-    if(!/^[a-zA-Z]{3}\d{4,6}$/.test(codIdentificativo)){
+  
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+  
+  // VERIFICO LA CORRETTEZZA DEI DATI INSERITI
+  function validateform(){  
+    var codIdentificativo=document.myForm.codIdentificativo.value;  
+  
+    // Verifico il codice identificativo.
+    if(codIdentificativo!=''){
+      if(!/^[a-zA-Z]{3}\d{4,6}$/.test(codIdentificativo)){
+        alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+        return false;
+      }
+    }
+  }
+  
+  // FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
+  function openNav() {
+    if (window.innerWidth > 600) {   
+      event.stopPropagation();
+      document.getElementById("mySidebar").style.width = "225px";
+      document.getElementById("main").style.marginLeft = "225px";
+      document.getElementById("w3-top").style.marginLeft = "225px";   
+      document.getElementById("myBtn").style.marginLeft = "260px";   
+      document.getElementById("header").style.marginLeft = "225px";
+    }else{
+      document.getElementById("mySidebar").style.width = "225px";
+    }
+  }
+  
+  // FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
+  function closeNav() {
+    if (window.innerWidth > 600) {   
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.getElementById("w3-top").style.marginLeft = "0px";  
+      document.getElementById("myBtn").style.marginLeft = "4%";
+      document.getElementById("header").style.marginLeft = "0";
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
+  }
+  
+  window.addEventListener("beforeunload", function () {
+    document.body.classList.add("animate-out");
+  });
+  
+  function closeNav2() {
+    if (window.innerWidth > 600) {
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
+  }
+  
+  // When the user scrolls the page, execute myFunction 
+  function myFunction_progressBar() {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    document.getElementById("myBar").style.width = scrolled + "%";
+  }
+  
+  // MENU DI RICERCA PAROLE
+  function myFunctionSearch() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("dropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
+    }
+  }
+  
+  
+  // MENU COLLAPSIBLE BARRA LATERALE SINISTRA
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+  
+  // VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
+  function validateform(){  
+    // INFORMAZIONI RELATIVE ALL'AUTORE
+    var nomeFile=document.myForm.nomeFile.value;
+    var codIdentificativo=document.myForm.codIdentificativo.value;
+  
+    // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
+    if(nomeFile.includes("'") || nomeFile.includes("/") ||  nomeFile.includes("#") ||  nomeFile.includes("%") || nomeFile.includes("§") ){
+      alert("Il campo NOME del file inserito dall'utente contiene caratteri non ammessi. Il nome del file non deve contenere i seguenti caratteri: ' / § # % ");
+      return false; 
+    }
+  
+      // Verifico il codice identificativo.
+      if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
       alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
       return false;
     }
+  
   }
-}
-
-// FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
-function openNav() {
-  if (window.innerWidth > 600) {   
-    event.stopPropagation();
-    document.getElementById("mySidebar").style.width = "225px";
-    document.getElementById("main").style.marginLeft = "225px";
-    document.getElementById("w3-top").style.marginLeft = "225px";   
-    document.getElementById("myBtn").style.marginLeft = "260px";   
-    document.getElementById("header").style.marginLeft = "225px";
-  }else{
-    document.getElementById("mySidebar").style.width = "225px";
-  }
-}
-
-// FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
-function closeNav() {
-  if (window.innerWidth > 600) {   
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-    document.getElementById("w3-top").style.marginLeft = "0px";  
-    document.getElementById("myBtn").style.marginLeft = "4%";
-    document.getElementById("header").style.marginLeft = "0";
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
-  }
-}
-
-window.addEventListener("beforeunload", function () {
-  document.body.classList.add("animate-out");
-});
-
-function closeNav2() {
-  if (window.innerWidth > 600) {
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
-  }
-}
-
-// When the user scrolls the page, execute myFunction 
-function myFunction_progressBar() {
-  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrolled = (winScroll / height) * 100;
-  document.getElementById("myBar").style.width = scrolled + "%";
-}
-
-// MENU DI RICERCA PAROLE
-function myFunctionSearch() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("dropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
+  
+  function validateformEsporta(){  
+    // INFORMAZIONI RELATIVE ALL'AUTORE
+    var codIdentificativoEsporta=document.myFormEsporta.codIdentificativoEsporta.value;
+  
+    // Verifico il codice identificativo per la sezione esporta.
+    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativoEsporta)){
+      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+      return false;
     }
+  
   }
-}
-
-
-// MENU COLLAPSIBLE BARRA LATERALE SINISTRA
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-
-// VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
-function validateform(){  
-  // INFORMAZIONI RELATIVE ALL'AUTORE
-  var nomeFile=document.myForm.nomeFile.value;
-  var codIdentificativo=document.myForm.codIdentificativo.value;
-
-  // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
-  if(nomeFile.includes("'") || nomeFile.includes("/") ||  nomeFile.includes("#") ||  nomeFile.includes("%") || nomeFile.includes("§") ){
-    alert("Il campo NOME del file inserito dall'utente contiene caratteri non ammessi. Il nome del file non deve contenere i seguenti caratteri: ' / § # % ");
-    return false; 
-  }
-
-    // Verifico il codice identificativo.
-    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
-    alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-    return false;
-  }
-
-}
-
-function validateformEsporta(){  
-  // INFORMAZIONI RELATIVE ALL'AUTORE
-  var codIdentificativoEsporta=document.myFormEsporta.codIdentificativoEsporta.value;
-
-  // Verifico il codice identificativo per la sezione esporta.
-  if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativoEsporta)){
-    alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-    return false;
-  }
-
-}
-
+  
 // USATA PER LA BARRA DI CARICAMENTO DEL FILE
 function _(el) {
   return document.getElementById(el);
@@ -361,7 +365,7 @@ function uploadFile() {
   ajax.open("POST", "file_upload_parser.php");
   ajax.send(formdata);
 }
-
+  
 // USATA PER LA BARRA DI CARICAMENTO DEL FILE
 function progressHandler(event) {
   //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
@@ -385,6 +389,52 @@ function errorHandler(event) {
 function abortHandler(event) {
   _("status").innerHTML = "Upload Aborted";
 }
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-codIdentificativo input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-nomeFile input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-nomeFile.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-nomeFile").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
 </script>
 

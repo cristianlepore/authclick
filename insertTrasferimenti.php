@@ -42,15 +42,15 @@ $statusMsg = '';
     <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>    
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
-    <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+  <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -69,43 +69,43 @@ $statusMsg = '';
     <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput" onkeyup="myFunctionSearch()"></div>
     <a class="collapsible"><i class="fa fa-user"></i> Proprietario</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#"><i>Nome</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#nome"><i>cognome</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Codice fiscale</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Partita IVA</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#"><i>Nome</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#nome"><i>cognome</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Codice fiscale</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Partita IVA</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Keywords</i></a>
     </div>
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Indirizzo</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Civico</i></a>
     </div>
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Domicilio</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Civico</i></a>
     </div>   
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Residenza</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Civico</i></a>
     </div>    
     <a class="collapsible"><i class="fa fa-edit"></i> Contratto</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Carica contratto</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Prezzo</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Data cessione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Cessione diritti</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#contrattoForm"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#contrattoForm"><i>Keywords</i></a>
     </div>
   </div>
 </div>

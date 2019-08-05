@@ -849,4 +849,80 @@ input:checked + .slider:after
   content:'SI';
 }
 
+/* Formatting search box */
+.search-boxNome{
+  position: relative;
+}
+
+.search-boxCognome{
+  position: relative;
+}
+
+.search-box-codIdentificativo{
+  position: relative;
+}
+
+.search-box-nomeFile{
+  position: relative;
+}
+
+.search-boxCodFiscale{
+  position: relative;
+}
+
+.search-box-nomeContratto{
+  position: relative;
+}
+
+.result{
+  position: absolute;        
+  z-index: 999;
+  top: 100%;
+  left: 0;
+}
+
+.search-boxNome input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-boxCognome input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-box-codIdentificativo input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-box-nomeFile input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-boxCodFiscale input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-box-nomeContratto input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Formatting result items */
+.result p{
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid #CCCCCC;
+  background-color:white;
+  border-top: none;
+  cursor: pointer;
+}
+
+.result p:hover{
+  background: lightgrey;
+}
+
 /*--------- END --------*/

@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- INSERISCO LO SCRIPT AJAX PER LE DATE -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
 
@@ -51,15 +53,15 @@ foreach($files as $file){ // iterate files
     <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="#" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
-    <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="trasferimenti.php" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+  <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -120,8 +122,9 @@ foreach($files as $file){ // iterate files
     <div class="col-25">
       <label for="nome"><i class="fa fa-user"></i> Nome</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="nome" name="nome" placeholder="es: Mario" required>
+    <div class="search-boxNome col-75">
+      <input type="text" autocomplete="off" id="nome" name="nome" placeholder="es: Mario" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -129,8 +132,9 @@ foreach($files as $file){ // iterate files
     <div class="col-25">
       <label for="cognome"><i class="fa fa-user"></i> Cognome</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="cognome" name="cognome" placeholder="es: Rossi" required>
+    <div class="search-boxCognome col-75">
+      <input type="text" id="cognome" autocomplete="off" name="cognome" placeholder="es: Rossi" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -507,7 +511,6 @@ foreach($files as $file){ // iterate files
 </div>
 </form>
 
-<!-- PARTE RELATIVA AGLI SCRIPT -->
 <script>
 
 // USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
@@ -1025,6 +1028,52 @@ const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno"
     }
   } 
 
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA UN NOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-boxNome input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-searchNome.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-boxNome").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-boxCognome input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-searchCognome.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-boxCognome").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
 });
 
 </script>

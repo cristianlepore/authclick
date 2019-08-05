@@ -35,15 +35,15 @@
   <div class="w3-bar w3-black w3-card">
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
-    <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="trasferimenti.php" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+  <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -433,7 +433,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         // USO UNO SCRIPT PER REDIRIGERE ALLA HOME PAGE. PHP NON PUÒ FUNZIONARE DENTRO ALLA CONDIZIONE IF
         echo ("<SCRIPT LANGUAGE='JavaScript'>
                   setTimeout(function(){
-                    window.location.href = '/authclick/new/files.php';
+                    window.location.href = '/authclick/new/files.html';
                   }, 5000);
                </SCRIPT>");
 

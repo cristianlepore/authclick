@@ -112,15 +112,15 @@
     <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>    
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
-    <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
-    <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
-  <a href="trasferimenti.php" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+  <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -177,7 +177,7 @@
     // USO UNO SCRIPT PER REDIRIGERE ALLA HOME PAGE. PHP NON PUÒ FUNZIONARE DENTRO ALLA CONDIZIONE IF
     echo ("<SCRIPT LANGUAGE='JavaScript'>
             setTimeout(function(){
-              window.location.href = '/authclick/new/files.php#panel_esporta';
+              window.location.href = '/authclick/new/files.html#panel_esporta';
             }, 5000);
           </SCRIPT>");
           
@@ -473,7 +473,7 @@
 <div class="w3-padding-16"></div>
 <!-- BOTTONO PER RITORNARE ALLA HOME PAGE -->
 <div class="col-25 submitButton">
-  <button type="submit" class="submitButton" onclick="window.location.href='/authclick/new/files.php'"><i class="fa fa-backward"></i> <i class="prova">TORNA</i></button>
+  <button type="submit" class="submitButton" onclick="window.location.href='/authclick/new/files.html'"><i class="fa fa-backward"></i> <i class="prova">TORNA</i></button>
 </div>
 <div class="w3-padding-16"></div>
 

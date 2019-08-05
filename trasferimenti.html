@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- SCRIPT JQUERY PER INSERIRE UN DASH OGNI 4 CIFRE DIGITATE DEL CAMPO PARTITA IVA -->
 <script src="css/jquery.min.js"></script>
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
 
@@ -38,14 +40,14 @@
     <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>    
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
-    <a href="files.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
   </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
-  <a href="files.php" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+  <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
 
@@ -65,43 +67,43 @@
     <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput" onkeyup="myFunctionSearch()"></div>
     <a class="collapsible"><i class="fa fa-user"></i> Proprietario</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#"><i>Nome</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#nome"><i>cognome</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Codice fiscale</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Partita IVA</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#cognome"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#"><i>Nome</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#nome"><i>cognome</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Codice fiscale</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Partita IVA</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#cognome"><i>Keywords</i></a>
     </div>
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Indirizzo</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#indirizzo"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#indirizzo"><i>Civico</i></a>
     </div>
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Domicilio</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#domicilio"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#domicilio"><i>Civico</i></a>
     </div>   
     <a class="collapsible"><i class="fa fa-address-card-o"></i> Residenza</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Nazione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Città</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>CAP</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Via / Piazza</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#residenza"><i>Civico</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Nazione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Città</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>CAP</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Via / Piazza</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#residenza"><i>Civico</i></a>
     </div>    
     <a class="collapsible"><i class="fa fa-edit"></i> Contratto</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Prezzo</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Data cessione</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#vendita"><i>Cessione diritti</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Carica contratto</i></a>
-      <a style="font-size:14px;" href="trasferimenti.php#contrattoForm"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Prezzo</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Data cessione</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#vendita"><i>Cessione diritti</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#contrattoForm"><i>Carica contratto</i></a>
+      <a style="font-size:14px;" href="trasferimenti.html#contrattoForm"><i>Keywords</i></a>
     </div>
   </div>
 </div>
@@ -120,8 +122,9 @@
     <div class="col-25">
       <label for="nome"><i class="fa fa-user"></i> Nome</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="nome" name="nome" placeholder="es: Luigi" required>
+    <div class="search-boxNome col-75">
+        <input type="text" autocomplete="off" id="nome" name="nome" placeholder="es: Luigi" required>
+        <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -130,8 +133,9 @@
     <div class="col-25">
       <label for="cognome"><i class="fa fa-user"></i> Cognome</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="cognome" name="cognome" placeholder="es: Verdi" required>
+    <div class="search-boxCognome col-75">
+      <input type="text" autocomplete="off" id="cognome" name="cognome" placeholder="es: Verdi" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -142,8 +146,9 @@
     <div class="col-25">
       <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Identificativo</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
+    <div class="col-75 search-boxCodFiscale">
+      <input type="text" autocomplete="off" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -428,7 +433,7 @@
                 <option value="Yemen">Yemen</option>
                 <option value="Zambia">Zambia</option>
                 <option value="Zimbabwe">Zimbabwe</option>
-            </select>
+            </select>   
     </div>
   </div>
   
@@ -1090,8 +1095,9 @@
     <div class="col-25">
       <label for="codIdentificativo"><i class="fa fa-tag"></i> Codice identificativo dell'opera</label>
     </div>
-    <div class="col-75">
-      <input type="text" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT000100" required>
+    <div class="col-75 search-box-codIdentificativo">
+      <input type="text" autocomplete="off" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT000100" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -1147,9 +1153,10 @@
     <div class="col-25">
       <label for="nomeContratto"><i class="fa fa-file-o"></i> Nome file</label>
     </div>
-    <div class="col-75">
+    <div class="col-75 search-box-nomeContratto">
         <div class="w3-col m5 w3-left">
-          <input type="text" style="width:100%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
+          <input type="text" autocomplete="off" style="width:100%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
+          <div class="result" style="width:100%;"></div>
         </div>
     </div>
   </div>
@@ -1202,318 +1209,432 @@
 
 <div class="w3-padding-32"></div>
 
-<!-- PARTE RELATIVA AGLI SCRIPT -->
 <script>
 
 // USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
 function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction(); myFunction_progressBar();};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("myBtn").style.display = "block";
-  } else {
-    document.getElementById("myBtn").style.display = "none";
-  }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-
-// VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
-function validateform(){  
-
-  var nome=document.myFormOpera.nome.value;
-  var cognome=document.myFormOpera.cognome.value;
-  var codFiscale=document.myFormOpera.codFiscale.value;
-  var partitaIVA=document.myFormOpera.partitaIVA.value;
-  var keywordsProprietario=document.myFormOpera.keywordsProprietario.value;
-
-  var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
-  var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
-  var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
-
-  var domicilioCittà=document.myFormOpera.domicilioCittà.value;
-  var domicilioCAP=document.myFormOpera.domicilioCAP.value;
-  var domicilioCivico=document.myFormOpera.domicilioCivico.value;
-
-  var residenzaCittà=document.myFormOpera.residenzaCittà.value;
-  var residenzaCAP=document.myFormOpera.residenzaCAP.value;
-  var residenzaCivico=document.myFormOpera.residenzaCivico.value;
-
-  var prezzo=document.myFormOpera.prezzo.value;
-  var codIdentificativo=document.myFormOpera.codIdentificativo.value;
-  var dataCessione=document.myFormOpera.dataCessione.value;
-
-  var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
-  var dataFineCessione=document.myFormOpera.dataFineCessione.value;
-  var nomeContratto=document.myFormOpera.nomeContratto.value;
-  var keywordsContratto=document.myFormOpera.keywordsContratto.value;
-
-  // VERIFICA SUL CAMPO NOME
-  if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nome)){
-    alert("Il campo NOME contiene caratteri non ammessi.");  
-    return false; 
-  }
-
-  // VERIFICA SUL CAMPO COGNOME
-  if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognome)){
-    alert("Il campo COGNOME contiene caratteri non ammessi.");  
-    return false; 
-  }
-
-  // VERIFICA SUL CODICE FISCALE
-  if(!/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i.test(codFiscale)){
-    alert("Il campo CODICE FISCALE non è formattato correttamente.");  
-    return false; 
-  }
-
-  // VERIFICO LA PARTITA IVA
-  if(!/^$|^[0-9]{4}-[0-9]{4}-[0-9]{3}$/.test(partitaIVA)){
-    alert("Il campo PARTITA IVA deve contenere 11 cifre.");
-    return false;
-  }
-
-  // VERIFICA LA CORRETTEZZA DEI CAMPI INDIRIZZO
-  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(indirizzoCittà)){
-    alert("Il campo CITTÀ (indirizzo) non è formattato correttamente.");  
-    return false; 
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+    }
   }
   
-  if(!/^$|^\d{5}$/.test(indirizzoCAP)){
-    alert("Il campo CAP (indirizzo) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
-    return false; 
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction(); myFunction_progressBar();};
+  
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("myBtn").style.display = "block";
+    } else {
+      document.getElementById("myBtn").style.display = "none";
+    }
   }
   
-  if(!/^$|^\d{1,10}$/.test(indirizzoCivico)){
-    alert("Il campo CIVICO (indirizzo) non è formattato correttamente.");  
-    return false; 
-  }
-
-  // VERIFICA LA CORRETTEZZA DEL CAMPO DOMICILIO
-  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(domicilioCittà)){
-    alert("Il campo CITTÀ (domicilio) non è formattato correttamente.");  
-    return false; 
-  }
-
-  if(!/^$|^\d{5}$/.test(domicilioCAP)){
-    alert("Il campo CAP (domicilio) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
-    return false; 
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
   
-  if(!/^$|^\d{1,10}$/.test(domicilioCivico)){
-    alert("Il campo CIVICO (domicilio) non è formattato correttamente.");  
-    return false; 
-  }
+  // VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
+  function validateform(){  
   
-  // VERIFICA LA CORRETTEZZA DEL CAMPO RESIDENZA
-  if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(residenzaCittà)){
-    alert("Il campo CITTÀ (residenza) non è formattato correttamente.");  
-    return false; 
-  }
-
-  if(!/^$|^\d{5}$/.test(residenzaCAP)){
-    alert("Il campo CAP (residenza) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
-    return false; 
-  }
-
-  if(!/^$|^\d{1,10}$/.test(residenzaCivico)){
-    alert("Il campo CIVICO (residenza) non è formattato correttamente.");  
-    return false; 
-  }
-
-  // VERIFICO LA CORRETTEZZA DEL VALORE INSERITO NEL CAMPO PREZZO
-  if(!/^$|^\d{1,10}\.?\d{0,2}$/.test(prezzo)){
-    alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
-    return false; 
-  }
+    var nome=document.myFormOpera.nome.value;
+    var cognome=document.myFormOpera.cognome.value;
+    var codFiscale=document.myFormOpera.codFiscale.value;
+    var partitaIVA=document.myFormOpera.partitaIVA.value;
+    var keywordsProprietario=document.myFormOpera.keywordsProprietario.value;
   
-  // Verifico il codice identificativo.
-  if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
-    alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-    return false;
-  }
-
-  // VERIFICO CHE LA DATA DI FINE CESSIONE SIA SUCCESSIVA ALLA DATA DI INIZIO CESSIONE
-  if(cessioneDirittiIsChecked){
-    if(dataCessione > dataFineCessione){
-      alert("La data di cessione non può essere successiva alla data di fine cessione.");
+    var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
+    var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
+    var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
+  
+    var domicilioCittà=document.myFormOpera.domicilioCittà.value;
+    var domicilioCAP=document.myFormOpera.domicilioCAP.value;
+    var domicilioCivico=document.myFormOpera.domicilioCivico.value;
+  
+    var residenzaCittà=document.myFormOpera.residenzaCittà.value;
+    var residenzaCAP=document.myFormOpera.residenzaCAP.value;
+    var residenzaCivico=document.myFormOpera.residenzaCivico.value;
+  
+    var prezzo=document.myFormOpera.prezzo.value;
+    var codIdentificativo=document.myFormOpera.codIdentificativo.value;
+    var dataCessione=document.myFormOpera.dataCessione.value;
+  
+    var cessioneDirittiIsChecked=document.getElementById("myCheck").checked;
+    var dataFineCessione=document.myFormOpera.dataFineCessione.value;
+    var nomeContratto=document.myFormOpera.nomeContratto.value;
+    var keywordsContratto=document.myFormOpera.keywordsContratto.value;
+  
+    // VERIFICA SUL CAMPO NOME
+    if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nome)){
+      alert("Il campo NOME contiene caratteri non ammessi.");  
+      return false; 
+    }
+  
+    // VERIFICA SUL CAMPO COGNOME
+    if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognome)){
+      alert("Il campo COGNOME contiene caratteri non ammessi.");  
+      return false; 
+    }
+  
+    // VERIFICA SUL CODICE FISCALE
+    if(!/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i.test(codFiscale)){
+      alert("Il campo CODICE FISCALE non è formattato correttamente.");  
+      return false; 
+    }
+  
+    // VERIFICO LA PARTITA IVA
+    if(!/^$|^[0-9]{4}-[0-9]{4}-[0-9]{3}$/.test(partitaIVA)){
+      alert("Il campo PARTITA IVA deve contenere 11 cifre.");
       return false;
     }
+  
+    // VERIFICA LA CORRETTEZZA DEI CAMPI INDIRIZZO
+    if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(indirizzoCittà)){
+      alert("Il campo CITTÀ (indirizzo) non è formattato correttamente.");  
+      return false; 
+    }
+    
+    if(!/^$|^\d{5}$/.test(indirizzoCAP)){
+      alert("Il campo CAP (indirizzo) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
+      return false; 
+    }
+    
+    if(!/^$|^\d{1,10}$/.test(indirizzoCivico)){
+      alert("Il campo CIVICO (indirizzo) non è formattato correttamente.");  
+      return false; 
+    }
+  
+    // VERIFICA LA CORRETTEZZA DEL CAMPO DOMICILIO
+    if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(domicilioCittà)){
+      alert("Il campo CITTÀ (domicilio) non è formattato correttamente.");  
+      return false; 
+    }
+  
+    if(!/^$|^\d{5}$/.test(domicilioCAP)){
+      alert("Il campo CAP (domicilio) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
+      return false; 
+    }
+    
+    if(!/^$|^\d{1,10}$/.test(domicilioCivico)){
+      alert("Il campo CIVICO (domicilio) non è formattato correttamente.");  
+      return false; 
+    }
+    
+    // VERIFICA LA CORRETTEZZA DEL CAMPO RESIDENZA
+    if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(residenzaCittà)){
+      alert("Il campo CITTÀ (residenza) non è formattato correttamente.");  
+      return false; 
+    }
+  
+    if(!/^$|^\d{5}$/.test(residenzaCAP)){
+      alert("Il campo CAP (residenza) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
+      return false; 
+    }
+  
+    if(!/^$|^\d{1,10}$/.test(residenzaCivico)){
+      alert("Il campo CIVICO (residenza) non è formattato correttamente.");  
+      return false; 
+    }
+  
+    // VERIFICO LA CORRETTEZZA DEL VALORE INSERITO NEL CAMPO PREZZO
+    if(!/^$|^\d{1,10}\.?\d{0,2}$/.test(prezzo)){
+      alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
+      return false; 
+    }
+    
+    // Verifico il codice identificativo.
+    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
+      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+      return false;
+    }
+  
+    // VERIFICO CHE LA DATA DI FINE CESSIONE SIA SUCCESSIVA ALLA DATA DI INIZIO CESSIONE
+    if(cessioneDirittiIsChecked){
+      if(dataCessione > dataFineCessione){
+        alert("La data di cessione non può essere successiva alla data di fine cessione.");
+        return false;
+      }
+    }
+    
+    // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
+    if(nomeContratto.includes("'") || nomeContratto.includes("/") ||  nomeContratto.includes("#") ||  nomeContratto.includes("%") || nomeContratto.includes("§") ){
+      alert("Il campo NOME DEL CONTRATTO contiene caratteri non ammessi. Il nome non deve contenere i seguenti caratteri: ' / § # % ");
+      return false; 
+    }
+  
   }
   
-  // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
-  if(nomeContratto.includes("'") || nomeContratto.includes("/") ||  nomeContratto.includes("#") ||  nomeContratto.includes("%") || nomeContratto.includes("§") ){
-    alert("Il campo NOME DEL CONTRATTO contiene caratteri non ammessi. Il nome non deve contenere i seguenti caratteri: ' / § # % ");
-    return false; 
-  }
-
-}
-
-// AGGIUNGO I DASH NEL CAMPO PARTITA IVA OGNI 4 CIFRE DIGITATE
-$(document).ready(function () {
-    $('#partitaIVA').keyup(function (event) {
-        addHyphen (this);
-    });
-});
-
-function addHyphen (element) {
-    let val = $(element).val().split('-').join('');   // Remove dash (-) if mistakenly entered.
-
-    let finalVal = val.match(/.{1,4}/g).join('-');    // Add (-) after 3rd every char.
-    $(element).val(finalVal);		// Update the input box.
-}
-
-// FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
-function openNav() {
-  if (window.innerWidth > 600) {   
-    event.stopPropagation();
-    document.getElementById("mySidebar").style.width = "225px";
-    document.getElementById("main").style.marginLeft = "225px";
-    document.getElementById("w3-top").style.marginLeft = "225px";   
-    document.getElementById("myBtn").style.marginLeft = "260px";  
-    document.getElementById("header").style.marginLeft = "225px"; 
-  }else{
-    document.getElementById("mySidebar").style.width = "225px";
-  }
-}
-
-// FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
-function closeNav() {
-  if (window.innerWidth > 600) {   
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-    document.getElementById("w3-top").style.marginLeft = "0px";  
-    document.getElementById("myBtn").style.marginLeft = "4%";
-    document.getElementById("header").style.marginLeft = "0";
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
-  }
-}
-
-window.addEventListener("beforeunload", function () {
-  document.body.classList.add("animate-out");
-});
-
-function closeNav2() {
-  if (window.innerWidth > 600) {
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
-  }
-}
-
-// When the user scrolls the page, execute myFunction 
-function myFunction_progressBar() {
-  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrolled = (winScroll / height) * 100;
-  document.getElementById("myBar").style.width = scrolled + "%";
-}
-
-// MENU DI RICERCA PAROLE
-function myFunctionSearch() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("dropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-// MENU COLLAPSIBLE BARRA LATERALE SINISTRA
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
+  // AGGIUNGO I DASH NEL CAMPO PARTITA IVA OGNI 4 CIFRE DIGITATE
+  $(document).ready(function () {
+      $('#partitaIVA').keyup(function (event) {
+          addHyphen (this);
+      });
   });
-}
-
-// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE.
-function myFunctionToggle() {
-  var checkBox = document.getElementById("myCheck");
-  var text = document.getElementById("text");
-  var dataFirma = document.getElementById("dataFineCessione");
-
-  if (checkBox.checked == true){
-    text.style.display = "block";
-    dataFirma.style.display = "block";
-    $("#dataFineCessione").slideDown("slow");
-  } else {
-    text.style.display = "none";
-    dataFirma.style.display = "none";
+  
+  function addHyphen (element) {
+      let val = $(element).val().split('-').join('');   // Remove dash (-) if mistakenly entered.
+  
+      let finalVal = val.match(/.{1,4}/g).join('-');    // Add (-) after 3rd every char.
+      $(element).val(finalVal);		// Update the input box.
   }
-}
+  
+  // FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
+  function openNav() {
+    if (window.innerWidth > 600) {   
+      event.stopPropagation();
+      document.getElementById("mySidebar").style.width = "225px";
+      document.getElementById("main").style.marginLeft = "225px";
+      document.getElementById("w3-top").style.marginLeft = "225px";   
+      document.getElementById("myBtn").style.marginLeft = "260px";  
+      document.getElementById("header").style.marginLeft = "225px"; 
+    }else{
+      document.getElementById("mySidebar").style.width = "225px";
+    }
+  }
+  
+  // FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
+  function closeNav() {
+    if (window.innerWidth > 600) {   
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.getElementById("w3-top").style.marginLeft = "0px";  
+      document.getElementById("myBtn").style.marginLeft = "4%";
+      document.getElementById("header").style.marginLeft = "0";
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
+  }
+  
+  window.addEventListener("beforeunload", function () {
+    document.body.classList.add("animate-out");
+  });
+  
+  function closeNav2() {
+    if (window.innerWidth > 600) {
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
+  }
+  
+  // When the user scrolls the page, execute myFunction 
+  function myFunction_progressBar() {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    document.getElementById("myBar").style.width = scrolled + "%";
+  }
+  
+  // MENU DI RICERCA PAROLE
+  function myFunctionSearch() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("dropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
+    }
+  }
+  
+  // MENU COLLAPSIBLE BARRA LATERALE SINISTRA
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+  
+  // PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE.
+  function myFunctionToggle() {
+    var checkBox = document.getElementById("myCheck");
+    var text = document.getElementById("text");
+    var dataFirma = document.getElementById("dataFineCessione");
+  
+    if (checkBox.checked == true){
+      text.style.display = "block";
+      dataFirma.style.display = "block";
+      $("#dataFineCessione").slideDown("slow");
+    } else {
+      text.style.display = "none";
+      dataFirma.style.display = "none";
+    }
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function _(el) {
+    return document.getElementById(el);
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function uploadFile() {
+    var file = _("contratto").files[0];
+    // alert(file.name+" | "+file.size+" | "+file.type);
+    var formdata = new FormData();
+    formdata.append("contratto", file);
+    var ajax = new XMLHttpRequest();
+    ajax.upload.addEventListener("progress", progressHandler, false);
+    ajax.addEventListener("load", completeHandler, false);
+    ajax.addEventListener("error", errorHandler, false);
+    ajax.addEventListener("abort", abortHandler, false);
+    ajax.open("POST", "file_upload_parser.php");
+    ajax.send(formdata);
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function progressHandler(event) {
+    //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
+    var percent = (event.loaded / event.total) * 100;
+    _("progressBar").value = Math.round(percent);
+    _("loaded_n_total").innerHTML = Math.round(percent) + "% caricati";
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function completeHandler(event) {
+    _("status").innerHTML = event.target.responseText;
+    _("progressBar").value = 0; //wil clear progress bar after successful upload
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function errorHandler(event) {
+    _("status").innerHTML = "Upload Failed";
+  }
+  
+  // USATA PER LA BARRA DI CARICAMENTO DEL FILE
+  function abortHandler(event) {
+    _("status").innerHTML = "Upload Aborted";
+  }
 
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function _(el) {
-  return document.getElementById(el);
-}
+  // SCRIPT AJAX. MENTRE SI DIGITA UN NOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-boxNome input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-searchNome.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-boxNome").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function uploadFile() {
-  var file = _("contratto").files[0];
-  // alert(file.name+" | "+file.size+" | "+file.type);
-  var formdata = new FormData();
-  formdata.append("contratto", file);
-  var ajax = new XMLHttpRequest();
-  ajax.upload.addEventListener("progress", progressHandler, false);
-  ajax.addEventListener("load", completeHandler, false);
-  ajax.addEventListener("error", errorHandler, false);
-  ajax.addEventListener("abort", abortHandler, false);
-  ajax.open("POST", "file_upload_parser.php");
-  ajax.send(formdata);
-}
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-boxCognome input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-searchCognome.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-boxCognome").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function progressHandler(event) {
-  //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
-  var percent = (event.loaded / event.total) * 100;
-  _("progressBar").value = Math.round(percent);
-  _("loaded_n_total").innerHTML = Math.round(percent) + "% caricati";
-}
+// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO UTENTE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-boxCodFiscale input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-searchCodFiscale.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-boxCodFiscale").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function completeHandler(event) {
-  _("status").innerHTML = event.target.responseText;
-  _("progressBar").value = 0; //wil clear progress bar after successful upload
-}
+// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-codIdentificativo input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function errorHandler(event) {
-  _("status").innerHTML = "Upload Failed";
-}
-
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function abortHandler(event) {
-  _("status").innerHTML = "Upload Aborted";
-}
+// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL CONTRATTO, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-nomeContratto input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-nomeContratto.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-nomeContratto").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
 </script>
 
