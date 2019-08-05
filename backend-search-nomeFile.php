@@ -9,9 +9,10 @@ if($db === false){
 }
 
 if(isset($_REQUEST["term"])){
+    $codIdentificativo = $_REQUEST["code"];
 
     // Prepare a select statement
-    $sql = "SELECT DISTINCT `Nome` FROM `File` WHERE Nome LIKE ? AND (`Tipologia`='Scheda' OR `Tipologia`='Foto')";
+    $sql = "SELECT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id`= `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND (`File`.`Tipologia`='Scheda' OR `File`.`Tipologia`='Foto') AND Nome LIKE ? ";
     
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
@@ -29,10 +30,13 @@ if(isset($_REQUEST["term"])){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-                    echo "<p>" . $row["Nome"] . "</p>";
+
+                    $fileName = pathinfo($row["Nome"])['filename'];
+
+                    echo "<p>" . $fileName . "</p>";
                 }
             } else{
-                echo "<p>Nessun valore trovato</p>";
+                ;
             }
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);

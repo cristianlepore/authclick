@@ -32,7 +32,7 @@ if(isset($_REQUEST["term"])){
                     echo "<p>" . $row["Codice_identificativo"] . "</p>";
                 }
             } else{
-                echo "<p>Nessun valore trovato</p>";
+                ;
             }
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);
