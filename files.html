@@ -93,7 +93,7 @@
     </div>
     <form name="myForm" action="/authclick/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
     <div class="w3-col m8">
-        <div class="search-box-codIdentificativo">
+        <div class="search-box-codIdentificativo search-box-tipologia">
           <input type="text" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
           <div class="result" style="width:100%;"></div>
         </div>
@@ -113,11 +113,7 @@
             </select>
           </div>
         </div>
-        <div class="w3-center w3-col m4 scheda" style="margin-top:8px">
-          dsfdsf
-        </div>
-        <div class="w3-center w3-col m4 miniatura" style="margin-top:8px">
-          dsdfds
+        <div class="scheda" style="margin-top:8px">
         </div>
     </div>
   </div>
@@ -434,6 +430,31 @@ $(document).ready(function(){
           $.get("backend-search-nomeFile.php", {code:codIdentificativo,term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-nomeFile").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-tipologia input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      if(inputVal.length){
+          // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
+          var codIdentificativo=document.myForm.codIdentificativo.value;
+
+          $.get("backend-search-tipologia.php", {code:codIdentificativo,term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              $('.scheda').html(data);
           });
       } else{
           resultDropdown.empty();
