@@ -10,9 +10,10 @@ if($db === false){
 
 if(isset($_REQUEST["term"])){
     $codIdentificativo = $_REQUEST["code"];
+    $tipo = $_REQUEST["tipo"];
 
     // Prepare a select statement
-    $sql = "SELECT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id`= `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND (`File`.`Tipologia`='Scheda' OR `File`.`Tipologia`='Foto') AND Nome LIKE ? ";
+    $sql = "SELECT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id`= `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND `File`.`Tipologia`='$tipo' AND Nome LIKE ? ";
     
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters

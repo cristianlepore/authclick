@@ -426,8 +426,9 @@ $(document).ready(function(){
       if(inputVal.length){
           // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
           var codIdentificativo=document.myForm.codIdentificativo.value;
+          var tipo=document.myForm.tipo.value;
 
-          $.get("backend-search-nomeFile.php", {code:codIdentificativo,term: inputVal}).done(function(data){
+          $.get("backend-search-nomeFile.php", {tipo: tipo, code:codIdentificativo,term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });

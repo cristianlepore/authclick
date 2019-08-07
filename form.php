@@ -59,7 +59,7 @@ foreach($files as $file){ // iterate files
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
-<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:48px">
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:45px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
 </div>
