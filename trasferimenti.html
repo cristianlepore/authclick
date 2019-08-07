@@ -1096,7 +1096,7 @@
       <label for="codIdentificativo"><i class="fa fa-tag"></i> Codice identificativo dell'opera</label>
     </div>
     <div class="col-75 search-box-codIdentificativo">
-      <input type="text" autocomplete="off" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT000100" required>
+      <input type="text" autocomplete="off" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT0001" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -1150,14 +1150,12 @@
   <br>
 
   <div class="row"> 
-    <div class="col-25">
+    <div class="w3-col m3">
       <label for="nomeContratto"><i class="fa fa-file-o"></i> Nome file</label>
     </div>
-    <div class="col-75 search-box-nomeContratto">
-        <div class="w3-col m5 w3-left">
-          <input type="text" autocomplete="off" style="width:100%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
-          <div class="result" style="width:100%;"></div>
-        </div>
+    <div class="w3-col m9 search-box-nomeContratto">
+      <input type="text" autocomplete="off" style="width:100%;" placeholder="es: ContrattoAuthclick" id="nomeContratto" name="nomeContratto" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -1622,8 +1620,10 @@ $(document).ready(function(){
       if(inputVal.length){
           // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
           var codIdentificativo=document.myFormOpera.codIdentificativo.value;
+          // PRENDO IL CODICE IDENTIFICATIVO (COD. FISCALE) DELL'UTENTE
+          var codFiscale=document.myFormOpera.codFiscale.value;
 
-          $.get("backend-search-nomeContratto.php", {code: codIdentificativo, term: inputVal}).done(function(data){
+          $.get("backend-search-nomeContratto.php", {codeFiscale: codFiscale, code: codIdentificativo, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });

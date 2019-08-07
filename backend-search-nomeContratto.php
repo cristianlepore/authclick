@@ -10,10 +10,21 @@ if($db === false){
 
 if(isset($_REQUEST["term"])){
     $codIdentificativo = $_REQUEST["code"];
+    $codFiscale = $_REQUEST["codeFiscale"];
 
-    // Prepare a select statement
-    $sql = "SELECT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id`= `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND `File`.`Tipologia`='Contratto' AND Nome LIKE ? ";
-   
+    // SELEZIONO ID UTENTE CHE HA QUEL CODICE FISCALE. QUESTO VALE SOLO SE L'UTENTE È GIÀ PRESENTE NEL DATABASE.
+    $result = $db->query( " SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' " );
+
+    // SE C'È GIÀ UN UTENTE CON QUEL CODICE IDENTIFICATIVO AL SISTEMA, GUARDO I FILE DEL CONTRATTO AD ESSO ASSOCIATI
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+        $userID = $row['id'];
+        
+        // ESTRAGGO DALLA TABELLA FILE IL NOME PER L'UTENTE (SOLO SE È GIÀ REGISTRATO AL DATABASE CON UN CONTRATTO CARICATO)
+        $sql = "SELECT DISTINCT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id` = `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND `File`.`Tipologia`='Contratto' AND `File`.`Utente_id`= 772 AND Nome LIKE ? ";
+
+    }
+
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_term);

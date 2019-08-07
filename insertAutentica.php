@@ -110,7 +110,7 @@ $luogoNascita = $_POST['luogoNascita'];
 $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
 
 $giornoNascita = (int)$_POST['giornoNascita'];
-$meseNascita = (int)$_POST['meseNascita'];
+$meseNascita = $_POST['meseNascita'];
 $annoNascita = (int)$_POST['annoNascita'];
 
 $luogoMorte = $_POST['luogoMorte'];
@@ -204,18 +204,30 @@ if($firma=='off')
   $noteFirma="";
 
 // INCREMENTE DI 1 IL NUMERO DEL MESE PER FARLO CORRISPONDERE AL VALORE REALE
-if($meseNascita!="" || $meseNascita!=0){
+if($meseNascita!="NULL"){
   $meseNascita=$meseNascita+1;
 }
-if($meseMorte!="" || $meseMorte!=0){
+// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
+$meseNascita = (int)$meseNascita;
+
+if($meseMorte!="NULL"){
   $meseMorte=$meseMorte+1;
 }
-if($meseScatto!="" || $meseScatto!=0){
+// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
+$meseMorte = (int)$meseMorte;
+
+if($meseScatto!="NULL"){
   $meseScatto=$meseScatto+1;
 }
-if($meseStampa!="" || $meseStampa!=0){
+// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
+$meseScatto = (int)$meseScatto;
+
+if($meseStampa!="NULL"){
   $meseStampa=$meseStampa+1;
 }
+// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
+$meseStampa = (int)$meseStampa;
+
 
 // REGEX PER PRENDERE SOLTANTO CARATTERI ALFABETICI.
 $rgxOnlyString = "/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/";

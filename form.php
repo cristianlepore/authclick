@@ -164,7 +164,7 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseNascita" name="meseNascita">
-          <option value=""> Mese </option>
+          <option value="NULL"> Mese </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -201,7 +201,7 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseDecesso" name="meseDecesso">
-          <option value=""> Mese </option>
+          <option value="NULL"> Mese </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -259,7 +259,7 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseScatto" name="meseScatto">
-          <option value=""> Mese </option>
+          <option value="NULL"> Mese </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
@@ -284,7 +284,7 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="meseStampa" name="meseStampa">
-          <option value=""> Mese </option>
+          <option value="NULL"> Mese </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
