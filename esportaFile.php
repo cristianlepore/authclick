@@ -413,7 +413,7 @@
               echo "<tr>";
               echo "<td style='width:15%;' class='tdStorico'>";
               // STAMPO A VIDEO IL NUMERO DEL FILE (IN ORDINE INVERSO)
-              echo " ".$numFotoHistory;
+              echo " ".$numFotoHistory."°";
               echo "</td>";
               // DECREMENTO IL NUMERO DEL FILE
               $numFotoHistory--;
@@ -446,7 +446,7 @@
               echo "<tr>";
               echo "<td style='width:15%;' class='tdStorico'>";
               // STAMPO A VIDEO IL NUMERO DEL FILE (IN ORDINE INVERSO)
-              echo " ".$numSchedaHistory;
+              echo " ".$numSchedaHistory."°";
               echo "</td>";
               // DECREMENTO IL NUMERO DEL FILE
               $numSchedaHistory--;

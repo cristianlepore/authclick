@@ -116,7 +116,7 @@
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
 
-  <form name="myFormOpera" action="/authclick/new/insertTrasferimenti.php" method="POST" enctype="multipart/form-data" onsubmit="return validateform()">
+  <form name="myFormOpera" action="/authclick/new/trasferimentiResponse.php" method="POST" enctype="multipart/form-data" onsubmit="return validateform()">
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
   <div class="row">
     <div class="col-25">
@@ -1526,7 +1526,10 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       if(inputVal.length){
-          $.get("backend-searchNome.php", {term: inputVal}).done(function(data){
+          // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+          var cognome=document.myFormOpera.cognome.value;
+
+          $.get("backend-searchNome.php", {cognome: cognome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });
@@ -1549,7 +1552,10 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       if(inputVal.length){
-          $.get("backend-searchCognome.php", {term: inputVal}).done(function(data){
+          // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+          var nome=document.myFormOpera.nome.value;
+
+          $.get("backend-searchCognome.php", {nome: nome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });
@@ -1572,7 +1578,13 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       if(inputVal.length){
-          $.get("backend-searchCodFiscale.php", {term: inputVal}).done(function(data){
+          // PRENDO IL VALORE DEL NOME DA PASSARGLI
+          var nome=document.myFormOpera.nome.value;
+
+          // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+          var cognome=document.myFormOpera.cognome.value;
+
+          $.get("backend-searchCodFiscale.php", {nome: nome, cognome: cognome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });

@@ -464,7 +464,7 @@ $(document).ready(function(){
   
   // Set search input value on click of result item
   $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-nomeFile").find('input[type="text"]').val($(this).text());
+      $(this).parents(".search-box-tipologia").find('input[type="text"]').val($(this).text());
       $(this).parent(".result").empty();
   });
 });

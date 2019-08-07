@@ -9,10 +9,15 @@ if($db === false){
 }
 
 if(isset($_REQUEST["term"])){
+    // PRENDO IL VALORE DEL NOME
+    // $nome = $_REQUEST["nome"];
 
+    // PRENDO IL NOME DEL COGNOME
+    // $cognome = $_REQUEST["cognome"];
+    
     // Prepare a select statement
     $sql = "SELECT DISTINCT `Codice_fiscale` FROM `Utente` WHERE Codice_fiscale LIKE ?";
-    
+
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_term);

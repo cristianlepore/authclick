@@ -1037,7 +1037,10 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       if(inputVal.length){
-          $.get("backend-searchNome.php", {term: inputVal}).done(function(data){
+          // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+          var cognome=document.myForm.cognome.value;
+
+          $.get("backend-searchNome.php", {cognome: cognome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });
@@ -1060,7 +1063,10 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       if(inputVal.length){
-          $.get("backend-searchCognome.php", {term: inputVal}).done(function(data){
+          // PRENDO IL VALORE DEL NOME DA PASSARGLI
+          var nome=document.myForm.nome.value;
+
+          $.get("backend-searchCognome.php", {nome: nome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
           });

@@ -19,9 +19,9 @@ if(isset($_REQUEST["term"])){
     if(mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
         $userID = $row['id'];
-        
+
         // ESTRAGGO DALLA TABELLA FILE IL NOME PER L'UTENTE (SOLO SE È GIÀ REGISTRATO AL DATABASE CON UN CONTRATTO CARICATO)
-        $sql = "SELECT DISTINCT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id` = `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND `File`.`Tipologia`='Contratto' AND `File`.`Utente_id`= 772 AND Nome LIKE ? ";
+        $sql = "SELECT DISTINCT `File`.`Nome` FROM `File` INNER JOIN `Fotografia` ON `File`.`Fotografia_id` = `Fotografia`.`id` WHERE `Fotografia`.`Codice_identificativo` = '$codIdentificativo' AND `File`.`Tipologia`='Contratto' AND `File`.`Utente_id`= $userID AND Nome LIKE ? ";
 
     }
 
@@ -42,7 +42,7 @@ if(isset($_REQUEST["term"])){
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
 
-                    $fileName = pathinfo($row["Nome"])['filename'];
+                    $fileName = $row["Nome"];
 
                     echo "<p>" . $fileName . "</p>";
                 }

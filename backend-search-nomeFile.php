@@ -31,8 +31,7 @@ if(isset($_REQUEST["term"])){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-
-                    $fileName = pathinfo($row["Nome"])['filename'];
+                    $fileName = $row["Nome"];
 
                     echo "<p>" . $fileName . "</p>";
                 }

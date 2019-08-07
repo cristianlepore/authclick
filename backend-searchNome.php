@@ -9,11 +9,19 @@ if($db === false){
 }
 
 if(isset($_REQUEST["term"])){
+    // PRENDO IL VALORE DEL COGNOME
+    $cognome = $_REQUEST["cognome"];
 
-    // Prepare a select statement
-    $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Nome LIKE ?";
-    
+    if($cognome==""){
+        // Prepare a select statement
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Nome LIKE ?";
+    }else {
+        // Prepare a select statement
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE `Cognome`='$cognome' AND Nome LIKE ?";
+    }
+
     if($stmt = mysqli_prepare($db, $sql)){
+
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_term);
 
