@@ -103,15 +103,12 @@ $insertOK = 0;
 
 // PRENDO I VALORI CHE MI SONO PASSATI DAL FILE FORM.PHP
 $nome = $_POST['nome'];
-$nome = mysqli_real_escape_string($db,$nome);
 $nome = ucwords($nome);
 
 $cognome = $_POST['cognome'];
-$cognome = mysqli_real_escape_string($db,$cognome);
 $cognome = ucwords($cognome);
 
 $luogoNascita = $_POST['luogoNascita'];
-$luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
 $luogoNascita = ucwords($luogoNascita);
 
 $giornoNascita = (int)$_POST['giornoNascita'];
@@ -119,7 +116,6 @@ $meseNascita = (int)$_POST['meseNascita'];
 $annoNascita = (int)$_POST['annoNascita'];
 
 $luogoMorte = $_POST['luogoMorte'];
-$luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
 $luogoMorte = ucwords($luogoMorte);
 
 $giornoMorte = (int)$_POST['giornoDecesso'];
@@ -127,11 +123,9 @@ $meseMorte = (int)$_POST['meseDecesso'];
 $annoMorte = (int)$_POST['annoDecesso'];
 
 $keywordsAutore = $_POST['keywords'];
-$keywordsAutore = mysqli_real_escape_string($db,$keywordsAutore);
 
 // VALORI DA POST DI OPERA
 $titolo = $_POST['titolo'];
-$titolo = mysqli_real_escape_string($db,$titolo);
 
 $giornoScatto = (int)$_POST['giornoScatto'];
 $meseScatto = (int)$_POST['meseScatto'];
@@ -145,45 +139,36 @@ $lunghezza = $_POST['lunghezza'];
 $larghezza = $_POST['larghezza'];
 
 $tecnicaScatto = $_POST['tecnicaScatto'];
-$tecnicaScatto = mysqli_real_escape_string($db,$tecnicaScatto);
 
 $tecnicaStampa = $_POST['tecnicaStampa'];
-$tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
 
 $supporto = $_POST['supporto'];
-$supporto = mysqli_real_escape_string($db,$supporto);
 
 $openEdition = $_POST['openEdition'];
 $numeroCopie = (int)$_POST['numeroCopie'];
 
 $noteNumeroCopie = $_POST['noteNumeroCopie'];
-$noteNumeroCopie = mysqli_real_escape_string($db,$noteNumeroCopie);
 
 $artistProof = $_POST['artistProof'];
 $numeroEsemplare = (int)$_POST['numeroEsemplare'];
 
 $noteNumeroEsemplare = $_POST['noteNumeroEsemplare'];
-$noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
 
 $targa = $_POST['targa'];
 $timbro = $_POST['timbro'];
 
 $noteTimbro = $_POST['noteTimbro'];
-$noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
 
 $firma = $_POST['firma'];
 
 $noteFirma = $_POST['noteFirma'];
-$noteFirma = mysqli_real_escape_string($db,$noteFirma);
 
 $annotazioni = $_POST['annotazioni'];
-$annotazioni = mysqli_real_escape_string($db,$annotazioni);
 
 $codiceIdentificativo = $_POST['code'];
 $codiceIdentificativo = strtoupper($codiceIdentificativo);
 
 $keywordsOpera = $_POST['keywordsOpera'];
-$keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
 
 $nuovoAutore = $_POST['nuovo_autore'];
 
@@ -291,45 +276,45 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
           <div class="w3-col m6 w3-left w3-padding-16">
  
             <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
-            <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
-            <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
-            <input type="hidden" name="luogoNascita" value = '<?php echo "$luogoNascita";?>' >
-            <input type="hidden" name="giornoNascita" value = '<?php echo "$giornoNascita";?>' >
-            <input type="hidden" name="meseNascita" value = '<?php echo "$meseNascita";?>' >
-            <input type="hidden" name="annoNascita" value = '<?php echo "$annoNascita";?>' >
-            <input type="hidden" name="luogoMorte" value = '<?php echo "$luogoMorte";?>' >
-            <input type="hidden" name="giornoDecesso" value = '<?php echo "$giornoMorte";?>' >
-            <input type="hidden" name="meseDecesso" value = '<?php echo "$meseMorte";?>' >
-            <input type="hidden" name="annoDecesso" value = '<?php echo "$annoMorte";?>' >
-            <input type="hidden" name="keywords" value = '<?php echo "$keywordsAutore";?>' >
+            <input type="hidden" name="nome" value = "<?php echo "$nome";?>" >
+            <input type="hidden" name="cognome" value = "<?php echo "$cognome";?>" >
+            <input type="hidden" name="luogoNascita" value = "<?php echo "$luogoNascita";?>" >
+            <input type="hidden" name="giornoNascita" value = "<?php echo "$giornoNascita";?>" >
+            <input type="hidden" name="meseNascita" value = "<?php echo "$meseNascita";?>" >
+            <input type="hidden" name="annoNascita" value = "<?php echo "$annoNascita";?>" >
+            <input type="hidden" name="luogoMorte" value = "<?php echo "$luogoMorte";?>" >
+            <input type="hidden" name="giornoDecesso" value = "<?php echo "$giornoMorte";?>" >
+            <input type="hidden" name="meseDecesso" value = "<?php echo "$meseMorte";?>" >
+            <input type="hidden" name="annoDecesso" value = "<?php echo "$annoMorte";?>" >
+            <input type="hidden" name="keywords" value = "<?php echo "$keywordsAutore";?>" >
 
-            <!-- INFORMAZIONI RELATIVE ALL'OPERA -->
-            <input type="hidden" name="titolo" value = '<?php echo "$titolo";?>' >
-            <input type="hidden" name="giornoScatto" value = '<?php echo "$giornoScatto";?>' >
-            <input type="hidden" name="meseScatto" value = '<?php echo "$meseScatto";?>' >
-            <input type="hidden" name="annoScatto" value = '<?php echo "$annoScatto";?>' >
-            <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
-            <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
-            <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
-            <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
-            <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
-            <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
-            <input type="hidden" name="tecnicaStampa" value = '<?php echo "$tecnicaStampa";?>' >
-            <input type="hidden" name="supporto" value = '<?php echo "$supporto";?>' >
-            <input type="hidden" name="openEdition" value = '<?php echo "$openEdition";?>' >
-            <input type="hidden" name="numeroCopie" value = '<?php echo "$numeroCopie";?>' >
-            <input type="hidden" name="noteNumeroCopie" value = '<?php echo "$noteNumeroCopie";?>' >
-            <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
-            <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
-            <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-            <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
-            <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
-            <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
-            <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
-            <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
-            <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-            <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
-            <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
+            <!-- INFORMAZIONI RELATIVE ALL"OPERA -->
+            <input type="hidden" name="titolo" value = "<?php echo "$titolo";?>" >
+            <input type="hidden" name="giornoScatto" value = "<?php echo "$giornoScatto";?>" >
+            <input type="hidden" name="meseScatto" value = "<?php echo "$meseScatto";?>" >
+            <input type="hidden" name="annoScatto" value = "<?php echo "$annoScatto";?>" >
+            <input type="hidden" name="giornoStampa" value = "<?php echo "$giornoStampa";?>" >
+            <input type="hidden" name="meseStampa" value = "<?php echo "$meseStampa";?>" >
+            <input type="hidden" name="annoStampa" value = "<?php echo "$annoStampa";?>" >
+            <input type="hidden" name="lunghezza" value = "<?php echo "$lunghezza";?>" >
+            <input type="hidden" name="larghezza" value = "<?php echo "$larghezza";?>" >
+            <input type="hidden" name="tecnicaScatto" value = "<?php echo "$tecnicaScatto";?>" >
+            <input type="hidden" name="tecnicaStampa" value = "<?php echo "$tecnicaStampa";?>" >
+            <input type="hidden" name="supporto" value = "<?php echo "$supporto";?>" >
+            <input type="hidden" name="openEdition" value = "<?php echo "$openEdition";?>" >
+            <input type="hidden" name="numeroCopie" value = "<?php echo "$numeroCopie";?>" >
+            <input type="hidden" name="noteNumeroCopie" value = "<?php echo "$noteNumeroCopie";?>" >
+            <input type="hidden" name="artistProof" value = "<?php echo "$artistProof";?>" >
+            <input type="hidden" name="numeroEsemplare" value = "<?php echo "$numeroEsemplare";?>" >
+            <input type="hidden" name="noteNumeroEsemplare" value = "<?php echo "$noteNumeroEsemplare";?>" >
+            <input type="hidden" name="targa" value = "<?php echo "$targa";?>" >
+            <input type="hidden" name="timbro" value = "<?php echo "$timbro";?>" >
+            <input type="hidden" name="noteTimbro" value = "<?php echo "$noteTimbro";?>" >
+            <input type="hidden" name="firma" value = "<?php echo "$firma";?>" >
+            <input type="hidden" name="noteFirma" value = "<?php echo "$noteFirma";?>" >
+            <input type="hidden" name="annotazioni" value = "<?php echo "$annotazioni";?>" >
+            <input type="hidden" name="code" value = "<?php echo "$codiceIdentificativo";?>" >
+            <input type="hidden" name="keywordsOpera" value = "<?php echo "$keywordsOpera";?>" >
             <input type="hidden" name="nuovo_autore" value = "1" >
 
             <!-- BOTTONE -->
@@ -341,46 +326,46 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
           </div>
           <form action="/authclick/new/insertAutentica.php" method="post" >
           <div class="w3-col m6 w3-left w3-padding-16" style="margin:-22px 0px 8px 0px">
-            <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
-            <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
-            <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
-            <input type="hidden" name="luogoNascita" value = '<?php echo "$luogoNascita";?>' >
-            <input type="hidden" name="giornoNascita" value = '<?php echo "$giornoNascita";?>' >
-            <input type="hidden" name="meseNascita" value = '<?php echo "$meseNascita";?>' >
-            <input type="hidden" name="annoNascita" value = '<?php echo "$annoNascita";?>' >
-            <input type="hidden" name="luogoMorte" value = '<?php echo "$luogoMorte";?>' >
-            <input type="hidden" name="giornoDecesso" value = '<?php echo "$giornoMorte";?>' >
-            <input type="hidden" name="meseDecesso" value = '<?php echo "$meseMorte";?>' >
-            <input type="hidden" name="annoDecesso" value = '<?php echo "$annoMorte";?>' >
-            <input type="hidden" name="keywords" value = '<?php echo "$keywordsAutore";?>' >
+            <!-- INFORMAZIONI RELATIVE ALL"AUTORE -->
+            <input type="hidden" name="nome" value = "<?php echo "$nome";?>" >
+            <input type="hidden" name="cognome" value = "<?php echo "$cognome";?>" >
+            <input type="hidden" name="luogoNascita" value = "<?php echo "$luogoNascita";?>" >
+            <input type="hidden" name="giornoNascita" value = "<?php echo "$giornoNascita";?>" >
+            <input type="hidden" name="meseNascita" value = "<?php echo "$meseNascita";?>" >
+            <input type="hidden" name="annoNascita" value = "<?php echo "$annoNascita";?>" >
+            <input type="hidden" name="luogoMorte" value = "<?php echo "$luogoMorte";?>" >
+            <input type="hidden" name="giornoDecesso" value = "<?php echo "$giornoMorte";?>" >
+            <input type="hidden" name="meseDecesso" value = "<?php echo "$meseMorte";?>" >
+            <input type="hidden" name="annoDecesso" value = "<?php echo "$annoMorte";?>" >
+            <input type="hidden" name="keywords" value = "<?php echo "$keywordsAutore";?>" >
 
-            <!-- INFORMAZIONI RELATIVE ALL'OPERA -->
-            <input type="hidden" name="titolo" value = '<?php echo "$titolo";?>' >
-            <input type="hidden" name="giornoScatto" value = '<?php echo "$giornoScatto";?>' >
-            <input type="hidden" name="meseScatto" value = '<?php echo "$meseScatto";?>' >
-            <input type="hidden" name="annoScatto" value = '<?php echo "$annoScatto";?>' >
-            <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
-            <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
-            <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
-            <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
-            <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
-            <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
-            <input type="hidden" name="tecnicaStampa" value = '<?php echo "$tecnicaStampa";?>' >
-            <input type="hidden" name="supporto" value = '<?php echo "$supporto";?>' >
-            <input type="hidden" name="openEdition" value = '<?php echo "$openEdition";?>' >
-            <input type="hidden" name="numeroCopie" value = '<?php echo "$numeroCopie";?>' >
-            <input type="hidden" name="noteNumeroCopie" value = '<?php echo "$noteNumeroCopie";?>' >
-            <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
-            <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
-            <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-            <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
-            <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
-            <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
-            <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
-            <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
-            <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-            <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
-            <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
+            <!-- INFORMAZIONI RELATIVE ALL"OPERA -->
+            <input type="hidden" name="titolo" value = "<?php echo "$titolo";?>" >
+            <input type="hidden" name="giornoScatto" value = "<?php echo "$giornoScatto";?>" >
+            <input type="hidden" name="meseScatto" value = "<?php echo "$meseScatto";?>" >
+            <input type="hidden" name="annoScatto" value = "<?php echo "$annoScatto";?>" >
+            <input type="hidden" name="giornoStampa" value = "<?php echo "$giornoStampa";?>" >
+            <input type="hidden" name="meseStampa" value = "<?php echo "$meseStampa";?>" >
+            <input type="hidden" name="annoStampa" value = "<?php echo "$annoStampa";?>" >
+            <input type="hidden" name="lunghezza" value = "<?php echo "$lunghezza";?>" >
+            <input type="hidden" name="larghezza" value = "<?php echo "$larghezza";?>" >
+            <input type="hidden" name="tecnicaScatto" value = "<?php echo "$tecnicaScatto";?>" >
+            <input type="hidden" name="tecnicaStampa" value = "<?php echo "$tecnicaStampa";?>" >
+            <input type="hidden" name="supporto" value = "<?php echo "$supporto";?>" >
+            <input type="hidden" name="openEdition" value = "<?php echo "$openEdition";?>" >
+            <input type="hidden" name="numeroCopie" value = "<?php echo "$numeroCopie";?>" >
+            <input type="hidden" name="noteNumeroCopie" value = "<?php echo "$noteNumeroCopie";?>" >
+            <input type="hidden" name="artistProof" value = "<?php echo "$artistProof";?>" >
+            <input type="hidden" name="numeroEsemplare" value = "<?php echo "$numeroEsemplare";?>" >
+            <input type="hidden" name="noteNumeroEsemplare" value = "<?php echo "$noteNumeroEsemplare";?>" >
+            <input type="hidden" name="targa" value = "<?php echo "$targa";?>" >
+            <input type="hidden" name="timbro" value = "<?php echo "$timbro";?>" >
+            <input type="hidden" name="noteTimbro" value = "<?php echo "$noteTimbro";?>" >
+            <input type="hidden" name="firma" value = "<?php echo "$firma";?>" >
+            <input type="hidden" name="noteFirma" value = "<?php echo "$noteFirma";?>" >
+            <input type="hidden" name="annotazioni" value = "<?php echo "$annotazioni";?>" >
+            <input type="hidden" name="code" value = "<?php echo "$codiceIdentificativo";?>" >
+            <input type="hidden" name="keywordsOpera" value = "<?php echo "$keywordsOpera";?>" >
             <input type="hidden" name="nuovo_autore" value = "0"><br>
             
             <!-- BOTTONE -->
@@ -395,6 +380,23 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     <?php
     exit();
 }else if($nuovoAutore=='' || $nuovoAutore == 1) {
+  // METTO IL CARATTERE DI ESCAPE PER FORMATTARE CORRETTAMENTE LA STRINGA CHE VERRÀ INSERITA NEL DB
+  $nome = mysqli_real_escape_string($db,$nome);
+  $cognome = mysqli_real_escape_string($db,$cognome);
+  $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
+  $luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
+  $keywordsAutore = mysqli_real_escape_string($db,$keywordsAutore);
+  $titolo = mysqli_real_escape_string($db,$titolo);
+  $tecnicaScatto = mysqli_real_escape_string($db,$tecnicaScatto);
+  $tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
+  $supporto = mysqli_real_escape_string($db,$supporto);
+  $noteNumeroCopie = mysqli_real_escape_string($db,$noteNumeroCopie);
+  $noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
+  $noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
+  $noteFirma = mysqli_real_escape_string($db,$noteFirma);
+  $annotazioni = mysqli_real_escape_string($db,$annotazioni);
+  $keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
+
 
   // SE I DATI DI MORTE NON SONO STATI INSERITI
     if($luogoMorte == "" && $annoMorte == ''){
@@ -458,49 +460,50 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
                </SCRIPT>");
 
 }else if($nuovoAutore==0){
+
   ?>
   <h4 class="w3-center">Seleziona uno di questi utenti.</h4>
   <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
     <form action="/authclick/new/insertOpera.php" method="post" >
         
         <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
-        <input type="hidden" name="luogoNascita" value = '<?php echo "$luogoNascita";?>' >
-        <input type="hidden" name="giornoNascita" value = '<?php echo "$giornoNascita";?>' >
-        <input type="hidden" name="meseNascita" value = '<?php echo "$meseNascita";?>' >
-        <input type="hidden" name="annoNascita" value = '<?php echo "$annoNascita";?>' >
-        <input type="hidden" name="luogoMorte" value = '<?php echo "$luogoMorte";?>' >
-        <input type="hidden" name="giornoDecesso" value = '<?php echo "$giornoMorte";?>' >
-        <input type="hidden" name="meseDecesso" value = '<?php echo "$meseMorte";?>' >
-        <input type="hidden" name="annoDecesso" value = '<?php echo "$annoMorte";?>' >
-        <input type="hidden" name="keywords" value = '<?php echo "$keywordsAutore";?>' >
+        <input type="hidden" name="luogoNascita" value = "<?php echo "$luogoNascita";?>" >
+        <input type="hidden" name="giornoNascita" value = "<?php echo "$giornoNascita";?>" >
+        <input type="hidden" name="meseNascita" value = "<?php echo "$meseNascita";?>" >
+        <input type="hidden" name="annoNascita" value = "<?php echo "$annoNascita";?>" >
+        <input type="hidden" name="luogoMorte" value = "<?php echo "$luogoMorte";?>" >
+        <input type="hidden" name="giornoDecesso" value = "<?php echo "$giornoMorte";?>" >
+        <input type="hidden" name="meseDecesso" value = "<?php echo "$meseMorte";?>" >
+        <input type="hidden" name="annoDecesso" value = "<?php echo "$annoMorte";?>" >
+        <input type="hidden" name="keywords" value = "<?php echo "$keywordsAutore";?>" >
         
         <!-- INFORMAZIONI RELATIVE ALL'OPERA DA PASSARE AL PROSSIMO FILE -->
-        <input type="hidden" name="titolo" value = '<?php echo "$titolo";?>' >
-        <input type="hidden" name="giornoScatto" value = '<?php echo "$giornoScatto";?>' >
-        <input type="hidden" name="meseScatto" value = '<?php echo "$meseScatto";?>' >
-        <input type="hidden" name="annoScatto" value = '<?php echo "$annoScatto";?>' >
-        <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
-        <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
-        <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
-        <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
-        <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
-        <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
-        <input type="hidden" name="tecnicaStampa" value = '<?php echo "$tecnicaStampa";?>' >
-        <input type="hidden" name="supporto" value = '<?php echo "$supporto";?>' >
-        <input type="hidden" name="openEdition" value = '<?php echo "$openEdition";?>' >
-        <input type="hidden" name="numeroCopie" value = '<?php echo "$numeroCopie";?>' >
-        <input type="hidden" name="noteNumeroCopie" value = '<?php echo "$noteNumeroCopie";?>' >
-        <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
-        <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
-        <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-        <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
-        <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
-        <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
-        <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
-        <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
-        <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-        <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
-        <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
+        <input type="hidden" name="titolo" value = "<?php echo "$titolo";?>" >
+        <input type="hidden" name="giornoScatto" value = "<?php echo "$giornoScatto";?>" >
+        <input type="hidden" name="meseScatto" value = "<?php echo "$meseScatto";?>" >
+        <input type="hidden" name="annoScatto" value = "<?php echo "$annoScatto";?>" >
+        <input type="hidden" name="giornoStampa" value = "<?php echo "$giornoStampa";?>" >
+        <input type="hidden" name="meseStampa" value = "<?php echo "$meseStampa";?>" >
+        <input type="hidden" name="annoStampa" value = "<?php echo "$annoStampa";?>" >
+        <input type="hidden" name="lunghezza" value = "<?php echo "$lunghezza";?>" >
+        <input type="hidden" name="larghezza" value = "<?php echo "$larghezza";?>" >
+        <input type="hidden" name="tecnicaScatto" value = "<?php echo "$tecnicaScatto";?>" >
+        <input type="hidden" name="tecnicaStampa" value = "<?php echo "$tecnicaStampa";?>" >
+        <input type="hidden" name="supporto" value = "<?php echo "$supporto";?>" >
+        <input type="hidden" name="openEdition" value = "<?php echo "$openEdition";?>" >
+        <input type="hidden" name="numeroCopie" value = "<?php echo "$numeroCopie";?>" >
+        <input type="hidden" name="noteNumeroCopie" value = "<?php echo "$noteNumeroCopie";?>" >
+        <input type="hidden" name="artistProof" value = "<?php echo "$artistProof";?>" >
+        <input type="hidden" name="numeroEsemplare" value = "<?php echo "$numeroEsemplare";?>" >
+        <input type="hidden" name="noteNumeroEsemplare" value = "<?php echo "$noteNumeroEsemplare";?>" >
+        <input type="hidden" name="targa" value = "<?php echo "$targa";?>" >
+        <input type="hidden" name="timbro" value = "<?php echo "$timbro";?>" >
+        <input type="hidden" name="noteTimbro" value = "<?php echo "$noteTimbro";?>" >
+        <input type="hidden" name="firma" value = "<?php echo "$firma";?>" >
+        <input type="hidden" name="noteFirma" value = "<?php echo "$noteFirma";?>" >
+        <input type="hidden" name="annotazioni" value = "<?php echo "$annotazioni";?>" >
+        <input type="hidden" name="code" value = "<?php echo "$codiceIdentificativo";?>" >
+        <input type="hidden" name="keywordsOpera" value = "<?php echo "$keywordsOpera";?>" >
     <table style="width:100%; margin-top:-40px; margin-left:20px;">
     <?php
 
@@ -512,6 +515,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         ?><tr><td>
         <!-- PASSAGGIO DEI DATI -->
         <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+        <input type="hidden" name="tipologia" value = '<?php echo "$users[1]";?>' >
         <?php
         echo "<b>Autore: </b>".$nome." ".$cognome."</td><td><b>Titolo: </b>".$photo['Titolo']."</td><td><b>Codice Identificativo: </b>".$photo['Codice_identificativo']."</td>";?><br>
         </td></tr><?php
@@ -519,12 +523,13 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     }
 
     // ALTRO
-    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
+    $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
     while($users = mysqli_fetch_array($result)){
       $codFiscale = $db->query("SELECT `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro'");
       while($codiceFiscale = mysqli_fetch_array($codFiscale)){
         ?><tr><td>
         <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+        <input type="hidden" name="tipologia" value = '<?php echo "$users[1]";?>' >
         <?php
         echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
         </td></tr><?php
@@ -539,6 +544,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         ?><tr><td>
         <!-- PASSAGGIO DEI DATI -->
         <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+        <input type="hidden" name="tipologia" value = '<?php echo "$users[1]";?>' >
         <?php
         echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
         </td></tr><?php
