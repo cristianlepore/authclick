@@ -46,33 +46,73 @@ $statusMsg = '';
 
 $autoreID = $_POST['userID'];
 
+// VALORI DA POST DI AUTORE
+$luogoNascita = $_POST['luogoNascita'];
+$luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
+$luogoNascita = ucwords($luogoNascita);
+
+$giornoNascita = (int)$_POST['giornoNascita'];
+$meseNascita = (int)$_POST['meseNascita'];
+$annoNascita = (int)$_POST['annoNascita'];
+$luogoMorte = $_POST['luogoMorte'];
+$luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
+$luogoMorte = ucwords($luogoMorte);
+
+$giornoMorte = (int)$_POST['giornoDecesso'];
+$meseMorte = (int)$_POST['meseDecesso'];
+$annoMorte = (int)$_POST['annoDecesso'];
+$keywordsAutore = $_POST['keywords'];
+$keywordsAutore = mysqli_real_escape_string($db,$keywordsAutore);
+
 // VALORI DA POST DI OPERA
 $titolo = $_POST['titolo'];
+$titolo = mysqli_real_escape_string($db,$titolo);
+
 $giornoScatto = (int)$_POST['giornoScatto'];
-$meseScatto = $_POST['meseScatto'];
+$meseScatto = (int)$_POST['meseScatto'];
 $annoScatto = (int)$_POST['annoScatto'];
 $giornoStampa = (int)$_POST['giornoStampa'];
-$meseStampa = $_POST['meseStampa'];
+$meseStampa = (int)$_POST['meseStampa'];
 $annoStampa = (int)$_POST['annoStampa'];
 $lunghezza = $_POST['lunghezza'];
 $larghezza = $_POST['larghezza'];
 $tecnicaScatto = $_POST['tecnicaScatto'];
+$tecnicaScatto = mysqli_real_escape_string($db,$tecnicaScatto);
+
 $tecnicaStampa = $_POST['tecnicaStampa'];
+$tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
+
 $supporto = $_POST['supporto'];
+$supporto = mysqli_real_escape_string($db,$supporto);
+
 $openEdition = $_POST['openEdition'];
 $numeroCopie = (int)$_POST['numeroCopie'];
 $noteNumeroCopie = $_POST['noteNumeroCopie'];
+$noteNumeroCopie = mysqli_real_escape_string($db,$noteNumeroCopie);
+
 $artistProof = $_POST['artistProof'];
 $numeroEsemplare = (int)$_POST['numeroEsemplare'];
 $noteNumeroEsemplare = $_POST['noteNumeroEsemplare'];
+$noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
+
 $targa = $_POST['targa'];
 $timbro = $_POST['timbro'];
 $noteTimbro = $_POST['noteTimbro'];
+$noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
+
 $firma = $_POST['firma'];
 $noteFirma = $_POST['noteFirma'];
+$noteFirma = mysqli_real_escape_string($db,$noteFirma);
+
 $annotazioni = $_POST['annotazioni'];
+$annotazioni = mysqli_real_escape_string($db,$annotazioni);
+
 $codiceIdentificativo = $_POST['code'];
+$codiceIdentificativo = strtoupper($codiceIdentificativo);
+
 $keywordsOpera = $_POST['keywordsOpera'];
+$keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
+
 
 // CONVERTO IL TOGGLE DEL TIMBRO E DELLA FIRMA IN UN VALORE (0,1)
 if($timbro=='on')
@@ -94,7 +134,7 @@ else
       $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $autoreID, '$keywordsOpera')");
 
       // AGGIORNO LA TABELLA UTENTE. SE ERA UN ACQUIRENTE ORA DIVENTERÀ UN AUTORE.
-      $update = $db->query("UPDATE `Utente` SET `Tipologia`='Autore' WHERE `id`=$autoreID ");
+      $update = $db->query("UPDATE `Utente` SET `Giorno_nascita`=$giornoNascita,`Mese_nascita`=$meseNascita,`Anno_nascita`=$annoNascita, `Luogo_nascita`='$luogoNascita', `Giorno_morte`=$giornoMorte,`Mese_morte`=$meseMorte,`Anno_morte`=$annoMorte, `Luogo_morte`='$luogoMorte',`Tipologia`='Autore/altro', `Keywords`='$keywordsAutore' WHERE `id`=$autoreID ");
 
       // PRENDO L'ID DELL'OPERA INSERITO APPENA SOPRA
       $result = $db->query("SELECT MAX(`id`) FROM `Fotografia`");

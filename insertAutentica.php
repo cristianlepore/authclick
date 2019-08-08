@@ -275,8 +275,9 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
 
   // VERIFICO CHE L'AUTORE NON SIA GIÀ PRESENTE NEL DATABASE
   $result = $db->query("SELECT `Nome`, `Cognome`,`Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND`Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' ");
+  $resultProprietario = $db->query("SELECT `Nome`, `Cognome`,`Tipologia` FROM `Utente` WHERE `Tipologia`='Altro' OR `Tipologia`='Autore/proprietario' ");
 
-  if($row = mysqli_num_rows($result) > 0 && $nuovoAutore==''){
+  if( ( $row = mysqli_num_rows($result) || $row = mysqli_num_rows($resultProprietario) > 0 ) && $nuovoAutore==''){
     // L'AUTORE È GIÀ PRESENTE NEL DATABASE
     ?>
 
@@ -462,6 +463,17 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
   <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
     <form action="/authclick/new/insertOpera.php" method="post" >
         
+        <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
+        <input type="hidden" name="luogoNascita" value = '<?php echo "$luogoNascita";?>' >
+        <input type="hidden" name="giornoNascita" value = '<?php echo "$giornoNascita";?>' >
+        <input type="hidden" name="meseNascita" value = '<?php echo "$meseNascita";?>' >
+        <input type="hidden" name="annoNascita" value = '<?php echo "$annoNascita";?>' >
+        <input type="hidden" name="luogoMorte" value = '<?php echo "$luogoMorte";?>' >
+        <input type="hidden" name="giornoDecesso" value = '<?php echo "$giornoMorte";?>' >
+        <input type="hidden" name="meseDecesso" value = '<?php echo "$meseMorte";?>' >
+        <input type="hidden" name="annoDecesso" value = '<?php echo "$annoMorte";?>' >
+        <input type="hidden" name="keywords" value = '<?php echo "$keywordsAutore";?>' >
+        
         <!-- INFORMAZIONI RELATIVE ALL'OPERA DA PASSARE AL PROSSIMO FILE -->
         <input type="hidden" name="titolo" value = '<?php echo "$titolo";?>' >
         <input type="hidden" name="giornoScatto" value = '<?php echo "$giornoScatto";?>' >
@@ -489,11 +501,11 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
         <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
         <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
-    <table style="width:100%; margin-top:-20px; margin-left:20px;">
+    <table style="width:100%; margin-top:-40px; margin-left:20px;">
     <?php
 
-    // SE NON È UN NUOVO AUTORE ASSOCIA LA FOTO AD UNO ESISTENTE
-    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`='$giornoNascita' AND `Mese_nascita`='$meseNascita' AND `Anno_nascita`='$annoNascita' AND `Luogo_nascita`='$luogoNascita' ");
+    // AUTORE
+    $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND `Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' AND `Tipologia`='Autore' ");
     while($users = mysqli_fetch_array($result)){
       $opere = $db->query("SELECT `Titolo`, `Codice_identificativo` FROM `Fotografia` WHERE `Autore_id`=$users[0] LIMIT 1");
       while($photo = mysqli_fetch_array($opere)){
@@ -505,18 +517,34 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         </td></tr><?php
       }
     }
-    // SE NON È UN NUOVO AUTORE ASSOCIA LA FOTO AD UNO ESISTENTE
-    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro'");
+
+    // ALTRO
+    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
     while($users = mysqli_fetch_array($result)){
       $codFiscale = $db->query("SELECT `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro'");
       while($codiceFiscale = mysqli_fetch_array($codFiscale)){
         ?><tr><td>
         <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
         <?php
-        echo "<b>Utente: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
+        echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
         </td></tr><?php
       }
     }
+    
+    // AUTORE/ALTRO
+    $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND `Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' AND `Tipologia`='Autore/altro' ");
+    while($users = mysqli_fetch_array($result)){
+      $codFiscale = $db->query("SELECT `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Autore/altro'");
+      while($codiceFiscale = mysqli_fetch_array($codFiscale)){
+        ?><tr><td>
+        <!-- PASSAGGIO DEI DATI -->
+        <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+        <?php
+        echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
+        </td></tr><?php
+      }
+    }
+
     
     ?></table>
       <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
