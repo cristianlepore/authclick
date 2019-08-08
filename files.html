@@ -40,6 +40,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -47,6 +48,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="#" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -94,7 +96,7 @@
     <form name="myForm" action="/authclick/new/caricaFile.php" method="post" enctype="multipart/form-data" onsubmit="return validateform()">
     <div class="w3-col m8">
         <div class="search-box-codIdentificativo search-box-tipologia">
-          <input type="text" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
+          <input type="text" style="text-transform: uppercase;" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativo" name="codIdentificativo" required>
           <div class="result" style="width:100%;"></div>
         </div>
     </div>
@@ -175,7 +177,7 @@
     <form name="myFormEsporta" action="/authclick/new/esportaFile.php" method="post" onsubmit="return validateformEsporta()">
       <div class="w3-col m6">
         <div class="w3-center search-box-codIdentificativo">
-          <input type="text" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>
+          <input type="text" style="text-transform: uppercase;" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>
           <div class="result" style="width:100%;"></div>
         </div>
       </div>

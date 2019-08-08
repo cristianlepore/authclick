@@ -42,6 +42,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -49,6 +50,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -123,7 +125,7 @@
       <label for="nome"><i class="fa fa-user"></i> Nome</label>
     </div>
     <div class="search-boxNome col-75">
-        <input type="text" autocomplete="off" id="nome" name="nome" placeholder="es: Luigi" required>
+        <input type="text" style="text-transform: capitalize;" autocomplete="off" id="nome" name="nome" placeholder="es: Luigi" required>
         <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -134,7 +136,7 @@
       <label for="cognome"><i class="fa fa-user"></i> Cognome</label>
     </div>
     <div class="search-boxCognome col-75">
-      <input type="text" autocomplete="off" id="cognome" name="cognome" placeholder="es: Verdi" required>
+      <input type="text" style="text-transform: capitalize;" autocomplete="off" id="cognome" name="cognome" placeholder="es: Verdi" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -147,7 +149,7 @@
       <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Identificativo</label>
     </div>
     <div class="col-75 search-boxCodFiscale">
-      <input type="text" autocomplete="off" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
+      <input type="text" style="text-transform: uppercase;" autocomplete="off" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -442,7 +444,7 @@
       <label for="indirizzoCittà"><i class="fa fa-institution"></i> Città</label>
     </div>
     <div class="col-75">
-      <input type="text" id="indirizzoCittà" name="indirizzoCittà" placeholder="es: Milano">
+      <input type="text" id="indirizzoCittà" style="text-transform: capitalize;" name="indirizzoCittà" placeholder="es: Milano">
     </div>
   </div>
 
@@ -741,7 +743,7 @@
       <label for="domicilioCittà"><i class="fa fa-institution"></i> Città</label>
     </div>
     <div class="col-75">
-      <input type="text" id="domicilioCittà" name="domicilioCittà" placeholder="es: Milano">
+      <input type="text" id="domicilioCittà" name="domicilioCittà" style="text-transform: capitalize;" placeholder="es: Milano">
     </div>
   </div>
 
@@ -1040,7 +1042,7 @@
       <label for="residenzaCittà"><i class="fa fa-institution"></i> Città</label>
     </div>
     <div class="col-75">
-      <input type="text" id="residenzaCittà" name="residenzaCittà" placeholder="es: Milano">
+      <input type="text" id="residenzaCittà" name="residenzaCittà" style="text-transform: capitalize;" placeholder="es: Milano">
     </div>
   </div>
 
@@ -1096,7 +1098,7 @@
       <label for="codIdentificativo"><i class="fa fa-tag"></i> Codice identificativo dell'opera</label>
     </div>
     <div class="col-75 search-box-codIdentificativo">
-      <input type="text" autocomplete="off" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT0001" required>
+      <input type="text" style="text-transform: uppercase;" autocomplete="off" id="codIdentificativo" name="codIdentificativo" placeholder="es: MRT0001" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>

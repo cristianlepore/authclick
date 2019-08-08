@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>App</title>
+<meta charset="UTF-8">
+
+<!-- HASH AUTORE DELLA PAGINA WEB -->
+<meta name="author" content="68bf9588feee255538e722cce5971af3c9f50e5ed8e06b876032e9fb98c5a9f62036c47cf20f4022eac95154f1a88b65aef367eefa36898fc8e9e850be1af275">
+<!-- CONSENTE LA VISUALIZZAZIONE SU SMARTPHONES -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CARICO IL MIO FOGLIO DI STILE -->
+<link rel="stylesheet" href="css/style.css">
+<!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+<style>
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+#w3-top{
+  transition: margin-left .5s;
+}
+
+</style>
+
+<body class="animate-in" id="animate-in">
+
+<!-- BOTTONE IN BASSO A DESTRA DI RITORNO AD INIZIO PAGINA -->
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top <i class="fa fa-caret-up"></i></button>
+
+<!-- BARRA DI NAVIGAZIONE --> 
+<div id="w3-top" class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+    <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>    
+    <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
+    <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
+    <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
+    </div>
+</div>
+
+<!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+    <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
+    <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
+</div>
+
+<!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
+<div id="header" class="header">
+    <div id="progress-container" class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+    </div>  
+</div>
+
+<!-- BARRA LATERALE SINISTRA -->
+<div id="mySidebar" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="w3-padding-16"></div>
+    <div id="dropdown">
+    <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput" onkeyup="myFunctionSearch()"></div>
+    <a class="collapsible"><i class="fa fa-upload"></i> Carica</a>
+    <div class="content" style="margin-left:30px;">
+        <a style="font-size:14px;" href="#codIdentificativo"><i>Tipo di file</i></a>
+        <a style="font-size:14px;" href="#tipo"><i>Nome file</i></a>
+        <a style="font-size:14px;" href="#nomeFile"><i>Carica il file dal pc</i></a>
+    </div>
+    <a class="collapsible"><i class="fa fa-download"></i> Esporta</a>
+    <div class="content" style="margin-left:30px;">
+        <a style="font-size:14px;" href="#panel_esporta"><i>Codice identificativo fotografia</i></a>
+    </div>
+    </div>
+</div>
+
+<!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
+<div id="header" class="header">
+    <div id="progress-container" class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>  
+</div>
+
+<div id="main" onclick="closeNav2()">
+    <div class="main">
+        <div class="container">
+        <div class="w3-center">
+            HELLO
+        <div>
+        </div>
+    </div>
+</div>
+            
+<script>
+
+// USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
+function myFunction() {
+  var x = document.getElementById("navDemo");
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("myBtn").style.display = "block";
+  } else {
+    document.getElementById("myBtn").style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
+window.addEventListener("beforeunload", function () {
+  document.body.classList.add("animate-out");
+});
+
+// FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
+function openNav() {
+  if (window.innerWidth > 600) {   
+    event.stopPropagation();
+    document.getElementById("mySidebar").style.width = "225px";
+    document.getElementById("main").style.marginLeft = "225px";
+    document.getElementById("w3-top").style.marginLeft = "225px";   
+    document.getElementById("myBtn").style.marginLeft = "260px";   
+    document.getElementById("header").style.marginLeft = "225px";
+  }else{
+    document.getElementById("mySidebar").style.width = "225px";
+  }
+}
+
+// FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
+function closeNav() {
+  if (window.innerWidth > 600) {   
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft= "0";
+    document.getElementById("w3-top").style.marginLeft = "0px";  
+    document.getElementById("myBtn").style.marginLeft = "4%";
+    document.getElementById("header").style.marginLeft = "0";
+  }else{
+    document.getElementById("mySidebar").style.width = "0";
+  }
+}
+
+function closeNav2() {
+  if (window.innerWidth > 600) {
+  }else{
+    document.getElementById("mySidebar").style.width = "0";
+  }
+}
+
+// MENU DI RICERCA PAROLE
+function myFunctionSearch() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("dropdown");
+  a = div.getElementsByTagName("a");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+}
+
+
+// MENU COLLAPSIBLE BARRA LATERALE SINISTRA
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+</script>
+
+</body>
+</html>

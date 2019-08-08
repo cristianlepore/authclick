@@ -55,6 +55,7 @@ foreach($files as $file){ // iterate files
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="contratto.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -62,6 +63,7 @@ foreach($files as $file){ // iterate files
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:45px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -123,7 +125,7 @@ foreach($files as $file){ // iterate files
       <label for="nome"><i class="fa fa-user"></i> Nome</label>
     </div>
     <div class="search-boxNome col-75">
-      <input type="text" autocomplete="off" id="nome" name="nome" placeholder="es: Mario" required>
+      <input type="text" autocomplete="off" style="text-transform: capitalize;" id="nome" name="nome" placeholder="es: Mario" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -133,7 +135,7 @@ foreach($files as $file){ // iterate files
       <label for="cognome"><i class="fa fa-user"></i> Cognome</label>
     </div>
     <div class="search-boxCognome col-75">
-      <input type="text" id="cognome" autocomplete="off" name="cognome" placeholder="es: Rossi" required>
+      <input type="text" id="cognome" style="text-transform: capitalize;" autocomplete="off" name="cognome" placeholder="es: Rossi" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -146,7 +148,7 @@ foreach($files as $file){ // iterate files
       <label for="luogoNascita"><i class="fa fa-institution"></i> Luogo di nascita</label>
     </div>
     <div class="col-75">
-      <input type="text" id="luogoNascita" name="luogoNascita" placeholder="es: Milano" required>
+      <input type="text" style="text-transform: capitalize;" id="luogoNascita" name="luogoNascita" placeholder="es: Milano" required>
     </div>
   </div>
   <br>
@@ -182,7 +184,7 @@ foreach($files as $file){ // iterate files
       <label for="luogoMorte"><i class="fa fa-institution"></i> Luogo di morte</label>
     </div>
     <div class="col-75">
-      <input type="text" id="luogoMorte" name="luogoMorte" placeholder="es: Roma">
+      <input type="text" style="text-transform: capitalize;" id="luogoMorte" name="luogoMorte" placeholder="es: Roma">
     </div>
   </div>
   <br>
@@ -195,7 +197,7 @@ foreach($files as $file){ // iterate files
       <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
       <div class="w3-col m3 w3-center">
         <select style="width:80%;" id="giornoDecesso" name="giornoDecesso">
-          <option value=0> Giorno </option>
+          <option value="NULL"> Giorno </option>
         </select>
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
@@ -486,7 +488,7 @@ foreach($files as $file){ // iterate files
     <label for="code"><i class="fa fa-tag"></i> Codice identificativo</label>
   </div>
   <div class="col-75">
-    <input type="text" id="code" name="code" placeholder="es: MRT000100" required>
+    <input type="text" style="text-transform: uppercase;" id="code" name="code" placeholder="es: MRT000100" required>
   </div>
   </div>
   <br>
@@ -825,7 +827,6 @@ const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno"
 ];
 
   // FUNZIONE PER LA DATA DI NASCITA
-  var qntYears = 1000;
   var selectYear = $("#annoNascita");
   var selectMonth = $("#meseNascita");
   var selectDay = $("#giornoNascita");

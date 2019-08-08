@@ -37,6 +37,7 @@
     <a href="form.php" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="contratto.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -44,6 +45,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -102,19 +104,23 @@ $insertOK = 0;
 // PRENDO I VALORI CHE MI SONO PASSATI DAL FILE FORM.PHP
 $nome = $_POST['nome'];
 $nome = mysqli_real_escape_string($db,$nome);
+$nome = ucwords($nome);
 
 $cognome = $_POST['cognome'];
 $cognome = mysqli_real_escape_string($db,$cognome);
+$cognome = ucwords($cognome);
 
 $luogoNascita = $_POST['luogoNascita'];
 $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
+$luogoNascita = ucwords($luogoNascita);
 
 $giornoNascita = (int)$_POST['giornoNascita'];
-$meseNascita = $_POST['meseNascita'];
+$meseNascita = (int)$_POST['meseNascita'];
 $annoNascita = (int)$_POST['annoNascita'];
 
 $luogoMorte = $_POST['luogoMorte'];
 $luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
+$luogoMorte = ucwords($luogoMorte);
 
 $giornoMorte = (int)$_POST['giornoDecesso'];
 $meseMorte = (int)$_POST['meseDecesso'];
@@ -174,6 +180,7 @@ $annotazioni = $_POST['annotazioni'];
 $annotazioni = mysqli_real_escape_string($db,$annotazioni);
 
 $codiceIdentificativo = $_POST['code'];
+$codiceIdentificativo = strtoupper($codiceIdentificativo);
 
 $keywordsOpera = $_POST['keywordsOpera'];
 $keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
@@ -204,29 +211,29 @@ if($firma=='off')
   $noteFirma="";
 
 // INCREMENTE DI 1 IL NUMERO DEL MESE PER FARLO CORRISPONDERE AL VALORE REALE
-if($meseNascita!="NULL"){
+if($meseNascita==0 && $giornoNascita==0){
+  ;
+}else{
   $meseNascita=$meseNascita+1;
 }
-// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
-$meseNascita = (int)$meseNascita;
 
-if($meseMorte!="NULL"){
+if($meseMorte==0 && $giornoMorte==0){
+  ;
+}else{
   $meseMorte=$meseMorte+1;
 }
-// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
-$meseMorte = (int)$meseMorte;
 
-if($meseScatto!="NULL"){
+if($meseScatto==0 && $giornoScatto==0){
+  ;
+}else{
   $meseScatto=$meseScatto+1;
 }
-// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
-$meseScatto = (int)$meseScatto;
 
-if($meseStampa!="NULL"){
+if($meseStampa==0 && $giornoStampa==0){
+  ;
+}else{
   $meseStampa=$meseStampa+1;
 }
-// SERVE FARE IL CAST AD INT PER MEMORIZZARLO NEL DATABASE
-$meseStampa = (int)$meseStampa;
 
 
 // REGEX PER PRENDERE SOLTANTO CARATTERI ALFABETICI.
@@ -267,9 +274,9 @@ if(preg_match($rgxOnlyString, $luogoNascita)){
 if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
 
   // VERIFICO CHE L'AUTORE NON SIA GIÀ PRESENTE NEL DATABASE
-  $result = $db->query("SELECT `Nome`, `Cognome`,`Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`='$meseNascita' AND`Anno_nascita`='$annoNascita' AND `Luogo_nascita`='$luogoNascita' ");
-  $result2 = $db->query("SELECT `Nome`, `Cognome` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
-  if(($row = mysqli_num_rows($result) > 0 || $row2 = mysqli_num_rows($result2)) && $nuovoAutore==''){
+  $result = $db->query("SELECT `Nome`, `Cognome`,`Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND`Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' ");
+
+  if($row = mysqli_num_rows($result) > 0 && $nuovoAutore==''){
     // L'AUTORE È GIÀ PRESENTE NEL DATABASE
     ?>
 

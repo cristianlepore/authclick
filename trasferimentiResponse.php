@@ -42,6 +42,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
+    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -49,6 +50,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
+  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -113,26 +115,25 @@
     <div class="container">
       <div class="w3-center">
         <?php
+          // STAMPO I MESSAGGI DI CONFERMA O DI ERRORE NELL'INSERIMENTO DEI DATI. I MESSAGGI SONO PRESI DAL FILE insertTrasferimenti.php.
           echo $statusMsg;
+
           if($statusMsgCaricamentoContratto!=""){
             echo "<br><br>".$statusMsgCaricamentoContratto;
-          }
-          if($statusMsgBlockchain!=""){
-            echo "<br><br>". $statusMsgBlockchain;
           }
         ?>
       <div>
     </div>
   </div>
+    <br>
+    <!-- BOTTONE PER RITORNARE ALLA PAGINA PRECEDENTE -->
+    <div class="w3-center">
+      <button class="w3-button w3-huge w3-black" onclick="window.location.href='/authclick/new/trasferimenti.html'">
+        <i class="fa fa-backward"> INDIETRO</i>
+    </button>
+  </div>
 </div>
 
-</div>
-
-<!-- BOTTONE PER RITORNARE ALLA PAGINA PRECEDENTE -->
-<div class="w3-center w3-padding-16">
-  <button class="w3-button w3-huge w3-black" onclick="window.location.href='/authclick/new/trasferimenti.html'">
-    <i class="fa fa-backward"> INDIETRO</i>
-  </button>
 </div>
 
 

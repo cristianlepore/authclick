@@ -6,11 +6,15 @@ $statusMsg = '';
 // VALORI DA POST DI ACQUIRENTE
 $nome = $_POST['nome'];
 $nome = mysqli_real_escape_string($db,$nome);
+$nome = ucwords($nome);
 
 $cognome = $_POST['cognome'];
 $cognome = mysqli_real_escape_string($db,$cognome);
+$cognome = ucwords($cognome);
 
 $codFiscale = $_POST['codFiscale'];
+$codFiscale = strtoupper($codFiscale);
+
 $partitaIVA = $_POST['partitaIVA'];
 $keywordsProprietario = $_POST['keywordsProprietario'];
 $keywordsProprietario = mysqli_real_escape_string($db,$keywordsProprietario);
@@ -19,6 +23,7 @@ $keywordsProprietario = mysqli_real_escape_string($db,$keywordsProprietario);
 $nazione = $_POST['indirizzoNazione'];
 $città = $_POST['indirizzoCittà'];
 $città = mysqli_real_escape_string($db,$città);
+$città = ucwords($città);
 
 $CAP = (int)$_POST['indirizzoCAP'];
 $via_piazza = $_POST['indirizzoVia_piazza'];
@@ -30,6 +35,7 @@ $civico = (int)$_POST['indirizzoCivico'];
 $nazione_domicilio = $_POST['domicilioNazione'];
 $città_domicilio = $_POST['domicilioCittà'];
 $città_domicilio = mysqli_real_escape_string($db,$città_domicilio);
+$città_domicilio = ucwords($città_domicilio);
 
 $CAP_domicilio = (int)$_POST['domicilioCAP'];
 $via_piazza_domicilio = $_POST['domicilioVia_piazza'];
@@ -41,6 +47,7 @@ $civico_domicilio = (int)$_POST['domicilioCivico'];
 $nazione_residenza = $_POST['residenzaNazione'];
 $città_residenza = $_POST['residenzaCittà'];
 $città_residenza = mysqli_real_escape_string($db,$città_residenza);
+$città_residenza = ucwords($città_residenza);
 
 $CAP_residenza = (int)$_POST['residenzaCAP'];
 $via_piazza_residenza = $_POST['residenzaVia_piazza'];
@@ -51,6 +58,7 @@ $civico_residenza = (int)$_POST['residenzaCivico'];
 // VALORI DA POST DI CONTRATTO
 $prezzo = $_POST['prezzo'];
 $codIdentificativo = $_POST['codIdentificativo'];
+$codIdentificativo = strtoupper($codIdentificativo);
 
 // DATA DI VENDITA
 $dataCessione = date('Y-m-d', strtotime($_POST['dataCessione']));
@@ -383,6 +391,12 @@ if($row = mysqli_num_rows($result) == 0){
     }
 
   } else if($row = mysqli_fetch_row($result) > 0 && $contrattoAmmissibile=="OK") {
+    // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO E CHIEDO SE SI VOGLIONO MODIFICARE I DATI DELL'UTENTE INSERITO PRECEDENTEMENTE.
+    
+
+    // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
+
+
 
     // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
 
@@ -415,34 +429,10 @@ if($row = mysqli_num_rows($result) == 0){
     }
     */
 
-  } else {
+  }else if($contrattoAmmissibile == "FAIL") {
     $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ATTENZIONE!</b><b> Puoi caricare soltanto contratti nei formati previsti. </b><div class='w3-padding-16'>I formati previsti sono: <i> doc, docx, pdf, docm, dot, dotm, dotx, odt, jpg, jpeg, bmp, png, gif.</i></div>";
   }
 
 }
 
-// SE L'INSERIMENTO DEL PROPRIETARIO È AVVENUTO CORRETTAMENTE, PREPARO I DATI PER L'INSERIMENTO SULLA BLOCKCHAIN
-if( $resultArray['response']=="OK" && ( $resultArrayTrasferimenti['response']=="OK" || resultArrayCessioneDiritti['response']=="OK") ){
-
-   // PRENDO I DATI RILEVANTI DA INSERIRE SULLA BLOCKCHAIN E LI METTO IN FORMATO JSON
-   $result = $db->query("SELECT `id`,`Clausole_contratto`,`Tipologia`,`Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id` FROM `Trasferimento` WHERE `id_venditore`='$venditore_id' AND `id_acquirente`='$acquirente_id' AND `Fotografia_id`=$fotografia_id ");
-   while($row = mysqli_fetch_array($result)){
-       $myObj->id_trasferimento = $row[0];
-       $myObj->clausoleContratto = $row[1];
-       $myObj->tipologia = $row[2];
-       $myObj->prezzo = $row[3];
-       $myObj->dataCessione = $row[4];
-       $myObj->fineCessione = $row[5];
-       $myObj->venditore_Id = $row[6];
-       $myObj->acquirente_Id = $row[7];
-       $myObj->fotografia_Id = $row[8];
-
-       $myJSON = json_encode($myObj);
-   }
-
-   // RICHIAMO LA FUNZIONE PER PROCESSARE I DATI E PREPARALI ALL'INVIO SU BLOCKCHAIN
-   $outHash = prepareStringForBlockchain($myJSON);
-
-} else {
-  $statusMsgBlockchain = "<i class='fa fa-warning'></i><b style='color:red;'> ATTENZIONE!</b><b> Non è stato possibile preparare i dati per l'inserimento su blockchain.</b>";
-}
+?>
