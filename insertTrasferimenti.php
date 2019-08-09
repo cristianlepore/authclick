@@ -375,8 +375,13 @@ if($row = mysqli_num_rows($result) == 0){
     // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO
     $result = $db->query("SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
     if($result->num_rows > 0){
+
+      // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
+      move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
+
       // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
       $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
+
     }
 
     // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.

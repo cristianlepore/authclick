@@ -120,12 +120,13 @@
 
           if($statusMsgCaricamentoContratto!=""){
             echo "<br><br>".$statusMsgCaricamentoContratto;
+            echo "<hr class='horizontalLine'>";
           }
           
           echo $doubleOwnerMsg;
         ?>
-  </div>
-  <br>
+      </div>
+    <br>
   <div class="w3-padding-32 w3-center">  
     <?php 
     if($doubleOwnerMsg==""){ ?>
@@ -176,6 +177,10 @@
         <input type="hidden" name="cessioneDiritti" value = '<?php echo "$cessioneDiritti";?>' >
         <input type="hidden" name="dataFineCessione" value = '<?php echo "$dataFineCessione";?>' >
         <input type="hidden" name="keywordsContratto" value = '<?php echo "$keywordsContratto";?>' >
+        <!-- NOME DEL FILE PROPOSTO DALL'UTENTE. IN QUESTO CASO L'ESTENSIO È GIÀ INCLUSA -->
+        <input type="hidden" name="nomeContratto" value = '<?php echo "$fileName";?>' >
+        <!-- GLI PASSO IDPHOTO -->
+        <input type="hidden" name="idPhoto" value = '<?php echo "$idPhoto";?>' >
 
         <button style="background-color:green; color:white;" class="w3-button w3-huge" >
           PROSEGUI <i class="fa fa-forward"></i>

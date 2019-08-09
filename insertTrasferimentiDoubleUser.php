@@ -154,6 +154,18 @@ $dataFineCessione = date('Y-m-d', strtotime($_POST['dataFineCessione']));
 // KEYWORDS PER IL CONTRATTO
 $keywordsContratto = $_POST['keywordsContratto'];
 
+// LEGGO IL NOME PROPOSTO DALL'UTENTE AL FILE.
+$fileName = $_POST['nomeContratto'];
+
+// DEFINISCO LE COSTANTI
+$targetDir = "uploads/";
+$forwSlash = "/";
+$tipoFile = "Contratto";
+
+// CREO IL PERCORSO PER LA CARTELLA
+$targetDir = $targetDir . $codIdentificativo . $forwSlash . $tipoFile . $forwSlash;
+$idPhoto = $_POST['idPhoto'];
+
 // SETTO IL FLAG DI CESSIONE DIRITTI CORRETTAMENTE
 if($cessioneDiritti=="on"){
   ;
@@ -351,6 +363,43 @@ if($cessioneDiritti=="off"){
 
 }
 
+// SOLO ORA SE TUTTO È ANDATO A BUON FINE, MEMORIZZO IL FILE DEL CONTRATTO
+if($resultArrayTrasferimenti[0] == "OK" || $resultArrayCessioneDiritti[0] == "OK"){
+
+  // CREO LA CARTELLA IN CUI ANDRÒ A MEMORIZZARE I CONTRATTI
+  $targetDir = $targetDir . $ownerId . $forwSlash;
+  $targetFilePath = $targetDir . $fileName;
+
+  // PREPARO PER LO SPOSTAMENTO DEL FILE
+  move_uploaded_file($fileName, $move);
+
+  // CREO LA CARTELLA PER SALVARVICI I DOCUMENTI (SE GIÀ NON ESISTEVA)
+  mkdir($targetDir);
+
+  // CREO LA CARTELLA ANNIDATA (SE GIÀ ESISTEVA)
+  mkdir($targetDir, 0777, true);
+
+  // CONTROLLO SE IL NOME DEL FILE ESISTE GIÀ NEL DATABASE PER LA STESSA FOTOGRAFIA E PER LA STESSA TIPOLOGIA (NON AMMISSIBILE).
+  $result = $db->query("SELECT `id` FROM `File` WHERE `Utente_id`= $ownerId AND `Nome` = '$fileName' AND `Tipologia` = '$tipoFile' ");
+  if ($result->num_rows > 0) {
+    $statusMsgCaricamentoContratto = "<b>ATTENZIONE !</b><p style='color:red;'>"."<b>NOME del file già esistente.<br></b></p>Cambiare nome e ricaricarlo.<hr class='horizontalLine'>";
+  }else{
+
+    // SPOSTO IL FILE CARICATO NELLA PAGINA PRECEDENTE ALL'INTERNO DELLA SUA CARTELLA DI DESTINAZIONE
+    if(rename("uploads/".$fileName, $targetFilePath)){
+
+      // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
+      // AGGIUNGO IL NUOVO FILE AL DATABASE
+      $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+
+      $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.<hr class='horizontalLine'>";
+    } else {
+      // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
+      $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE durante il caricamento del contratto.</b><hr class='horizontalLine'>";
+    }
+  }
+}
+
 // **********************************************************************
 // ***************** FINE DEL PROGRAMMA *********************************
 // **********************************************************************
@@ -361,7 +410,16 @@ if($cessioneDiritti=="off"){
   <div class="main">
     <div class="container">
       <div class="w3-center">
-        HELLO
+        <?php
+          // STAMPO I MESSAGGI DI CONFERMA O DI ERRORE NELL'INSERIMENTO DEI DATI. I MESSAGGI SONO PRESI DAL FILE insertTrasferimenti.php.
+          echo $statusMsg;
+
+          if($statusMsgCaricamentoContratto!=""){
+            echo "<br><br>".$statusMsgCaricamentoContratto;
+          }
+          
+          echo $doubleOwnerMsg;
+        ?>
       </div>
     </div>
   </div>

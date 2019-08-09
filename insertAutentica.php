@@ -519,30 +519,25 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     }
 
     // ALTRO
-    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
+    $result = $db->query("SELECT `id`,`Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro' ");
     while($users = mysqli_fetch_array($result)){
-      $codFiscale = $db->query("SELECT `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Altro'");
-      while($codiceFiscale = mysqli_fetch_array($codFiscale)){
-        ?><tr><td>
-        <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
-        <?php
-        echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
-        </td></tr><?php
-      }
+      ?><tr><td>
+      <!-- PASSAGGIO DEI DATI -->
+      <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+      <?php
+      echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$users[1]."</td>";?><br>
+      </td></tr><?php
     }
     
     // AUTORE/ALTRO
-    $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND `Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' AND `Tipologia`='Autore/altro' ");
+    $result = $db->query("SELECT `id`, `Tipologia`, `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND `Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' AND `Tipologia`='Autore/altro' ");
     while($users = mysqli_fetch_array($result)){
-      $codFiscale = $db->query("SELECT `Codice_fiscale` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Autore/altro'");
-      while($codiceFiscale = mysqli_fetch_array($codFiscale)){
-        ?><tr><td>
-        <!-- PASSAGGIO DEI DATI -->
-        <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
-        <?php
-        echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$codiceFiscale['Codice_fiscale']."</td>";?><br>
-        </td></tr><?php
-      }
+      ?><tr><td>
+      <!-- PASSAGGIO DEI DATI -->
+      <input type="radio" checked name="userID" value='<?php echo "$users[0]";?>' >
+      <?php
+      echo "<b>Proprietario: </b>".$nome." ".$cognome."</td><td><b>Codice Fiscale: </b>".$users[2]."</td>";?><br>
+      </td></tr><?php
     }
 
     
