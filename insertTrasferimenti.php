@@ -131,26 +131,6 @@ function insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprie
 
 }
 
-// FUNZIONE PER INSERIRE ED AGGIORNARE GLI INDIRIZZI
-function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
-  include 'dbConfig.php';
-
-  // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
-  if($nazione != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
-  }
-  if($nazione_residenza != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza'");
-  }
-  if($nazione_domicilio != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
-  }
-
-}
-
 // FUNZIONE PER INSERIRE GLI INDIRIZZI NUOVI
 function insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
   include 'dbConfig.php';
@@ -301,8 +281,8 @@ if($row = mysqli_num_rows($result) == 0){
   $contrattoAmmissibile = checkContratto($fileType);
 
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
-  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE (`Nome`='$nome' && `Cognome`='$cognome') || `Codice_fiscale`='$codFiscale' ");
-  
+  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
+
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
   if($row = mysqli_fetch_row($result) == 0 && $contrattoAmmissibile=="OK"){
 
@@ -390,13 +370,18 @@ if($row = mysqli_num_rows($result) == 0){
       }
     }
 
-  } else if($row = mysqli_fetch_row($result) > 0 && $contrattoAmmissibile=="OK") {
-    // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO E CHIEDO SE SI VOGLIONO MODIFICARE I DATI DELL'UTENTE INSERITO PRECEDENTEMENTE.
+  } else if($result->num_rows > 0 && $contrattoAmmissibile=="OK") {
     
+    // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO
+    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
+    if($result->num_rows > 0){
+      // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
+      $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
+    }
 
     // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
 
-
+    // CARICARE IL FILE DEL CONTRATTO
 
     // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
 

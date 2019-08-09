@@ -12,9 +12,6 @@
 <!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- CARICO IL CORRISPETTIVO FILE PHP -->
-<?php
-  include ("insertTrasferimenti.php");
-?>
 
 <style>
 
@@ -110,85 +107,264 @@
   </div>
 </div>
 
+<?php
+// Include the database configuration file
+include 'dbConfig.php';
+$statusMsg = '';
+
+// VALORI DA POST DI ACQUIRENTE
+$nome = $_POST['nome'];
+$cognome = $_POST['cognome'];
+$codFiscale = $_POST['codFiscale'];
+$partitaIVA = $_POST['partitaIVA'];
+$keywordsProprietario = $_POST['keywordsProprietario'];
+
+// VALORI DA POST DI INDIRIZZO
+$nazione = $_POST['indirizzoNazione'];
+$città = $_POST['indirizzoCittà'];
+$CAP = (int)$_POST['indirizzoCAP'];
+$via_piazza = $_POST['indirizzoVia_piazza'];
+$civico = (int)$_POST['indirizzoCivico'];
+
+// VALORI DA POST DI DOMICILIO
+$nazione_domicilio = $_POST['domicilioNazione'];
+$città_domicilio = $_POST['domicilioCittà'];
+$CAP_domicilio = (int)$_POST['domicilioCAP'];
+$via_piazza_domicilio = $_POST['domicilioVia_piazza'];
+$civico_domicilio = (int)$_POST['domicilioCivico'];
+
+// VALORI DA POST DI RESIDENZA
+$nazione_residenza = $_POST['residenzaNazione'];
+$città_residenza = $_POST['residenzaCittà'];
+$CAP_residenza = (int)$_POST['residenzaCAP'];
+$via_piazza_residenza = $_POST['residenzaVia_piazza'];
+$civico_residenza = (int)$_POST['residenzaCivico'];
+
+// VALORI DA POST DI CONTRATTO
+$prezzo = $_POST['prezzo'];
+$codIdentificativo = $_POST['codIdentificativo'];
+
+// DATA DI VENDITA
+$dataCessione = date('Y-m-d', strtotime($_POST['dataCessione']));
+
+// CESSIONE DIRITTI
+$cessioneDiritti = $_POST['cessioneDiritti'];
+$dataFineCessione = date('Y-m-d', strtotime($_POST['dataFineCessione']));
+
+// KEYWORDS PER IL CONTRATTO
+$keywordsContratto = $_POST['keywordsContratto'];
+
+// SETTO IL FLAG DI CESSIONE DIRITTI CORRETTAMENTE
+if($cessioneDiritti=="on"){
+  ;
+}else {
+  $cessioneDiritti = "off";
+}
+
+// SE IL CAMPO PREZZO È STATO LASCIATO VUOTO, LO SOSTITUISCO CON UNO ZERO
+if($prezzo==''){
+  $prezzo=0;
+}
+
+// **********************************************************************
+// ***************** INIZIO DEL PROGRAMMA *******************************
+// **********************************************************************
+
+// DEFINISCO TUTTE LE FUNZIONI CHE MI SERVIRANNO
+// ***************************************************************
+// ***************************************************************
+
+// FUNZIONE PER INSERIRE IL NUOVO PROPRIETARIO
+function updateOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario){
+  include 'dbConfig.php';
+
+  // INSERISCO IL PROPRIETARIO
+  $insert = $db->query("UPDATE `Utente` SET `Nome`='$nome', `Cognome`='$cognome', `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Keywords`='$keywordsProprietario' WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
+
+  if($insert){
+    // SE L'INSERIMENTO È ANDATO BENE, PREPARO IL MESSAGGIO DA STAMPARE A VIDEO
+    $statusMsg = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al proprietario avvenuto con successo.";
+    $out['response'] = "OK";
+  } else{
+    $statusMsg = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema nell'inserimento dei dati relativi al proprietario.";
+    $out['response'] = "FAIL";
+  }
+
+  $out['statusMsg'] = $statusMsg;
+  return $out;
+
+}
+
+function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
+  include 'dbConfig.php';
+
+  // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
+  if($nazione != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
+  }
+  if($nazione_residenza != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_residenza', `Città`='$città_residenza', `CAP`=$CAP_residenza, `Via/piazza`='$via_piazza_residenza', `Civico`=$civico_residenza WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza' ");
+  }                               
+  if($nazione_domicilio != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_domicilio', `Città`='$città_domicilio', `CAP`=$CAP_domicilio, `Via/piazza`='$via_piazza_domicilio', `Civico`=$civico_domicilio WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
+  }
+
+}
+
+// FUNZIONE PER INSERIRE I TRASFERIMENTI
+function insertTransferimento($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $keywordsContratto){
+  include 'dbConfig.php';
+
+  // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
+  $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+  $row = mysqli_fetch_row($result);
+  $fotografia_id = $row[0];
+
+  // SELEZIONO L'ATTUALE PROPRIETARIO DELL'OPERA
+  $result = $db->query("SELECT `Utente_id` FROM `Possiede` WHERE `Fotografia_id`='$fotografia_id'");
+  $row = mysqli_fetch_row($result);
+  $venditore_id = $row[0];
+  $acquirente_id = $newOwnerId;
+  
+  // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`, `Keywords`) VALUES ('Vendita', $prezzo, '$dataCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti', '$keywordsContratto')");
+  if($insert){
+
+    // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
+    $statusMsgTrasferimento = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al trasferimento avvenuto con successo.";
+    
+    // AGGIORNO LA TABELLA POSSIEDE
+    $insert = $db->query("UPDATE `Possiede` SET `Utente_id`='$acquirente_id' WHERE `Fotografia_id`='$fotografia_id'");
+    if($insert)
+      $response = "OK";
+    else
+      $response = "FAIL";
+
+  } else{
+
+    // MESSAGGIO DI INSERIMENTO CON ERRORE
+    $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
+
+    $response = "FAIL";
+
+  }
+
+  return array($response, $statusMsgTrasferimento);
+
+}
+
+// FUNZIONE PER INSERIRE LA CESSIONE DEI DIRITTI
+function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione, $keywordsContratto){
+  include 'dbConfig.php';
+
+  // SELEZIONO L'ID DELLA FOTOGRAFIA IN BASE AL CODICE IDENTIFICATIVO
+  $result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+  $row = mysqli_fetch_row($result);
+  $fotografia_id = $row[0];
+
+  // SELEZIONO L'ATTUALE PROPRIETARIO DELL'OPERA
+  $result = $db->query("SELECT `Utente_id` FROM `Possiede` WHERE `Fotografia_id`='$fotografia_id'");
+  $row = mysqli_fetch_row($result);
+  $venditore_id = $row[0];
+  $acquirente_id = $newOwnerId;
+
+  // INSERISCO I TRASFERIMENTI NELL'APPOSITA TABELLA
+  $insert = $db->query("INSERT INTO `Trasferimento`(`Tipologia`, `Prezzo`,`Data_cessione`,`Fine_cessione`,`id_venditore`,`id_acquirente`,`Fotografia_id`, `Cessione_diritti`, `Keywords`) VALUES ('Cessione', $prezzo, '$dataCessione', '$dataFineCessione', $venditore_id, $acquirente_id, $fotografia_id, '$cessioneDiritti', '$keywordsContratto')");
+  if($insert){
+
+    // MESSAGGIO DI INSERIMENTO CORRETTO DEL TRASFERIMENTO
+    $statusMsgTrasferimento = "<i class='fa fa-check'></i>"."Inserimento dei dati relativi al trasferimento avvenuto con successo.";
+
+    // MESSAGGIO DI OUTPUT
+    $response = "OK";
+
+  } else{
+
+    // MESSAGGIO DI INSERIMENTO CON ERRORE
+    $statusMsgTrasferimento = "<i class='fa fa-warning'></i>"."ATTENZIONE! Problema con l'inserimento dei dati relativi al trasferimento.";
+
+    // MESSAGGIO DI OUTPUT
+    $response = "FAIL";
+
+  }
+
+  return array($response, $statusMsgTrasferimento);
+
+}
+
+// ***************************************************************
+// ***************************************************************
+// ***************************************************************
+
+
+// INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
+$resultArray = updateOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
+
+// PRENDO L'ID DELL'UTENTE CON QUEL CODICE IDENTIFICATIVO
+$result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
+$row = mysqli_fetch_row($result);
+$ownerId = (int)$row[0];
+
+// SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
+if($cessioneDiritti=="off"){
+  // SE SI TRATTA DI UNA VENDITA E NON DI UNA SEMPLICA CESSIONE DIRITTI
+  
+  // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
+  if($resultArray['response'] == "OK"){
+
+    // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
+    updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+
+    // SE È UNA VENDITA, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
+    $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $keywordsContratto);
+  }
+
+  // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
+  if($resultArrayTrasferimenti[0] == "OK"){
+    $statusMsg = "<i class='fa fa-check'></i> Trasferimento registrato con successo";
+  } else {
+    $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE. Il trasferimento non è avvenuto correttamente. Riprovare.</b>";
+  }
+
+} else if($cessioneDiritti== "on") {
+  // SE SI TRATTA DI UNA CESSIONE DI DIRITTI
+
+  // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
+  if($resultArray['response'] == "OK"){
+    
+    // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
+    updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+    
+    // SE È UNA CESSIONE DI DIRITTI, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI
+    $resultArrayCessioneDiritti = insertCessioneDiritti($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione, $keywordsContratto);
+  }
+
+  // PREPARO I MESSAGGI DA STAMPARE DI AVENUTO TRASFERIMENTO O DI FALLIMENTO
+  if($resultArrayCessioneDiritti[0] == "OK"){
+    $statusMsg = "<i class='fa fa-check'></i> La cessione diritti è stata registrata con successo";
+  } else {
+    $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE. Cessione diritti non avvenuta correttamente.</b>";
+  }
+
+}
+
+// **********************************************************************
+// ***************** FINE DEL PROGRAMMA *********************************
+// **********************************************************************
+
+?>
+
 <div id="main" onclick="closeNav2()">
   <div class="main">
     <div class="container">
       <div class="w3-center">
-        <?php
-          // STAMPO I MESSAGGI DI CONFERMA O DI ERRORE NELL'INSERIMENTO DEI DATI. I MESSAGGI SONO PRESI DAL FILE insertTrasferimenti.php.
-          echo $statusMsg;
-
-          if($statusMsgCaricamentoContratto!=""){
-            echo "<br><br>".$statusMsgCaricamentoContratto;
-          }
-          
-          echo $doubleOwnerMsg;
-        ?>
-  </div>
-  <br>
-  <div class="w3-padding-32 w3-center">  
-    <?php 
-    if($doubleOwnerMsg==""){ ?>
-    <!-- BOTTONE PER RITORNARE ALLA PAGINA PRECEDENTE -->
-      <button class="w3-button w3-huge w3-black" onclick="window.location.href='/authclick/new/trasferimenti.html'">
-        <i class="fa fa-backward"></i> INDIETRO
-      </button>
-    <?php } else {
-    ?>
-    <!-- BOTTONE PER LA SCELTA SE TORNARE INDIETRO -->
-    <div class="col-50">
-      <button style="background-color:red; color:white;" class="w3-button w3-huge" onclick="window.location.href='/authclick/new/trasferimenti.html'">
-        <i class="fa fa-backward"></i> INDIETRO
-      </button>
+        HELLO
+      </div>
     </div>
-    <!-- BOTTONE PER LA SCELTA SE PROSEGUIRE -->
-    <div class="col-50">
-      <form action="/authclick/new/insertTrasferimentiDoubleUser.php" method="post" >    
-        <!-- PASSO TUTTI I VALORI ALLA PAGINA SUCCESSIVA PER INSERIRE I DATI -->    
-        <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
-        <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
-        <input type="hidden" name="codFiscale" value = '<?php echo "$codFiscale";?>' >
-        <input type="hidden" name="partitaIVA" value = '<?php echo "$partitaIVA";?>' >
-        <input type="hidden" name="keywordsProprietario" value = '<?php echo "$keywordsProprietario";?>' >
-
-        <input type="hidden" name="indirizzoNazione" value = '<?php echo "$nazione";?>' >
-        <input type="hidden" name="indirizzoCittà" value = '<?php echo "$città";?>' >
-        <input type="hidden" name="indirizzoCAP" value = '<?php echo "$CAP";?>' >
-        <input type="hidden" name="indirizzoVia_piazza" value = '<?php echo "$via_piazza";?>' >
-        <input type="hidden" name="indirizzoCivico" value = '<?php echo "$civico";?>' >
-
-        <input type="hidden" name="domicilioNazione" value = '<?php echo "$nazione_domicilio";?>' >
-        <input type="hidden" name="domicilioCittà" value = '<?php echo "$città_domicilio";?>' >
-        <input type="hidden" name="domicilioCAP" value = '<?php echo "$CAP_domicilio";?>' >
-        <input type="hidden" name="domicilioVia_piazza" value = '<?php echo "$via_piazza_domicilio";?>' >
-        <input type="hidden" name="domicilioCivico" value = '<?php echo "$civico_domicilio";?>' >
-
-        <input type="hidden" name="residenzaNazione" value = '<?php echo "$nazione_residenza";?>' >
-        <input type="hidden" name="residenzaCittà" value = '<?php echo "$città_residenza";?>' >
-        <input type="hidden" name="residenzaCAP" value = '<?php echo "$CAP_residenza";?>' >
-        <input type="hidden" name="residenzaVia_piazza" value = '<?php echo "$via_piazza_residenza";?>' >
-        <input type="hidden" name="residenzaCivico" value = '<?php echo "$civico_residenza";?>' >
-
-        <!-- INFORMAZIONI SUL CONTRATTO -->
-        <input type="hidden" name="prezzo" value = '<?php echo "$prezzo";?>' >
-        <input type="hidden" name="codIdentificativo" value = '<?php echo "$codIdentificativo";?>' >
-        <input type="hidden" name="dataCessione" value = '<?php echo "$dataCessione";?>' >
-        <input type="hidden" name="cessioneDiritti" value = '<?php echo "$cessioneDiritti";?>' >
-        <input type="hidden" name="dataFineCessione" value = '<?php echo "$dataFineCessione";?>' >
-        <input type="hidden" name="keywordsContratto" value = '<?php echo "$keywordsContratto";?>' >
-
-        <button style="background-color:green; color:white;" class="w3-button w3-huge" >
-          PROSEGUI <i class="fa fa-forward"></i>
-        </button>
-      </form>
-    </div>
-    <?php } ?>
   </div>
-
-  </div>
-    </div>
-</div>
-
 </div>
 
 

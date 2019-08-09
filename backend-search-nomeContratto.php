@@ -13,7 +13,7 @@ if(isset($_REQUEST["term"])){
     $codFiscale = $_REQUEST["codeFiscale"];
 
     // SELEZIONO ID UTENTE CHE HA QUEL CODICE FISCALE. QUESTO VALE SOLO SE L'UTENTE È GIÀ PRESENTE NEL DATABASE.
-    $result = $db->query( " SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' " );
+    $result = $db->query( " SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' AND `Codice_fiscale`='$codFiscale' " );
 
     // SE C'È GIÀ UN UTENTE CON QUEL CODICE IDENTIFICATIVO AL SISTEMA, GUARDO I FILE DEL CONTRATTO AD ESSO ASSOCIATI
     if(mysqli_num_rows($result) > 0){
