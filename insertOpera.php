@@ -133,8 +133,15 @@ else
       // INSERISCO I DATI DELL'OPERA
       $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $autoreID, '$keywordsOpera')");
 
-      // AGGIORNO LA TABELLA UTENTE. SE ERA UN ACQUIRENTE ORA DIVENTERÀ UN AUTORE.
-      $update = $db->query("UPDATE `Utente` SET `Giorno_nascita`=$giornoNascita,`Mese_nascita`=$meseNascita,`Anno_nascita`=$annoNascita, `Luogo_nascita`='$luogoNascita', `Giorno_morte`=$giornoMorte,`Mese_morte`=$meseMorte,`Anno_morte`=$annoMorte, `Luogo_morte`='$luogoMorte',`Tipologia`='Autore/altro', `Keywords`='$keywordsAutore' WHERE `id`=$autoreID ");
+      $result = $db->query("SELECT `Tipologia` FROM `Utente` WHERE `id`=$autoreID");
+      if($row = mysqli_fetch_row($result)[0] != "Autore"){
+        // AGGIORNO LA TABELLA UTENTE. SE ERA UN ACQUIRENTE ORA DIVENTERÀ UN AUTORE.
+        $update = $db->query("UPDATE `Utente` SET `Giorno_nascita`=$giornoNascita,`Mese_nascita`=$meseNascita,`Anno_nascita`=$annoNascita, `Luogo_nascita`='$luogoNascita', `Giorno_morte`=$giornoMorte,`Mese_morte`=$meseMorte,`Anno_morte`=$annoMorte, `Luogo_morte`='$luogoMorte',`Tipologia`='Autore/altro', `Keywords`='$keywordsAutore' WHERE `id`=$autoreID ");
+      } else {
+        // AGGIORNO LA TABELLA UTENTE. SE ERA UN AUTORE, DEVE RIMANERE SOLO UN AUTORE.
+        $update = $db->query("UPDATE `Utente` SET `Giorno_nascita`=$giornoNascita,`Mese_nascita`=$meseNascita,`Anno_nascita`=$annoNascita, `Luogo_nascita`='$luogoNascita', `Giorno_morte`=$giornoMorte,`Mese_morte`=$meseMorte,`Anno_morte`=$annoMorte, `Luogo_morte`='$luogoMorte',`Tipologia`='Autore', `Keywords`='$keywordsAutore' WHERE `id`=$autoreID ");
+
+      }
 
       // PRENDO L'ID DELL'OPERA INSERITO APPENA SOPRA
       $result = $db->query("SELECT MAX(`id`) FROM `Fotografia`");

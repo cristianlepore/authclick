@@ -279,12 +279,12 @@ if($row = mysqli_num_rows($result) == 0){
 
   // VERIFICO CHE IL FILE INSERITO SIA UNO DI QUELLI NEI FORMATI AMMESSI
   $contrattoAmmissibile = checkContratto($fileType);
-
+  
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
-  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
+  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' ");
 
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
-  if($row = mysqli_fetch_row($result) == 0 && $contrattoAmmissibile=="OK"){
+  if( $result->num_rows == 0 && $contrattoAmmissibile=="OK" ){
 
     // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
     $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
@@ -297,7 +297,7 @@ if($row = mysqli_num_rows($result) == 0){
     // SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
     if($cessioneDiritti=="off"){
       // SE SI TRATTA DI UNA VENDITA E NON DI UNA SEMPLICA CESSIONE DIRITTI
-      
+
       // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
       if($resultArray['response'] == "OK"){
         // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
@@ -382,11 +382,17 @@ if($row = mysqli_num_rows($result) == 0){
       // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
       $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
 
+    } else {
+      // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
+      
+      // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
+      move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
+
+      // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
+      $doubleAuthor = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un autore con questo nome e cognome.<div class='w3-padding-16'> Preferisci aggiungerlo come nuovo proprietario o associare la vendita ad un autore già esistente? </div>  <hr class='horizontalLine'> ";
+
     }
-
-    // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
-
-    // CARICARE IL FILE DEL CONTRATTO
+    
 
     // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
 

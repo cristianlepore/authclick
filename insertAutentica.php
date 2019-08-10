@@ -11,6 +11,8 @@
 <link rel="stylesheet" href="css/style.css">
 <!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <style>
 
@@ -33,6 +35,7 @@
 <!-- BARRA DI NAVIGAZIONE --> 
 <div id="w3-top" class="w3-top">
   <div class="w3-bar w3-black w3-card">
+    <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left" onclick="openNav()">&#9776;</button>
     <div onclick="closeNav()"><a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a></div>
     <a href="form.php" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
@@ -42,7 +45,7 @@
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
-<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:45px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
   <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
@@ -62,31 +65,15 @@
   <div class="w3-padding-16"></div>
   <div id="dropdown">
     <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput" onkeyup="myFunctionSearch()"></div>
-    <a class="collapsible"><i class="fa fa-user"></i> Autore</a>
+    <a class="collapsible"><i class="fa fa-upload"></i> Carica</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="#"><i>Nome</i></a>
-      <a style="font-size:14px;" href="#nome"><i>cognome</i></a>
-      <a style="font-size:14px;" href="#cognome"><i>Luogo di nascita</i></a>
-      <a style="font-size:14px;" href="#luogoNascita"><i>Data di nascita</i></a>
-      <a style="font-size:14px;" href="#annoNascita"><i>Luogo di morte</i></a>
-      <a style="font-size:14px;" href="#luogoMorte"><i>Data del decesso</i></a>
-      <a style="font-size:14px;" href="#annoDecesso"><i>Keywords</i></a>
+      <a style="font-size:14px;" href="#codIdentificativo"><i>Tipo di file</i></a>
+      <a style="font-size:14px;" href="#tipo"><i>Nome file</i></a>
+      <a style="font-size:14px;" href="#nomeFile"><i>Carica il file dal pc</i></a>
     </div>
-    <a class="collapsible"><i class="fa fa-photo"></i> Fotografia</a>
+    <a class="collapsible"><i class="fa fa-download"></i> Esporta</a>
     <div class="content" style="margin-left:30px;">
-      <a style="font-size:14px;" href="#opera"><i>Titolo</i></a>
-      <a style="font-size:14px;" href="#titolo"><i>Data di scatto</i></a>
-      <a style="font-size:14px;" href="#titolo"><i>Data di stampa</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Dimensioni</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Tecnica di scatto</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Tecnica di stampa</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Supporto</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Tiratura</i></a>
-      <a style="font-size:14px;" href="#dataStampa"><i>Esemplare</i></a>
-      <a style="font-size:14px;" href="#esemplare"><i>Annotazioni</i></a>
-      <a style="font-size:14px;" href="#esemplare"><i>Keywords</i></a>
-      <a style="font-size:14px;" href="#myCheck"><i>Timbro</i></a>
-      <a style="font-size:14px;" href="#myCheck"><i>Firma</i></a>
+      <a style="font-size:14px;" href="#panel_esporta"><i>Codice identificativo fotografia</i></a>
     </div>
   </div>
 </div>
@@ -271,7 +258,7 @@ if(preg_match($rgxOnlyString, $luogoNascita)){
 <?php
 
 // SE I VALORI DI NOME E COGNOME INSERITI SONO CORRETTI ALLORA PROSEGUO, ALTRIMENTI ESCO
-if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
+if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){  
 
   // VERIFICO CHE L'AUTORE NON SIA GIÀ PRESENTE NEL DATABASE
   $result = $db->query("SELECT `Nome`, `Cognome`,`Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Giorno_nascita`=$giornoNascita AND `Mese_nascita`=$meseNascita AND`Anno_nascita`=$annoNascita AND `Luogo_nascita`='$luogoNascita' ");
@@ -411,7 +398,6 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
       }
     }
 ?>
-    <div class="w3-center w3-padding-16 w3-padding-bottom" style="margin-top:35px;">
     <i class="fa fa-check"></i>
     <?php echo $statusMsg;
     $insertAutoreOK = 1;
@@ -459,6 +445,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
 
 }else if($nuovoAutore==0){
   ?>
+
   <h4 class="w3-center">Seleziona uno di questi utenti.</h4>
   <hr style="margin-left:100px;margin-right:100px;" class="horizontalLine">
     <form action="/authclick/new/insertOpera.php" method="post" >
@@ -561,124 +548,276 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
 
 // USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
 function myFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") == -1) {
-    x.className += " w3-show";
-  } else { 
-    x.className = x.className.replace(" w3-show", "");
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+      x.className += " w3-show";
+    } else { 
+      x.className = x.className.replace(" w3-show", "");
+    }
   }
-}
-
-// When the user scrolls down 20px from the top of the document, show the button
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    document.getElementById("myBtn").style.display = "block";
-  } else {
-    document.getElementById("myBtn").style.display = "none";
+  
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction(); myFunction_progressBar();};
+  
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("myBtn").style.display = "block";
+    } else {
+      document.getElementById("myBtn").style.display = "none";
+    }
   }
-}
-
-// When the user clicks on the button, scroll to the top of the document
-function topFunction() {
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-}
-
-
-// FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
-function openNav() {
-  if (window.innerWidth > 600) {   
-    event.stopPropagation();
-    document.getElementById("mySidebar").style.width = "225px";
-    document.getElementById("main").style.marginLeft = "225px";
-    document.getElementById("container").style.marginLeft = "225px";
-    document.getElementById("w3-top").style.marginLeft = "225px";   
-    document.getElementById("myBtn").style.marginLeft = "260px";
-    document.getElementById("header").style.marginLeft = "225px";
-  }else{
-    document.getElementById("mySidebar").style.width = "225px";
+  
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }
-}
-
-// FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
-function closeNav() {
-  if (window.innerWidth > 600) {   
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft= "0";
-    document.getElementById("container").style.marginLeft = "0px";
-    document.getElementById("w3-top").style.marginLeft = "0px";  
-    document.getElementById("myBtn").style.marginLeft = "4%";
-    document.getElementById("header").style.marginLeft = "0";
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
+  
+  // VERIFICO LA CORRETTEZZA DEI DATI INSERITI
+  function validateform(){  
+    var codIdentificativo=document.myForm.codIdentificativo.value;  
+  
+    // Verifico il codice identificativo.
+    if(codIdentificativo!=''){
+      if(!/^[a-zA-Z]{3}\d{4,6}$/.test(codIdentificativo)){
+        alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+        return false;
+      }
+    }
   }
-}
-
-function closeNav2() {
-  if (window.innerWidth > 600) {
-  }else{
-    document.getElementById("mySidebar").style.width = "0";
+  
+  // FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
+  function openNav() {
+    if (window.innerWidth > 600) {   
+      event.stopPropagation();
+      document.getElementById("mySidebar").style.width = "225px";
+      document.getElementById("main").style.marginLeft = "225px";
+      document.getElementById("w3-top").style.marginLeft = "225px";   
+      document.getElementById("myBtn").style.marginLeft = "260px";   
+      document.getElementById("header").style.marginLeft = "225px";
+    }else{
+      document.getElementById("mySidebar").style.width = "225px";
+    }
   }
-}
-
-// PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE.
-function myFunctionToggle2() {
-  var checkBox2 = document.getElementById("myCheck2");
-  var text2 = document.getElementById("text2");
-  if (checkBox2.checked == true){
-    text2.style.display = "block";
-  } else {
-     text2.style.display = "none";
+  
+  // FUNZIONE PER CHIUDERE LA BARRA LATERALE DI SINISTRA
+  function closeNav() {
+    if (window.innerWidth > 600) {   
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+      document.getElementById("w3-top").style.marginLeft = "0px";  
+      document.getElementById("myBtn").style.marginLeft = "4%";
+      document.getElementById("header").style.marginLeft = "0";
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
   }
+  
+  window.addEventListener("beforeunload", function () {
+    document.body.classList.add("animate-out");
+  });
+  
+  function closeNav2() {
+    if (window.innerWidth > 600) {
+    }else{
+      document.getElementById("mySidebar").style.width = "0";
+    }
+  }
+  
+  // When the user scrolls the page, execute myFunction 
+  function myFunction_progressBar() {
+    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var scrolled = (winScroll / height) * 100;
+    document.getElementById("myBar").style.width = scrolled + "%";
+  }
+  
+  // MENU DI RICERCA PAROLE
+  function myFunctionSearch() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("dropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
+    }
+  }
+  
+  
+  // MENU COLLAPSIBLE BARRA LATERALE SINISTRA
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+  
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+  
+  // VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
+  function validateform(){  
+    // INFORMAZIONI RELATIVE ALL'AUTORE
+    var nomeFile=document.myForm.nomeFile.value;
+    var codIdentificativo=document.myForm.codIdentificativo.value;
+  
+    // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
+    if(nomeFile.includes("'") || nomeFile.includes("/") ||  nomeFile.includes("#") ||  nomeFile.includes("%") || nomeFile.includes("§") ){
+      alert("Il campo NOME del file inserito dall'utente contiene caratteri non ammessi. Il nome del file non deve contenere i seguenti caratteri: ' / § # % ");
+      return false; 
+    }
+  
+      // Verifico il codice identificativo.
+      if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
+      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+      return false;
+    }
+  
+  }
+  
+  function validateformEsporta(){  
+    // INFORMAZIONI RELATIVE ALL'AUTORE
+    var codIdentificativoEsporta=document.myFormEsporta.codIdentificativoEsporta.value;
+  
+    // Verifico il codice identificativo per la sezione esporta.
+    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativoEsporta)){
+      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
+      return false;
+    }
+  
+  }
+  
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function _(el) {
+  return document.getElementById(el);
 }
 
-window.addEventListener("beforeunload", function () {
-  document.body.classList.add("animate-out");
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function uploadFile() {
+  var file = _("file").files[0];
+  // alert(file.name+" | "+file.size+" | "+file.type);
+  var formdata = new FormData();
+  formdata.append("file", file);
+  var ajax = new XMLHttpRequest();
+  ajax.upload.addEventListener("progress", progressHandler, false);
+  ajax.addEventListener("load", completeHandler, false);
+  ajax.addEventListener("error", errorHandler, false);
+  ajax.addEventListener("abort", abortHandler, false);
+  ajax.open("POST", "file_upload_parser.php");
+  ajax.send(formdata);
+}
+  
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function progressHandler(event) {
+  //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
+  var percent = (event.loaded / event.total) * 100;
+  _("progressBar").value = Math.round(percent);
+  _("loaded_n_total").innerHTML = Math.round(percent) + "% caricati";
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function completeHandler(event) {
+  _("status").innerHTML = event.target.responseText;
+  _("progressBar").value = 0; //wil clear progress bar after successful upload
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function errorHandler(event) {
+  _("status").innerHTML = "Upload Failed";
+}
+
+// USATA PER LA BARRA DI CARICAMENTO DEL FILE
+function abortHandler(event) {
+  _("status").innerHTML = "Upload Aborted";
+}
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-codIdentificativo input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+            resultDropdown.html(data);
+          });
+
+      } else{
+          resultDropdown.empty();
+      }
+
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
 });
 
-// When the user scrolls the page, execute myFunction 
-function myFunction_progressBar() {
-  var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-  var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  var scrolled = (winScroll / height) * 100;
-  document.getElementById("myBar").style.width = scrolled + "%";
-}
+// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-nomeFile input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
+          var codIdentificativo=document.myForm.codIdentificativo.value;
+          var tipo=document.myForm.tipo.value;
 
-// MENU DI RICERCA PAROLE
-function myFunctionSearch() {
-  var input, filter, ul, li, a, i;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  div = document.getElementById("dropdown");
-  a = div.getElementsByTagName("a");
-  for (i = 0; i < a.length; i++) {
-    txtValue = a[i].textContent || a[i].innerText;
-    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-      a[i].style.display = "";
-    } else {
-      a[i].style.display = "none";
-    }
-  }
-}
-
-
-// MENU COLLAPSIBLE BARRA LATERALE SINISTRA
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
+          $.get("backend-search-nomeFile.php", {tipo: tipo, code:codIdentificativo,term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              resultDropdown.html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
   });
-}
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-nomeFile").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-tipologia input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      if(inputVal.length){
+          // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
+          var codIdentificativo=document.myForm.codIdentificativo.value;
+
+          $.get("backend-search-tipologia.php", {code:codIdentificativo,term: inputVal}).done(function(data){
+              // Display the returned data in browser
+              $('.scheda').html(data);
+          });
+      } else{
+          resultDropdown.empty();
+      }
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-tipologia").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+  });
+});
 
 </script>
 </div>

@@ -123,18 +123,26 @@
             echo "<hr class='horizontalLine'>";
           }
           
-          echo $doubleOwnerMsg;
+
+          if($doubleOwnerMsg != ""){
+            echo $doubleOwnerMsg;
+          }
+
+          if($doubleAuthor != ""){
+            echo $doubleAuthor;
+          }
+
         ?>
       </div>
     <br>
-  <div class="w3-padding-32 w3-center">  
+  <div class="w3-padding-16 w3-center">  
     <?php 
-    if($doubleOwnerMsg==""){ ?>
+    if($doubleOwnerMsg=="" && $doubleAuthor==""){ ?>
     <!-- BOTTONE PER RITORNARE ALLA PAGINA PRECEDENTE -->
       <button class="w3-button w3-huge w3-black" onclick="window.location.href='/authclick/new/trasferimenti.html'">
         <i class="fa fa-backward"></i> INDIETRO
       </button>
-    <?php } else {
+    <?php } else if($doubleOwnerMsg!="" && $doubleAuthor==""){
     ?>
     <!-- BOTTONE PER LA SCELTA SE TORNARE INDIETRO -->
     <div class="col-50">
@@ -187,11 +195,65 @@
         </button>
       </form>
     </div>
-    <?php } ?>
-  </div>
+    <?php } else if ($doubleOwnerMsg=="" && $doubleAuthor!="") { ?>
+      <!-- BOTTONE PER LA SCELTA SE TORNARE INDIETRO -->
+      <div class="col-50">
+        <form action="/authclick/new/insertTrasferimentiDoubleAuthor.php" method="post" >
+        <!-- PASSO TUTTI I VALORI ALLA PAGINA SUCCESSIVA PER INSERIRE I DATI -->    
+        <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
+        <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
+        <input type="hidden" name="codFiscale" value = '<?php echo "$codFiscale";?>' >
+        <input type="hidden" name="partitaIVA" value = '<?php echo "$partitaIVA";?>' >
+        <input type="hidden" name="keywordsProprietario" value = '<?php echo "$keywordsProprietario";?>' >
 
-  </div>
+        <input type="hidden" name="indirizzoNazione" value = '<?php echo "$nazione";?>' >
+        <input type="hidden" name="indirizzoCittà" value = '<?php echo "$città";?>' >
+        <input type="hidden" name="indirizzoCAP" value = '<?php echo "$CAP";?>' >
+        <input type="hidden" name="indirizzoVia_piazza" value = '<?php echo "$via_piazza";?>' >
+        <input type="hidden" name="indirizzoCivico" value = '<?php echo "$civico";?>' >
+
+        <input type="hidden" name="domicilioNazione" value = '<?php echo "$nazione_domicilio";?>' >
+        <input type="hidden" name="domicilioCittà" value = '<?php echo "$città_domicilio";?>' >
+        <input type="hidden" name="domicilioCAP" value = '<?php echo "$CAP_domicilio";?>' >
+        <input type="hidden" name="domicilioVia_piazza" value = '<?php echo "$via_piazza_domicilio";?>' >
+        <input type="hidden" name="domicilioCivico" value = '<?php echo "$civico_domicilio";?>' >
+
+        <input type="hidden" name="residenzaNazione" value = '<?php echo "$nazione_residenza";?>' >
+        <input type="hidden" name="residenzaCittà" value = '<?php echo "$città_residenza";?>' >
+        <input type="hidden" name="residenzaCAP" value = '<?php echo "$CAP_residenza";?>' >
+        <input type="hidden" name="residenzaVia_piazza" value = '<?php echo "$via_piazza_residenza";?>' >
+        <input type="hidden" name="residenzaCivico" value = '<?php echo "$civico_residenza";?>' >
+
+        <!-- INFORMAZIONI SUL CONTRATTO -->
+        <input type="hidden" name="prezzo" value = '<?php echo "$prezzo";?>' >
+        <input type="hidden" name="codIdentificativo" value = '<?php echo "$codIdentificativo";?>' >
+        <input type="hidden" name="dataCessione" value = '<?php echo "$dataCessione";?>' >
+        <input type="hidden" name="cessioneDiritti" value = '<?php echo "$cessioneDiritti";?>' >
+        <input type="hidden" name="dataFineCessione" value = '<?php echo "$dataFineCessione";?>' >
+        <input type="hidden" name="keywordsContratto" value = '<?php echo "$keywordsContratto";?>' >
+        <!-- NOME DEL FILE PROPOSTO DALL'UTENTE. IN QUESTO CASO L'ESTENSIO È GIÀ INCLUSA -->
+        <input type="hidden" name="nomeContratto" value = '<?php echo "$fileName";?>' >
+        <!-- GLI PASSO IDPHOTO -->
+        <input type="hidden" name="idPhoto" value = '<?php echo "$idPhoto";?>' >
+
+        <button style="background-color:red; color:white;" class="w3-button w3-huge" >
+          <i class="fa fa-plus"></i> AGGIUNGI COME NUOVO PROPRIETARIO
+        </button>
+      </div>
+
+      <!-- BOTTONE PER LA SCELTA SE PROSEGUIRE -->
+      <div class="col-50">
+        <form action="/authclick/new/" method="post" >    
+        <button style="background-color:green; color:white;" class="w3-button w3-huge" >
+          ASSOCIA AD UN AUTORE ESISTENTE <i class="fa fa-forward"></i>
+        </button>
+      </form>
     </div>
+    <?php } ?>
+    <div class="w3-padding-16"></div>
+    </div>
+    </div>
+  </div>
 </div>
 
 </div>
