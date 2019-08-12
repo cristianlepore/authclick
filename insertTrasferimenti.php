@@ -264,17 +264,24 @@ function checkContratto($fileType){
 
 // INIZIO DEL PROGRAMMA
 // VERIFICO CHE QUEL CODICE IDENTIFICATIVO ESISTA GIA NEL DATABASE ALTRIMENTI MANDO UN WARNING ALL'UTENTE
-$result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo'");
+$result = $db->query("SELECT `id` FROM `Fotografia` WHERE `Codice_identificativo`='$codIdentificativo' ");
 
 // TROVO L'ID DELLA FOTO CHE HA QUEL CODICE IDENTIFICATIVO. MI SERVIRÀ PER CARICARE I CONTRATTI
 $row = mysqli_fetch_row($result);
 $idPhoto = $row[0];
 
+// VERIFICO SE IL NOME DATO AL CONTRATTO NON ESISTE GIÀ PER QUELLA FOTOGRAFIA E PER QUELL'UTENTE.
+$resultContratto = $db->query( "SELECT `File`.`id` FROM `File` INNER JOIN `Fotografia` ON `Fotografia`.`id` = `File`.`Fotografia_id` INNER JOIN `Utente` ON `File`.`Utente_id` = `Utente`.`id` WHERE `Fotografia`.`Codice_identificativo`='$codIdentificativo' AND `Utente`.`Codice_fiscale`='$codFiscale' AND `File`.`Nome`='$fileName' ");
+
 // USO LA QUERY PRECEDENTE PER VERIFICARE QUANTO APPENA FATTO
 if($row = mysqli_num_rows($result) == 0){
-    // SE NON ESISTE QUEL CODICE IDENTIFICATIVO
-    $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'>"." ATTENZIONE! Il codice identificativo non esiste nel sistema."."</b><p>"."Riprovare inserendo un diverso codice identificativo."."</p>";
-} else{
+  // SE NON ESISTE QUEL CODICE IDENTIFICATIVO
+  $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'>"." ATTENZIONE! La fotografia non esiste nel sistema."."</b><p>"."Riprovare inserendo un diverso codice identificativo."."</p>";
+} else if($row = mysqli_num_rows($resultContratto) > 0){
+  // SE ESISTE GIÀ UN CONTRATTO CON QUELLO STESSO NOME, MANDO UN MESSAGGIO DI ERRORE.
+  $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ATTENZIONE!</b> Esiste già un contratto con questo stesso nome. <div class='w3-padding-16'></div> <hr class='horizontalLine'> ";
+
+} else { 
   // ALTRIMENTI SE IL CODICE IDENTIFICATIVO ESISTE NEL DATABASE
 
   // VERIFICO CHE IL FILE INSERITO SIA UNO DI QUELLI NEI FORMATI AMMESSI
@@ -351,27 +358,22 @@ if($row = mysqli_num_rows($result) == 0){
       // CREO LA CARTELLA ANNIDATA (SE GIÀ ESISTEVA)
       mkdir($targetDir, 0777, true);
 
-      // CONTROLLO SE IL NOME DEL FILE ESISTE GIÀ NEL DATABASE PER LA STESSA FOTOGRAFIA E PER LA STESSA TIPOLOGIA (NON AMMISSIBILE).
-      $result = $db->query("SELECT `id` FROM `File` WHERE `Utente_id`= $ownerId AND `Nome` = '$fileName' AND `Tipologia` = '$tipoFile' ");
-      if ($result->num_rows > 0) {
-        $statusMsg = "<b>ATTENZIONE !</b><p style='color:red;'>"."<b>NOME del file già esistente.<br></b></p>Cambiare nome e ricaricarlo.";
-      }else{
+      if(move_uploaded_file($_FILES["contratto"]["tmp_name"], $targetFilePath)){
+        // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
+        // AGGIUNGO IL NUOVO FILE AL DATABASE
+        $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
 
-        if(move_uploaded_file($_FILES["contratto"]["tmp_name"], $targetFilePath)){
-          // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
-          // AGGIUNGO IL NUOVO FILE AL DATABASE
-          $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
-
-          $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.";
-        } else {
-          // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
-          $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE durante il caricamento del contratto.</b>";
-        }
+        $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.";
+      } else {
+        // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
+        $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE durante il caricamento del contratto.</b>";
       }
+      
     }
 
   } else if($result->num_rows > 0 && $contrattoAmmissibile=="OK") {
-    
+    // SE SONO QUI È PERCHÈ HANNO LO STESSO NOME E COGNOME DI UN'ALTRO UTENTE REGISTRATO NEL SISTEMA.
+
     // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO
     $result = $db->query("SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
     if($result->num_rows > 0){
@@ -383,47 +385,18 @@ if($row = mysqli_num_rows($result) == 0){
       $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
 
     } else {
-      // SE ESISTE GIÀ UN UTENTE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
+      // SE ESISTE GIÀ UN AUTORE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
       
+      // PRENDO TUTTA LA SERIE DI AUTORI CON QUELLO STESSO NOME E COGNOME ED IL CODICE IDENTIFICATIVO DELLA LORO PRIMA OPERA
+      $result = $db->query(" SELECT DISTINCT `F`.`Codice_identificativo`, `Utente`.* FROM (SELECT `Fotografia`.* FROM `Fotografia` GROUP BY `Fotografia`.`Autore_id` ) as `F` RIGHT JOIN `Utente` ON `Utente`.`id` = `F`.`Autore_id` WHERE `Utente`.`Tipologia` = 'Autore' AND `Utente`.`Nome` = '$nome' AND `Utente`.`Cognome` = '$cognome'; ");
+    
       // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
       move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
 
       // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
-      $doubleAuthor = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un autore con questo nome e cognome.<div class='w3-padding-16'> Preferisci aggiungerlo come nuovo proprietario o associare la vendita ad un autore già esistente? </div>  <hr class='horizontalLine'> ";
+      $doubleAuthor = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un autore con questo nome e cognome.<div class='w3-padding-16'></div>";
 
     }
-    
-
-    // Devo stampare a video tutti gli utenti con quel nome e cognome e farli scegliere a chi inserisce i dati
-
-    /*
-    // AGGIORNO SOLO GLI UTENTI
-    $proprietarioId = $row[0];
-    $tipologia = $row[1];
-
-    // AGGIORNO I DATI DEL PROPRIETARIO
-    // SE L'UTENTE È GIÀ NEL DATABASE, VERIFICO SE È COME AUTORE O COME ALTRO
-    if($tipologia=='Autore'){
-      // SE È COME AUTORE, LO AGGIORNO E BASTA
-      $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Autore / Altro' WHERE `id`=$proprietarioId ");
-
-      // FUNZIONE PER AGGIUNGERE O AGGIORNARE GLI INDIRIZZI DEI PROPRIETARI.
-      updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $proprietarioId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
-
-    }else if($tipologia=='Altro'){
-      // SE ERA GIÀ A SISTEMA COME UN ACQUIRENTE, AGGIORNO SOLO I SUOI DATI CON QUESTI NUOVI.
-      $updateUser = $db->query("UPDATE `Utente` SET `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Tipologia`='Altro' WHERE `id`=$proprietarioId ");
-
-      // FUNZIONE PER AGGIUNGERE O AGGIORNARE GLI INDIRIZZI DEI PROPRIETARI.
-      updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $proprietarioId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
-
-    }
-    
-    // STAMPO I MESSAGGI DI AGGIORNAMENTO DELL'UTENTE E DEGLI INDIRIZZI
-    if($updateUser){
-        $statusMsg = "<i class='fa fa-check'></i>"."Aggiornamento dei dati relativi all'utente avvenuto con successo.";
-    }
-    */
 
   }else if($contrattoAmmissibile == "FAIL") {
     $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ATTENZIONE!</b><b> Puoi caricare soltanto contratti nei formati previsti. </b><div class='w3-padding-16'>I formati previsti sono: <i> doc, docx, pdf, docm, dot, dotm, dotx, odt, jpg, jpeg, bmp, png, gif.</i></div>";

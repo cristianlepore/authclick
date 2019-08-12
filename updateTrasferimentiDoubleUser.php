@@ -186,12 +186,12 @@ if($prezzo==''){
 // ***************************************************************
 // ***************************************************************
 
-// FUNZIONE PER INSERIRE IL NUOVO PROPRIETARIO
-function insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario){
+// FUNZIONE PER AGGIORNARE IL NUOVO PROPRIETARIO
+function updateOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario){
   include 'dbConfig.php';
 
   // INSERISCO IL PROPRIETARIO
-  $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Codice_fiscale`, `Partita_IVA`, `Tipologia`, `Keywords`) VALUES ('$nome','$cognome','$codFiscale','$partitaIVA', 'Altro', '$keywordsProprietario')");
+  $insert = $db->query("UPDATE `Utente` SET `Nome`='$nome', `Cognome`='$cognome', `Codice_fiscale`='$codFiscale', `Partita_IVA`='$partitaIVA', `Keywords`='$keywordsProprietario' WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
 
   if($insert){
     // SE L'INSERIMENTO È ANDATO BENE, PREPARO IL MESSAGGIO DA STAMPARE A VIDEO
@@ -207,16 +207,22 @@ function insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprie
 
 }
 
-function insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
+function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio){
   include 'dbConfig.php';
 
-  // AGGIUNGO I DATI SUGLI INDIRIZZI, DOMICILIO E RESIDENZA DELL'ACQUIRENTE
-  if($nazione != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
-  if($nazione_residenza != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
-  if($nazione_domicilio != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
+  // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
+  if($nazione != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
+  }
+  if($nazione_residenza != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_residenza', `Città`='$città_residenza', `CAP`=$CAP_residenza, `Via/piazza`='$via_piazza_residenza', `Civico`=$civico_residenza WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza' ");
+  }                               
+  if($nazione_domicilio != ""){
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_domicilio', `Città`='$città_domicilio', `CAP`=$CAP_domicilio, `Via/piazza`='$via_piazza_domicilio', `Civico`=$civico_domicilio WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
+  }
 
 }
 
@@ -307,23 +313,22 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
 
 
 // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
-$resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
+$resultArray = updateOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
 
-// PRENDO L'ID DELL'UTENTE INSERITO APPENA SOPRA
-$result = $db->query("SELECT MAX(`id`) FROM `Utente`");
+// PRENDO L'ID DELL'UTENTE CON QUEL CODICE IDENTIFICATIVO
+$result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
 $row = mysqli_fetch_row($result);
 $ownerId = (int)$row[0];
 
 // SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
 if($cessioneDiritti=="off"){
-
-   // SE SI TRATTA DI UNA VENDITA E NON DI UNA SEMPLICA CESSIONE DIRITTI
+  // SE SI TRATTA DI UNA VENDITA E NON DI UNA SEMPLICA CESSIONE DIRITTI
   
   // SE L'UTENTE È STATO INSERITO CORRETTAMENTE, AGGIUNGO ANCHE I SUOI INDIRIZZI ED I DATI DEL TRASFERIMENTO
   if($resultArray['response'] == "OK"){
 
     // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
-    insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+    updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
 
     // SE È UNA VENDITA, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI ED AGGIORNO LA TABELLA POSSIEDE
     $resultArrayTrasferimenti = insertTransferimento($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $keywordsContratto);
@@ -343,7 +348,7 @@ if($cessioneDiritti=="off"){
   if($resultArray['response'] == "OK"){
     
     // AGGIUNGO ANCHE I SUOI INDIRIZZI NELLA TABELLA INDIRIZZI
-    insertIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
+    updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId, $nazione_residenza, $città_residenza, $CAP_residenza, $via_piazza_residenza, $civico_residenza, $nazione_domicilio, $città_domicilio, $CAP_domicilio, $via_piazza_domicilio, $civico_domicilio);
     
     // SE È UNA CESSIONE DI DIRITTI, AGGIORNO IL TRASFERIMENTO NELLA TABELLA TRASFERIMENTI
     $resultArrayCessioneDiritti = insertCessioneDiritti($codIdentificativo, $ownerId, $prezzo, $dataCessione, $cessioneDiritti, $dataFineCessione, $keywordsContratto);
@@ -374,25 +379,27 @@ if($resultArrayTrasferimenti[0] == "OK" || $resultArrayCessioneDiritti[0] == "OK
   // CREO LA CARTELLA ANNIDATA (SE GIÀ ESISTEVA)
   mkdir($targetDir, 0777, true);
 
-  // CONTROLLO SE IL NOME DEL FILE ESISTE GIÀ NEL DATABASE PER LA STESSA FOTOGRAFIA E PER LA STESSA TIPOLOGIA (NON AMMISSIBILE).
-  $result = $db->query("SELECT `id` FROM `File` WHERE `Utente_id`= $ownerId AND `Nome` = '$fileName' AND `Tipologia` = '$tipoFile' ");
-  if ($result->num_rows > 0) {
-    $statusMsgCaricamentoContratto = "<b>ATTENZIONE !</b><p style='color:red;'>"."<b>NOME del file già esistente.<br></b></p>Cambiare nome e ricaricarlo.<hr class='horizontalLine'>";
-  }else{
 
-    // SPOSTO IL FILE CARICATO NELLA PAGINA PRECEDENTE ALL'INTERNO DELLA SUA CARTELLA DI DESTINAZIONE
-    if(rename("uploads/".$fileName, $targetFilePath)){
+  // SPOSTO IL FILE CARICATO NELLA PAGINA PRECEDENTE ALL'INTERNO DELLA SUA CARTELLA DI DESTINAZIONE
+  if(rename("uploads/".$fileName, $targetFilePath)){
 
-      // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
-      // AGGIUNGO IL NUOVO FILE AL DATABASE
-      $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+    // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
+    // AGGIUNGO IL NUOVO FILE AL DATABASE
+    $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
 
-      $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.<hr class='horizontalLine'>";
-    } else {
-      // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
-      $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE durante il caricamento del contratto.</b><hr class='horizontalLine'>";
-    }
+    $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.<hr class='horizontalLine'>";
+  } else {
+    // ERRORE NEL CARICAMENTO DEL CONTRATTO AL DATABASE
+    $statusMsgCaricamentoContratto = "<i class='fa fa-warning'></i><b style='color:red;'> ERRORE durante il caricamento del contratto.</b><hr class='horizontalLine'>";
   }
+
+}
+
+// QUESTA PARTE SERVE PER CANCELLARE I FILE RIMASTI NELLA CARTELLA TEMPORANEA /UPLOADS.
+$files = glob('uploads/*'); // get all file names
+foreach($files as $file){ // iterate files
+    if(is_file($file))
+        unlink($file); // delete file
 }
 
 // **********************************************************************
