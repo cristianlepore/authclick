@@ -487,6 +487,11 @@ input[type=submit] {
   margin-left: -138px;
 }
 
+.preview {
+  background-color: white;
+  margin-left: -138px;
+}
+
 .col-50 {
   float: left;
   width: 50%;
@@ -549,7 +554,7 @@ input[type=submit] {
   td{
     max-width:50%;
   }
-  .prova{
+  .invia{
     display:none;
     text-decoration: none;
   }

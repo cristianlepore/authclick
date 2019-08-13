@@ -57,6 +57,11 @@ foreach($files as $file){ // iterate files
     <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
     <a href="contratto.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
+  <div class="preview">
+    <div class="w3-center" id="codiceIdentificativoPreview" style="margin-top:5px; background-color:white; font-size:22px; display:none">
+      
+    </div>
+  </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
@@ -117,11 +122,11 @@ foreach($files as $file){ // iterate files
   <h3 class="w3-center"><i class="fa fa-user"></i> AUTORE DELL'OPERA</h3>
   <p style="color:red;">In rosso i campi obbligatori.</p>
   <hr class="horizontalLine">
-  
+
   <form name="myForm" action="/authclick/new/insertAutentica.php" method="post" onsubmit="return validateform()">
   <!-- INSERISCO INFORMAZIONI RELATIVE ALL'AUTORE -->
-  <div class="row">
-    <div class="col-25">
+  <div class="row" id="newAuthorName">
+    <div class="col-25" >
       <label for="nome"><i class="fa fa-user"></i> Nome</label>
     </div>
     <div class="search-boxNome col-75">
@@ -130,7 +135,7 @@ foreach($files as $file){ // iterate files
     </div>
   </div>
   <br>
-  <div class="row">
+  <div class="row" id="newAuthorSurname">
     <div class="col-25">
       <label for="cognome"><i class="fa fa-user"></i> Cognome</label>
     </div>
@@ -237,7 +242,7 @@ foreach($files as $file){ // iterate files
 <p style="color:red;">In rosso i campi obbligatori.</p>
 <hr class="horizontalLine">
 <br>
-  <div class="row">
+  <div class="row" id="newAuthorTitolo">
     <div class="col-25">
       <label for="titolo"><i class="fa fa-flag-o"></i> Titolo</label>
     </div>
@@ -509,7 +514,7 @@ foreach($files as $file){ // iterate files
 
 <div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
 <div class="col-25 submitButton">
-  <button type="submit" class="submitButton"><i class="fa fa-send"></i> <i class="prova">INVIA</i></button>
+  <button type="submit" class="submitButton"><i class="fa fa-send"></i> <i class="invia">INVIA</i></button>
 </div>
 </form>
 
@@ -559,6 +564,7 @@ function validateform(){
   var annoMorte=document.myForm.annoDecesso.value;
 
   // INFORMAZIONI RELATIVE ALL'OPERA
+  var titolo=document.myForm.titolo.value;
   var giornoScatto=document.myForm.giornoScatto.value;
   var meseScatto=document.myForm.meseScatto.value;
   var annoScatto=parseInt(document.myForm.annoScatto.value);    
@@ -1082,6 +1088,73 @@ $(document).ready(function(){
       $(this).parent(".result").empty();
   });
 });
+
+// SLIDE DOWN DELLA PREVIEW DEL CODICE IDENTIFICATIVO QUANDO SI INIZIA A DIGITARE IL CAMPO NOME
+$(document).ready(function(){
+
+$('#newAuthorName input[name=nome]').keyup(function(){
+
+ if($(this).val()==""){
+      $('#codiceIdentificativoPreview').slideUp("slow");
+ }
+ else{
+    $('#codiceIdentificativoPreview').slideDown("slow");
+ }
+
+});
+
+});
+
+// CREARE DINAMICAMENTE IL CODICE IDENTIFICATIVO STAMPANDO LE LETTERE A SCHERMO
+var inputBoxNome = document.getElementById('nome');
+
+inputBoxNome.onkeyup = function(){
+  var data = document.getElementById('nome').value;
+  var firstLetter = data.charAt(0);
+
+  document.getElementById('codiceIdentificativoPreview').innerHTML = "CODICE PREVISTO: <span style='color:red;'>"+firstLetter.toUpperCase()+"</span>";
+}
+
+// CREA DINAMICAMENTE IL CODICE IDENTIFICATIVO -- COGNOME
+var inputBoxCognome = document.getElementById('cognome');
+inputBoxCognome.onkeyup = function(){
+  var data = document.getElementById('cognome').value;
+  var firstLetterCognome = data.charAt(0).toUpperCase();
+  
+  if(firstLetterCognome=="" || firstLetterCognome==" " ){
+    document.getElementById('spanCognome').remove();
+  } else if( !document.getElementById('spanCognome') ) {
+    var span = document.createElement('SPAN');
+    span.innerHTML = '<span id="spanCognome" style="color:red;">'+firstLetterCognome+'</span>';
+    document.getElementById('codiceIdentificativoPreview').appendChild(span);
+  }
+}
+
+// CREA DINAMICAMENTE IL CODICE IDENTIFICATIVO -- TITOLO OPERA
+var inputBoxTitolo = document.getElementById('titolo');
+inputBoxTitolo.onkeyup = function(){
+  var data = document.getElementById('titolo').value;
+  var firstLetterTitolo = data.charAt(0).toUpperCase();
+  
+  if(firstLetterTitolo=="" || firstLetterTitolo==" " ){
+    document.getElementById('spanTitolo').remove();
+    document.getElementById('spanTarga').remove();
+  } else if( !document.getElementById('spanTitolo') ) {
+    var span = document.createElement('SPAN');
+    span.innerHTML = '<span id="spanTitolo" style="color:red;">'+firstLetterTitolo+'</span>';
+    document.getElementById('codiceIdentificativoPreview').appendChild(span);
+
+    var spanTarga = document.createElement('SPAN');
+    // RICHIAMO IL FILE PHP PER AVERE UNA PREVIEW DELLA TARGA E DEL CODICE IDENTIFICATIVO DELL'OPERA
+    $.get("targa-preview.php", {}).done(function(data){
+      // ELIMINO GLI SPAZZI DAL VALORE DI RITORNO.
+      var data = data.replace(/\s+/g, '')
+      spanTarga.innerHTML = '<span id="spanTarga" style="color:red;">'+data+'</span>';
+      document.getElementById('codiceIdentificativoPreview').appendChild(spanTarga);
+    });
+  }
+
+}
 
 </script>
 
