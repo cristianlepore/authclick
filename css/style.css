@@ -551,6 +551,9 @@ input[type=submit] {
   .container{
     margin-left: -138px;
   }
+  .preview{
+    margin-left: -138px;
+  }
   td{
     max-width:50%;
   }

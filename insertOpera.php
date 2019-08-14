@@ -47,6 +47,13 @@ $statusMsg = '';
 $autoreID = $_POST['userID'];
 
 // VALORI DA POST DI AUTORE
+$nome = $_POST['nome'];
+$nome = mysqli_real_escape_string($db,$nome);
+$nome = ucwords($nome);
+$cognome = $_POST['cognome'];
+$cognome = mysqli_real_escape_string($db,$cognome);
+$cognome = ucwords($cognome);
+
 $luogoNascita = $_POST['luogoNascita'];
 $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
 $luogoNascita = ucwords($luogoNascita);
@@ -95,7 +102,6 @@ $numeroEsemplare = (int)$_POST['numeroEsemplare'];
 $noteNumeroEsemplare = $_POST['noteNumeroEsemplare'];
 $noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
 
-$targa = $_POST['targa'];
 $timbro = $_POST['timbro'];
 $noteTimbro = $_POST['noteTimbro'];
 $noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
@@ -106,9 +112,6 @@ $noteFirma = mysqli_real_escape_string($db,$noteFirma);
 
 $annotazioni = $_POST['annotazioni'];
 $annotazioni = mysqli_real_escape_string($db,$annotazioni);
-
-$codiceIdentificativo = $_POST['code'];
-$codiceIdentificativo = strtoupper($codiceIdentificativo);
 
 $keywordsOpera = $_POST['keywordsOpera'];
 $keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
@@ -129,6 +132,23 @@ else
 <body>
 
 <?php
+
+      // PRENDO L'UTIMO VALORE INSERITO IN FOTOGRAFIA COME PREVIEW DEL CODICE IDENTIFICATIVO E DELLA TARGA DELL'OPERA
+      // GLI AGGIUNGO 1 PER FARLO COMBACIARE CON I NUOVI VALORI
+      // VALORI PER LA TARGA
+      $result = $db->query(" SELECT MAX(`id`) FROM `Fotografia` ");
+      $row = mysqli_fetch_row($result);
+      $targa = (int)$row[0]+1;
+      
+      // VALORI PER IL CODICE IDENTIFICATIVO
+      $firstCharacterNome = $nome[0];
+      $firstCharacterNome = strtoupper($firstCharacterNome);
+      $firstCharacterCognome = $cognome[0];
+      $firstCharacterCognome = strtoupper($firstCharacterCognome);
+      $firstCharacterTitolo = $titolo[0];
+      $firstCharacterTitolo = strtoupper($firstCharacterTitolo);
+      
+      $codiceIdentificativo = $firstCharacterNome.$firstCharacterCognome.$firstCharacterTitolo.$targa;
 
       // INSERISCO I DATI DELL'OPERA
       $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $autoreID, '$keywordsOpera')");

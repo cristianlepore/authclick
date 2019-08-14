@@ -206,7 +206,7 @@
     <div class="w3-center">
     <h3><i class="fa fa-cloud-download"></i> ULTIMI DOCUMENTI CARICARTI</h3>
     </div>
-    <div class="w3-center">Fotografia con codice identificativo: <h4><?php echo $codIdentificativo; ?></h4>
+    <div class="w3-center">Fotografia con codice identificativo: <h3 style="color:green;"><?php echo $codIdentificativo; ?></h3>
     </div>
     <hr class="horizontalLine">
 
@@ -387,7 +387,7 @@
       <h3 class="w3-wide w3-center" id="panel_storico"><i class="fa fa-history"></i>
        STORICO DEI DOCUMENTI
       </h3>
-    <div class="w3-center">Fotografia con codice identificativo: <h4><?php echo $codIdentificativo; ?></h4></div>
+    <div class="w3-center">Fotografia con codice identificativo: <h3 style="color:green;"><?php echo $codIdentificativo; ?></h3></div>
     <hr class="horizontalLine">
       <!-- TITOLO DELLA TABELLA -->
       <div class="w3-row">

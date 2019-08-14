@@ -152,7 +152,6 @@ $numeroEsemplare = (int)$_POST['numeroEsemplare'];
 $noteNumeroEsemplare = $_POST['noteNumeroEsemplare'];
 $noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
 
-$targa = $_POST['targa'];
 $timbro = $_POST['timbro'];
 
 $noteTimbro = $_POST['noteTimbro'];
@@ -165,9 +164,6 @@ $noteFirma = mysqli_real_escape_string($db,$noteFirma);
 
 $annotazioni = $_POST['annotazioni'];
 $annotazioni = mysqli_real_escape_string($db,$annotazioni);
-
-$codiceIdentificativo = $_POST['code'];
-$codiceIdentificativo = strtoupper($codiceIdentificativo);
 
 $keywordsOpera = $_POST['keywordsOpera'];
 $keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
@@ -309,13 +305,11 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
             <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
             <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-            <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
             <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
             <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
             <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
             <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
             <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-            <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
             <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
             <input type="hidden" name="nuovo_autore" value = "1" >
 
@@ -360,13 +354,11 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
             <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
             <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-            <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
             <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
             <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
             <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
             <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
             <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-            <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
             <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
             <input type="hidden" name="nuovo_autore" value = "0"><br>
             
@@ -406,6 +398,23 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
       $result = $db->query("SELECT MAX(`id`) FROM `Utente`");
       $row = mysqli_fetch_row($result);
       $lastAuthorId = (int)$row[0];
+
+      // PRENDO L'UTIMO VALORE INSERITO IN FOTOGRAFIA COME PREVIEW DEL CODICE IDENTIFICATIVO E DELLA TARGA DELL'OPERA
+      // GLI AGGIUNGO 1 PER FARLO COMBACIARE CON I NUOVI VALORI
+      // VALORI PER LA TARGA
+      $result = $db->query(" SELECT MAX(`id`) FROM `Fotografia` ");
+      $row = mysqli_fetch_row($result);
+      $targa = (int)$row[0]+1;
+      
+      // VALORI PER IL CODICE IDENTIFICATIVO
+      $firstCharacterNome = $nome[0];
+      $firstCharacterNome = strtoupper($firstCharacterNome);
+      $firstCharacterCognome = $cognome[0];
+      $firstCharacterCognome = strtoupper($firstCharacterCognome);
+      $firstCharacterTitolo = $titolo[0];
+      $firstCharacterTitolo = strtoupper($firstCharacterTitolo);
+
+      $codiceIdentificativo = $firstCharacterNome.$firstCharacterCognome.$firstCharacterTitolo.$targa;
 
       // INSERISCO I DATI DELL'OPERA
       $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $lastAuthorId, '$keywordsOpera')");
@@ -451,6 +460,8 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     <form action="/authclick/new/insertOpera.php" method="post" >
         
         <!-- INFORMAZIONI RELATIVE ALL'AUTORE -->
+        <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
+        <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
         <input type="hidden" name="luogoNascita" value = '<?php echo "$luogoNascita";?>' >
         <input type="hidden" name="giornoNascita" value = '<?php echo "$giornoNascita";?>' >
         <input type="hidden" name="meseNascita" value = '<?php echo "$meseNascita";?>' >
@@ -480,13 +491,11 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         <input type="hidden" name="artistProof" value = '<?php echo "$artistProof";?>' >
         <input type="hidden" name="numeroEsemplare" value = '<?php echo "$numeroEsemplare";?>' >
         <input type="hidden" name="noteNumeroEsemplare" value = '<?php echo "$noteNumeroEsemplare";?>' >
-        <input type="hidden" name="targa" value = '<?php echo "$targa";?>' >
         <input type="hidden" name="timbro" value = '<?php echo "$timbro";?>' >
         <input type="hidden" name="noteTimbro" value = '<?php echo "$noteTimbro";?>' >
         <input type="hidden" name="firma" value = '<?php echo "$firma";?>' >
         <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
         <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
-        <input type="hidden" name="code" value = '<?php echo "$codiceIdentificativo";?>' >
         <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
     <table style="width:100%; margin-top:-40px; margin-left:20px;">
     <?php
@@ -573,19 +582,6 @@ function myFunction() {
     document.documentElement.scrollTop = 0;
   }
   
-  // VERIFICO LA CORRETTEZZA DEI DATI INSERITI
-  function validateform(){  
-    var codIdentificativo=document.myForm.codIdentificativo.value;  
-  
-    // Verifico il codice identificativo.
-    if(codIdentificativo!=''){
-      if(!/^[a-zA-Z]{3}\d{4,6}$/.test(codIdentificativo)){
-        alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-        return false;
-      }
-    }
-  }
-  
   // FUNZIONE PER APRIRE LA BARRA LATERALE DI SINISTRA
   function openNav() {
     if (window.innerWidth > 600) {   
@@ -665,159 +661,6 @@ function myFunction() {
       }
     });
   }
-  
-  // VALIDO IL CONTENUTO INSERITO NEL FORM DALL'UTENTE.
-  function validateform(){  
-    // INFORMAZIONI RELATIVE ALL'AUTORE
-    var nomeFile=document.myForm.nomeFile.value;
-    var codIdentificativo=document.myForm.codIdentificativo.value;
-  
-    // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
-    if(nomeFile.includes("'") || nomeFile.includes("/") ||  nomeFile.includes("#") ||  nomeFile.includes("%") || nomeFile.includes("§") ){
-      alert("Il campo NOME del file inserito dall'utente contiene caratteri non ammessi. Il nome del file non deve contenere i seguenti caratteri: ' / § # % ");
-      return false; 
-    }
-  
-      // Verifico il codice identificativo.
-      if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
-      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-      return false;
-    }
-  
-  }
-  
-  function validateformEsporta(){  
-    // INFORMAZIONI RELATIVE ALL'AUTORE
-    var codIdentificativoEsporta=document.myFormEsporta.codIdentificativoEsporta.value;
-  
-    // Verifico il codice identificativo per la sezione esporta.
-    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativoEsporta)){
-      alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-      return false;
-    }
-  
-  }
-  
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function _(el) {
-  return document.getElementById(el);
-}
-
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function uploadFile() {
-  var file = _("file").files[0];
-  // alert(file.name+" | "+file.size+" | "+file.type);
-  var formdata = new FormData();
-  formdata.append("file", file);
-  var ajax = new XMLHttpRequest();
-  ajax.upload.addEventListener("progress", progressHandler, false);
-  ajax.addEventListener("load", completeHandler, false);
-  ajax.addEventListener("error", errorHandler, false);
-  ajax.addEventListener("abort", abortHandler, false);
-  ajax.open("POST", "file_upload_parser.php");
-  ajax.send(formdata);
-}
-  
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function progressHandler(event) {
-  //_("loaded_n_total").innerHTML = "Caricati " + event.loaded + " bytes di " + event.total;
-  var percent = (event.loaded / event.total) * 100;
-  _("progressBar").value = Math.round(percent);
-  _("loaded_n_total").innerHTML = Math.round(percent) + "% caricati";
-}
-
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function completeHandler(event) {
-  _("status").innerHTML = event.target.responseText;
-  _("progressBar").value = 0; //wil clear progress bar after successful upload
-}
-
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function errorHandler(event) {
-  _("status").innerHTML = "Upload Failed";
-}
-
-// USATA PER LA BARRA DI CARICAMENTO DEL FILE
-function abortHandler(event) {
-  _("status").innerHTML = "Upload Aborted";
-}
-
-// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
-$(document).ready(function(){
-  $('.search-box-codIdentificativo input[type="text"]').on("keyup input", function(){
-      /* Get input value on change */
-      var inputVal = $(this).val();
-      var resultDropdown = $(this).siblings(".result");
-      if(inputVal.length){
-          $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
-              // Display the returned data in browser
-            resultDropdown.html(data);
-          });
-
-      } else{
-          resultDropdown.empty();
-      }
-
-  });
-  
-  // Set search input value on click of result item
-  $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
-      $(this).parent(".result").empty();
-  });
-});
-
-// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
-$(document).ready(function(){
-  $('.search-box-nomeFile input[type="text"]').on("keyup input", function(){
-      /* Get input value on change */
-      var inputVal = $(this).val();
-      var resultDropdown = $(this).siblings(".result");
-      if(inputVal.length){
-          // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
-          var codIdentificativo=document.myForm.codIdentificativo.value;
-          var tipo=document.myForm.tipo.value;
-
-          $.get("backend-search-nomeFile.php", {tipo: tipo, code:codIdentificativo,term: inputVal}).done(function(data){
-              // Display the returned data in browser
-              resultDropdown.html(data);
-          });
-      } else{
-          resultDropdown.empty();
-      }
-  });
-  
-  // Set search input value on click of result item
-  $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-nomeFile").find('input[type="text"]').val($(this).text());
-      $(this).parent(".result").empty();
-  });
-});
-
-// SCRIPT AJAX. MENTRE SI DIGITA IL NOME DEL FILE, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
-$(document).ready(function(){
-  $('.search-box-tipologia input[type="text"]').on("keyup input", function(){
-      /* Get input value on change */
-      var inputVal = $(this).val();
-      if(inputVal.length){
-          // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
-          var codIdentificativo=document.myForm.codIdentificativo.value;
-
-          $.get("backend-search-tipologia.php", {code:codIdentificativo,term: inputVal}).done(function(data){
-              // Display the returned data in browser
-              $('.scheda').html(data);
-          });
-      } else{
-          resultDropdown.empty();
-      }
-  });
-  
-  // Set search input value on click of result item
-  $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-tipologia").find('input[type="text"]').val($(this).text());
-      $(this).parent(".result").empty();
-  });
-});
 
 </script>
 </div>

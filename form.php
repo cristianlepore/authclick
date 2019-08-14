@@ -58,8 +58,7 @@ foreach($files as $file){ // iterate files
     <a href="contratto.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
   <div class="preview">
-    <div class="w3-center" id="codiceIdentificativoPreview" style="margin-top:5px; background-color:white; font-size:22px; display:none">
-      
+    <div class="w3-center" id="codiceIdentificativoPreview" style="margin-top:3px; background-color:white; font-size:22px; display:none">
     </div>
   </div>
 </div>
@@ -433,16 +432,6 @@ foreach($files as $file){ // iterate files
 
   <div class="row">
     <div class="col-25">
-      <label for="targa"><i class="fa fa-tag"></i> Targa</label>
-    </div>
-    <div class="col-75" style="margin-top:16px;">
-      <input type="numeric" id="targa" style="width:100%;" name="targa" placeholder=" es: 0001" required>
-    </div>
-  </div>
-  <hr class="horizontalLine">
-
-  <div class="row">
-    <div class="col-25">
       <label for="timbro"><i class="fa fa-trademark"></i> Timbro</label>
     </div>
     <div class="col-75" style="margin-top:12px;">
@@ -488,14 +477,6 @@ foreach($files as $file){ // iterate files
   <br>
   <hr class="horizontalLine">
   
-  <div class="row">
-    <div class="col-25">
-    <label for="code"><i class="fa fa-tag"></i> Codice identificativo</label>
-  </div>
-  <div class="col-75">
-    <input type="text" style="text-transform: uppercase;" id="code" name="code" placeholder="es: MRT000100" required>
-  </div>
-  </div>
   <br>
   <div class="row">
     <div class="col-25">
@@ -575,8 +556,6 @@ function validateform(){
   var larghezza=document.myForm.larghezza.value;
   var numeroCopie=parseInt(document.myForm.numeroCopie.value);
   var numeroEsemplare=parseInt(document.myForm.numeroEsemplare.value);
-  var targa=document.myForm.targa.value;
-  var codeIdentificativo=document.myForm.code.value;
 
 // VERIFICO CHE NEL FORM CI SIANO SOLO CARATTERI AMMISSIBILI.
   if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(name)){
@@ -696,18 +675,6 @@ function validateform(){
       alert("L'anno di scatto della fotografia deve essere successivo alla data di nascita dell'autore.");
       return false;
     }
-  }
-
-  // VERIFICO IL CONTENUTO DELLA TARGA. DEVE ESSERE PER FORZA UN NUMERO CON 4 CIFRE.
-  if(!/^[0-9]{4}$/.test(targa)){
-    alert("Il campo TARGA deve contenere un numero di 4 cifre.");
-    return false;
-  }
-
-  // Verifico il codice identificativo.
-  if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codeIdentificativo)){
-    alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
-    return false;
   }
 
 } 
@@ -1112,7 +1079,7 @@ inputBoxNome.onkeyup = function(){
   var data = document.getElementById('nome').value;
   var firstLetter = data.charAt(0);
 
-  document.getElementById('codiceIdentificativoPreview').innerHTML = "CODICE PREVISTO: <span style='color:red;'>"+firstLetter.toUpperCase()+"</span>";
+  document.getElementById('codiceIdentificativoPreview').innerHTML = "CODICE: <span style='color:red;'>"+firstLetter.toUpperCase()+"</span>";
 }
 
 // CREA DINAMICAMENTE IL CODICE IDENTIFICATIVO -- COGNOME

@@ -44,6 +44,10 @@
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
     <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
+  <div class="preview">
+    <div class="w3-center" id="codiceIdentificativoView" style="margin-top:3px; background-color:white; font-size:22px; ">
+    </div>
+  </div>
 </div>
 
 <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
@@ -1347,7 +1351,7 @@ function myFunction() {
     }
     
     // Verifico il codice identificativo.
-    if(!/^[a-zA-Z]{3}\d{4,8}$/.test(codIdentificativo)){
+    if(!/^[a-zA-Z]{3}\d{1,11}$/.test(codIdentificativo)){
       alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
       return false;
     }
@@ -1651,6 +1655,19 @@ $(document).ready(function(){
       $(this).parents(".search-box-nomeContratto").find('input[type="text"]').val($(this).text());
       $(this).parent(".result").empty();
   });
+});
+
+// VISUALIZZAO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL SISTEMA
+// RICHIAMO IL FILE PHP PER VISUALIZZARE L'ULTIMO CODICE IDENTIFICATIVO INSERITO AL SISTEMA
+$.get("show-codiceIdentificativo.php", {}).done(function(data){
+  // PRENDO I DATI DI RITORNO DALLA QUERY AL DATABASE
+  var resultQuery = data;
+
+  // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
+  document.getElementById('codiceIdentificativoView').innerHTML = "CODICE: <span style='color:green;'>"+resultQuery+"</span>";
+
+  // INSERISCO AUTOMATICAMENTE IL VALORE DEL CODICE IDENTIFICATIVO NEL CAMPO DEL FORM HTML (IN ENTRAMBI I CAMPI CHE LO NECESSITANO)
+  $("#codIdentificativo").val(data);
 });
 
 </script>
