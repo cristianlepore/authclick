@@ -17,7 +17,7 @@ if($db === false){
     echo $lastValue."-".$zero;
 
 }
- 
+
 // close connection
 mysqli_close($db);
 ?>

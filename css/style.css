@@ -785,6 +785,10 @@ body {
   padding: 16px;
 }
 
+#codiceIdentificativoView {
+  transition: margin-left .5s;
+}
+
 @media screen and (max-height: 600px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
@@ -933,5 +937,52 @@ input:checked + .slider:after
 .result p:hover{
   background: lightgrey;
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.tableStorico {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tdStorico, .thStorico {
+  border: 1px solid #dddddd;
+  text-align: left;
+}
+
+.trStorico:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.tablePreview {
+  border: 0px solid #f2f2f2;
+  text-align: left;
+}
+
+.tdPreview, .thPreview {
+  border: 0px solid #f2f2f2;
+  padding: 15px;
+}
+
+.trPreview:nth-child(even) {
+  border: 0px solid #f2f2f2;
+  background-color: #f2f2f2;
+}
+
 
 /*--------- END --------*/

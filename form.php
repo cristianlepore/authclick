@@ -55,11 +55,7 @@ foreach($files as $file){ // iterate files
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
-    <a href="contratto.html" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
-  </div>
-  <div class="preview">
-    <div class="w3-center" id="codiceIdentificativoPreview" style="margin-top:3px; background-color:white; font-size:22px; display:none">
-    </div>
+    <a href="contratto.php" data-transition="pop" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -67,7 +63,7 @@ foreach($files as $file){ // iterate files
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:45px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
-  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
+  <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -117,6 +113,9 @@ foreach($files as $file){ // iterate files
 <!-- INIZIO DEL FORM PER INSERIRE AUTENTICA -->
 <div id="main" onclick="closeNav2()">
 <div class="main">
+<!-- PREVIEW DEL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA -->
+<div class="w3-center" id="codiceIdentificativoPreview" style=" margin-top:-30px; margin-left:-123px; background-color:white; font-size:22px; "><br></div>
+
 <div class="container">
   <h3 class="w3-center"><i class="fa fa-user"></i> AUTORE DELL'OPERA</h3>
   <p style="color:red;">In rosso i campi obbligatori.</p>
@@ -1079,7 +1078,7 @@ inputBoxNome.onkeyup = function(){
   var data = document.getElementById('nome').value;
   var firstLetter = data.charAt(0);
 
-  document.getElementById('codiceIdentificativoPreview').innerHTML = "CODICE: <span style='color:red;'>"+firstLetter.toUpperCase()+"</span>";
+  document.getElementById('codiceIdentificativoPreview').innerHTML = "CODICE FOTOGRAFIA: <span style='color:red;'>"+firstLetter.toUpperCase()+"</span>";
 }
 
 // CREA DINAMICAMENTE IL CODICE IDENTIFICATIVO -- COGNOME

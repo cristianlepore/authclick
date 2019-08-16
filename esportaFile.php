@@ -23,21 +23,6 @@
   transition: margin-left .5s;
 }
 
-.tableStorico {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.tdStorico, .thStorico {
-  border: 1px solid #dddddd;
-  text-align: left;
-}
-
-.trStorico:nth-child(even) {
-  background-color: #dddddd;
-}
-
 </style>
 
 <?php
@@ -115,7 +100,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
-    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
+    <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -123,7 +108,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
-  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
+  <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -214,18 +199,18 @@
     <?php
     ?>
     <div class="w3-row w3-padding-bottom">
-        <table style="width:100%;">
-            <tr>
-                <th style="width:50%"><h4><i class="fa fa-photo"></i> Miniatura</th></h4>
-                <th style="width:50%"><h4><i class="fa fa-file"></i> Scheda</th></h4>
+        <table class="tablePreview" style="width:100%;">
+            <tr class="trPreview">
+                <th class="tdPreview w3-center" style="width:50%"><h4><i class="fa fa-photo"></i> Miniatura</th></h4>
+                <th class="tdPreview w3-center" style="width:50%"><h4><i class="fa fa-file"></i> Scheda</th></h4>
             </tr>
-            <tr>
-                <td style="width:50%"><div class="w3-center"><b>Nome file: </b> <?php echo $SubjectCode['foto']['name'] ?></div> </td> 
-                <td style="width:50%"><div class="w3-center"><b>Nome file: </b> <?php echo $SubjectCode['scheda']['name'] ?></div> </td> 
+            <tr class="trPreview">
+                <td class="tdPreview" style="width:50%"><div class="w3-center"><b>Nome file: </b> <?php echo $SubjectCode['foto']['name'] ?></div> </td> 
+                <td class="tdPreview" style="width:50%"><div class="w3-center"><b>Nome file: </b> <?php echo $SubjectCode['scheda']['name'] ?></div> </td> 
             </tr>
-            <tr>
+            <tr class="trPreview">
               <!-- COLONNA DI SINISTRA - PULSANTE DI SCARICA FILE -->
-              <td style="width:50%">
+              <td class="tdPreview" style="width:50%">
                 <div class="col-33 w3-center">
                 <?php
                   if($SubjectCode['foto']['name']!=''){
@@ -257,7 +242,7 @@
                 </div>
               </td>
               <!-- COLONNA DI DESTRA - PULSANTE DI SCARICA FILE -->
-              <td style="width:50%">
+              <td class="tdPreview" style="width:50%">
                 <div class="col-33 w3-center">
                 <?php
                   if($SubjectCode['scheda']['name']!=''){
@@ -289,14 +274,14 @@
                 </div>
               </td>
             </tr>
-            <tr>
-              <td>
+            <tr class="trPreview">
+              <td class="tdPreview" >
               </td>
-              <td>
+              <td class="tdPreview" >
               </td>
             </tr>
-            <tr>
-              <td>
+            <tr class="trPreview">
+              <td class="tdPreview" >
                 <div class="w3-center">
                   <?php
                     // COLONNA DI SINISTRA - PREVIEW DEL FILE
@@ -310,7 +295,7 @@
                   ?>
                   </div>
                 </td>
-                <td>
+                <td class="tdPreview" >
                   <div class="w3-center">
                     <?php
                       // COLONNA DI DESTRA - PREVIEW DEL FILE

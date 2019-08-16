@@ -39,7 +39,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
-    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
+    <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -47,7 +47,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="files.html" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
-  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
+  <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->

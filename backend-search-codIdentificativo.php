@@ -29,7 +29,7 @@ if(isset($_REQUEST["term"])){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-                    echo "<p>" . $row["Codice_identificativo"] . "</p>";
+                    echo "<p class='w3-left' style='width:100%;'>" . $row["Codice_identificativo"] . "</p>";
                 }
             } else{
                 ;

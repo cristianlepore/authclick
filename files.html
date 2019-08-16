@@ -46,11 +46,7 @@
     <a href="form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
     <a href="#" style="border-bottom: 2px solid white;" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">GESTISCI FILE</a>
     <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">TRASFERIMENTI</a>
-    <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
-  </div>
-  <div class="preview">
-    <div class="w3-center" id="codiceIdentificativoView" style="margin-top:3px; background-color:white; font-size:22px; ">
-    </div>
+    <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">CONTRATTI</a>
   </div>
 </div>
 
@@ -58,7 +54,7 @@
 <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
   <a href="#" class="w3-bar-item w3-button w3-padding-large" >GESTISCI FILE</a>
   <a href="trasferimenti.html" class="w3-bar-item w3-button w3-padding-large" >TRASFERIMENTI</a>
-  <a href="contratto.html" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
+  <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large" >CONTRATTI</a>
 </div>
 
 <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
@@ -92,6 +88,9 @@
 <!-- SLIDEUP E SLIDEDOWN MENU DI CARICA -->
 <div id="main" onclick="closeNav2()">
 <div class="main">
+  <!-- PREVIEW DEL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA -->
+  <div class="w3-center" id="codiceIdentificativoView" style=" margin-top:-30px; margin-left:-123px; background-color:white; font-size:22px; "></div>
+
   <div class="container">
   <h3 class="w3-wide w3-center"><i class="fa fa-upload"></i>
     CARICA DOCUMENTO
@@ -489,11 +488,11 @@ $.get("show-codiceIdentificativo.php", {}).done(function(data){
   var resultQuery = data;
 
   // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
-  document.getElementById('codiceIdentificativoView').innerHTML = "CODICE: <span style='color:green;'>"+resultQuery+"</span>";
+  document.getElementById('codiceIdentificativoView').innerHTML = "CODICE FOTOGRAFIA: <span style='color:green;'>"+resultQuery+"</span>";
 
   // INSERISCO AUTOMATICAMENTE IL VALORE DEL CODICE IDENTIFICATIVO NEL CAMPO DEL FORM HTML (IN ENTRAMBI I CAMPI CHE LO NECESSITANO)
-  $("#codIdentificativo").val(data);
-  $("#codIdentificativoEsporta").val(data);
+  $("#codIdentificativo").val(resultQuery);
+  $("#codIdentificativoEsporta").val(resultQuery);
 });
 
 </script>

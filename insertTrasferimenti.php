@@ -288,7 +288,7 @@ if($row = mysqli_num_rows($result) == 0){
   $contrattoAmmissibile = checkContratto($fileType);
   
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
-  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' ");
+  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
 
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
   if( $result->num_rows == 0 && $contrattoAmmissibile=="OK" ){
