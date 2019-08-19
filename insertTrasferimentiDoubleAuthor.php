@@ -383,9 +383,14 @@ if($resultArrayTrasferimenti[0] == "OK" || $resultArrayCessioneDiritti[0] == "OK
     // SPOSTO IL FILE CARICATO NELLA PAGINA PRECEDENTE ALL'INTERNO DELLA SUA CARTELLA DI DESTINAZIONE
     if(rename("uploads/".$fileName, $targetFilePath)){
 
-      // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
-      // AGGIUNGO IL NUOVO FILE AL DATABASE
-      $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+    // PRENDO ID DELL'ULTIMO TRASFERIMENTO EFFETTUATO CHE MI SERVIRÀ PER INSERIRLO NELLA TABELLA FILE
+    $result = $db->query("SELECT MAX(`id`) FROM `Trasferimento` ");
+    $row = mysqli_fetch_array($result);
+    $lastTrasferimento = $row[0];
+
+    // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
+    // AGGIUNGO IL NUOVO FILE AL DATABASE
+    $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`, `Trasferimento_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId, $lastTrasferimento)");
 
       $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.<hr class='horizontalLine'>";
     } else {

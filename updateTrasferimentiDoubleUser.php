@@ -383,9 +383,14 @@ if($resultArrayTrasferimenti[0] == "OK" || $resultArrayCessioneDiritti[0] == "OK
   // SPOSTO IL FILE CARICATO NELLA PAGINA PRECEDENTE ALL'INTERNO DELLA SUA CARTELLA DI DESTINAZIONE
   if(rename("uploads/".$fileName, $targetFilePath)){
 
+    // PRENDO ID DELL'ULTIMO TRASFERIMENTO EFFETTUATO CHE MI SERVIRÀ PER INSERIRLO NELLA TABELLA FILE
+    $result = $db->query("SELECT MAX(`id`) FROM `Trasferimento` ");
+    $row = mysqli_fetch_array($result);
+    $lastTrasferimento = $row[0];
+
     // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
     // AGGIUNGO IL NUOVO FILE AL DATABASE
-    $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+    $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`, `Trasferimento_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId, $lastTrasferimento)");
 
     $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.<hr class='horizontalLine'>";
   } else {
@@ -430,117 +435,6 @@ foreach($files as $file){ // iterate files
 
 <!-- INIZIA LA PARTE RELATIVA AGLI SCRIPT -->
 <script>
-
-window.onload = function () {
-// check to see if user has metamask addon installed on his browser. check to make sure web3 is defined
-if (typeof web3 === 'undefined') {
-document.getElementById('metamask').innerHTML = 'You need <a href="https://metamask.io/">MetaMask</a> browser plugin to run this example'
-}
-}
-//function to retrieve the last inserted value on the blockchain
-function getvalue() {
-    try {
-        // contract Abi defines all the variables,constants and functions of the smart contract. replace with your own abi
-        var abi = [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "x",
-				"type": "string"
-			}
-		],
-		"name": "set",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
-        //contract address. please change the address to your own
-        var contractaddress = '0xc59f4b9960bac556ef599ca7a407d652c9036d2f';
-        //instantiate and connect to contract address via Abi
-        var myAbi = web3.eth.contract(abi);
-        var myfunction = myAbi.at(contractaddress);
-        //call the get function of our SimpleStorage contract
-        myfunction.get.call(function (err, xname) {
-            if (err) { console.log(err) }
-            if (xname) {
-                //display value on the webpage
-                document.getElementById("xbalance").innerHTML = "Utimo valore inserito in blockchain è: " + xname;
-            }
-        });
-    }
-    catch (err) {
-        document.getElementById("xbalance").innerHTML = err;
-    }
-}
-// function to add a new integer value to the blockchain
-function setvalue() {
-    try {
-        // contract Abi defines all the variables,constants and functions of the smart contract. replace with your own abi
-        var abi = [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "x",
-				"type": "string"
-			}
-		],
-		"name": "set",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "get",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
-]
-        //contract address. please change the address to your own
-        var contractaddress = '0xc59f4b9960bac556ef599ca7a407d652c9036d2f';
-        //instantiate and connect to contract address via Abi
-        var myAbi = web3.eth.contract(abi);
-        var myfunction = myAbi.at(contractaddress);
-        //call the set function of our SimpleStorage contract
-        ethereum.enable();
-        myfunction.set.sendTransaction(document.getElementById("xvalue").value, { from: web3.eth.accounts[0], gas: 4000000 }, function (error, result) {
-            if (!error) {
-                console.log(result);
-            } else {
-                console.log(error);
-            }
-        })
-    } catch (err) {
-        document.getElementById("xvalue").innerHTML = err;
-    }
-}
 
 // USATA PER IL TOGGLE DEL MENU QUANDO LA DIMENSIONE DELLO SCHERMO VIENE RIDOTTA
 function myFunction() {

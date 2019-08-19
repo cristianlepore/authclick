@@ -348,7 +348,7 @@ a.ex5:hover, a.ex5:active {color: black; text-decoration: none;}
   left: 62%;
   font-size: 24px;
   color: white;
-  transform: translate(-50%,-50%);
+  transform: translate(-56%,-50%);
   -ms-transform: translate(-50%,-50%);
 }
 
@@ -570,7 +570,7 @@ input[type=submit] {
   left:85%;
   width:10%;
   background-color: green;
-  z-index: 99;
+  z-index: 0;
   font-size: 14px;
   border: none;
   outline: none;
@@ -889,7 +889,7 @@ input:checked + .slider:after
 
 .result{
   position: absolute;        
-  z-index: 999;
+  z-index: 1;
   top: 100%;
   left: 0;
 }
@@ -984,5 +984,33 @@ tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
+#overlay {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.712);
+  z-index: 2;
+  cursor: pointer;
+}
+
+#text{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 50%;
+  font-size: 24px;
+  background-color: white;
+  padding: 75px;
+  border-radius: 25px;
+  color: black;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
 
 /*--------- END --------*/

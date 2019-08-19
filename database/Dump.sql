@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 02, 2019 at 05:10 PM
+-- Generation Time: Aug 19, 2019 at 04:46 PM
 -- Server version: 8.0.16
--- PHP Version: 7.2.20
+-- PHP Version: 7.2.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,7 +48,8 @@ CREATE TABLE `File` (
   `Fotografia_id` bigint(30) DEFAULT NULL,
   `Path` varchar(200) DEFAULT NULL,
   `Utente_id` bigint(30) DEFAULT NULL,
-  `Keywords` varchar(5000) DEFAULT NULL
+  `Keywords` varchar(5000) DEFAULT NULL,
+  `Trasferimento_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -183,7 +184,8 @@ ALTER TABLE `File`
   ADD PRIMARY KEY (`id`) USING BTREE,
   ADD KEY `Fotografia_id` (`Fotografia_id`) USING BTREE,
   ADD KEY `fk_File_Fotografia1_idx` (`Fotografia_id`) USING BTREE,
-  ADD KEY `fk_File_Utente1` (`Utente_id`) USING BTREE;
+  ADD KEY `fk_File_Utente1` (`Utente_id`) USING BTREE,
+  ADD KEY `fk_File_Trasferimento1` (`Trasferimento_id`);
 
 --
 -- Indexes for table `Fotografia`
@@ -229,25 +231,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=136;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=369;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=602;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=341;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=608;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=730;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1041;
 
 --
 -- Constraints for dumped tables
@@ -264,6 +266,7 @@ ALTER TABLE `Account`
 --
 ALTER TABLE `File`
   ADD CONSTRAINT `fk_File_Fotografia1` FOREIGN KEY (`Fotografia_id`) REFERENCES `Fotografia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_File_Trasferimento1` FOREIGN KEY (`Trasferimento_id`) REFERENCES `Trasferimento` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_File_Utente1` FOREIGN KEY (`Utente_id`) REFERENCES `Utente` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

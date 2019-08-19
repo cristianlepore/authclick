@@ -437,7 +437,7 @@ foreach($files as $file){ // iterate files
       <label class="switch">
         <input type="checkbox" id="myCheck" name="timbro" onclick="myFunctionToggle()">
         <div class="slider round">
-          <div class="w3-row" id="text" style="margin-top:3px;width:200px;font-size:16px;margin-left:150px;color:black;display:none">
+          <div class="w3-row" id="text1" style="margin-top:3px;width:200px;font-size:16px;margin-left: 80px;color:black;display:none">
             <i class="fa fa-check"></i> L'opera è stata timbrata
           </div>
         </div>
@@ -715,7 +715,7 @@ function closeNav2() {
 // PER VISUALIZZARE IL MESSAGGIO QUANDO VIENE SPUNTATO IL TOGGLE TIMBRO.
 function myFunctionToggle() {
   var checkBox = document.getElementById("myCheck");
-  var text = document.getElementById("text");
+  var text = document.getElementById("text1");
   if (checkBox.checked == true){
     text.style.display = "block";
   } else {

@@ -77,6 +77,15 @@
     </div>
   </div>
 </div>
+        
+
+<!-- PAGGINA SOVRAPPOSTA DI OVERLAY PER L'INSERIMENTO DEI DATI IN BLOCKCHAIN -->
+<div class="animate-in" id="overlay" onclick="off()">
+  <div id="text" style="top: 42%; left: 50%; width: 60%; height:50%;" class="w3-center" onclick="off_stopPropagation()">
+    <p id="testo">Ultimo valore inserito su blockchain.</p>
+    <p id='xbalance' class='w3-center' style='font-size:18px;'></p>
+  </div>
+</div>
 
 <div id="main" onclick="closeNav2()">
   <!-- SLIDEUP E SLIDEDOWN MENU DI ESPORTA -->
@@ -105,20 +114,21 @@
         </div>
         <hr class="horizontalLine">
         <br>
-        
+
         <h4 id="storicoTrasferimenti"><i class="fa fa-history"></i> STORICO TRASFERIMENTI</h4>
         <div id="newTable">
           <table id="contratti">
             <tr>
               <th>Numero</th>
-              <th>File</th>
+              <th>Contratto</th>
               <th>Tipologia</th>
-              <th>Data Cessione</th>
-              <th>Fine Cessione</th>
+              <th>Data trasferimento</th>
+              <th>Fine cessione</th>
               <th>Proprietario</th>
               <th></th>
             </tr>
           </table>
+
         </div>
 
         </div>
@@ -260,6 +270,9 @@ $(document).ready(function(){
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
       
+      // LO TRASFORMO IN STRINGA PER PASSARLO DOPO ALLA FUNZIONE SUCCESSIVA
+      codiceIdentificativoFotografia = JSON.stringify(inputVal);
+
       if(inputVal.length){
         $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
             // Display the returned data in browser
@@ -279,7 +292,7 @@ $(document).ready(function(){
               document.getElementById("contratti").innerHTML = "";
 
               // RICREO LA TABELLA CHE È STATA DISTRUTTA PRIMA
-              var tabella = '<table id="contratti"><tr><th>Numero</th><th>File</th><th>Tipologia</th><th>Data Cessione</th><th>Fine Cessione</th><th>Proprietario</th><th></th></tr></table>';
+              var tabella = '<table id="contratti"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th></th></tr></table>';
               document.getElementById('newTable').innerHTML = tabella;
               var titolo = '<h4 id="storicoTrasferimenti"><i class="fa fa-history"></i> STORICO TRASFERIMENTI</h4>';
               document.getElementById('storicoTrasferimenti').innerHTML = titolo;
@@ -294,7 +307,7 @@ $(document).ready(function(){
                 // GENERO I PULSANTI DA UTILIZZARE SU OGNI RIGA
                 var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + singoloContratto[i].Path + singoloContratto[i].Nome + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
                 var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";
-                var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
+                var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + singoloContratto[i].idTrasferimento + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
 
                 // STAMPO I VALORI OTTENUTI
                 // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
@@ -329,7 +342,8 @@ $(document).ready(function(){
   $.get("show-codiceIdentificativo.php", {}).done(function(data){
     // PRENDO I DATI DI RITORNO DALLA QUERY AL DATABASE
     var codIdentificativo = data;
-
+    var codiceIdentificativo = JSON.stringify(codIdentificativo);
+    
     $.get("show-contracts.php", {code:codIdentificativo}).done(function(data){
       // FACCIO IL PARSING DEL JSON E LO STAMPO
       var listaContratti = JSON.parse(data);
@@ -341,10 +355,15 @@ $(document).ready(function(){
         if(singoloContratto[i].Fine_cessione==null)
           singoloContratto[i].Fine_cessione = "";
 
+        // PREPARO I VALORI DA PASSARE
+        var idTrasferimento = singoloContratto[i].idTrasferimento;
+        var path = JSON.stringify(singoloContratto[i].Path + singoloContratto[i].Nome);
+        var nomeFile = JSON.stringify(singoloContratto[i].Nome);
+
         // GENERO I PULSANTI DA UTILIZZARE SU OGNI RIGA
         var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + singoloContratto[i].Path + singoloContratto[i].Nome + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
-        var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";
-        var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
+        var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";        
+        var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + [codiceIdentificativo,idTrasferimento,path,nomeFile] + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
 
         // STAMPO I VALORI OTTENUTI
         // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
@@ -359,6 +378,154 @@ $(document).ready(function(){
 
 });
 
+function on(codiceIdentificativo,idTrasferimento,path,nomeFile) {
+alert(nomeFile);
+  document.getElementById("overlay").style.display = "block";
+  getvalue();
+
+  // RICHIAMO IL FILE PER ESTRARRE I DATI IMPORTANTI DA INSERIRE IN BLOCKCHAIN
+  $.get("blockchain/sendToBlockchain.php", {codiceIdentificativo:codiceIdentificativo, idTrasferimento:idTrasferimento, path:path, nomeFile:nomeFile}).done(function(data){
+    alert(data);
+    setvalue(data);
+  });
+
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function off_stopPropagation(){
+  document.getElementById("overlay").style.display = "block";
+  event.stopPropagation();
+}
+
+
+// **************************************************************************
+// **************************************************************************
+// ************** PARTE RELATIVA AL TRASFERIMENTO SU BLOCKCHAIN *************
+// **************************************************************************
+// **************************************************************************
+
+window.onload = function () {
+  // check to see if user has metamask addon installed on his browser. check to make sure web3 is defined
+  if (typeof web3 === 'undefined') {
+    document.getElementById('metamask').innerHTML = 'You need <a href="https://metamask.io/">MetaMask</a> browser plugin to run this example'
+  }
+}
+
+//function to retrieve the last inserted value on the blockchain
+function getvalue() {
+    try {
+        // contract Abi defines all the variables,constants and functions of the smart contract. replace with your own abi
+        var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+        //contract address. please change the address to your own
+        var contractaddress = '0xc59f4b9960bac556ef599ca7a407d652c9036d2f';
+        //instantiate and connect to contract address via Abi
+        var myAbi = web3.eth.contract(abi);
+        var myfunction = myAbi.at(contractaddress);
+        //call the get function of our SimpleStorage contract
+        myfunction.get.call(function (err, xname) {
+            if (err) { console.log(err) }
+            if (xname) {
+                //display value on the webpage
+                document.getElementById("xbalance").innerHTML = xname;
+            }
+        });
+    }
+    catch (err) {
+        document.getElementById("xbalance").innerHTML = err;
+    }
+}
+
+// function to add a new integer value to the blockchain
+function setvalue(xvalue) {
+    try {
+        // contract Abi defines all the variables,constants and functions of the smart contract. replace with your own abi
+        var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "x",
+				"type": "string"
+			}
+		],
+		"name": "set",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "get",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+        //contract address. please change the address to your own
+        var contractaddress = '0xc59f4b9960bac556ef599ca7a407d652c9036d2f';
+        //instantiate and connect to contract address via Abi
+        var myAbi = web3.eth.contract(abi);
+        var myfunction = myAbi.at(contractaddress);
+        //call the set function of our SimpleStorage contract
+        ethereum.enable();
+        myfunction.set.sendTransaction(xvalue, { from: web3.eth.accounts[0], gas: 4000000 }, function (error, result) {
+            if (!error) {
+                console.log(result);
+            } else {
+                console.log(error);
+            }
+        })
+    } catch (err) {
+        //document.getElementById("xvalue").innerHTML = err;
+    }
+    
+}
+
+// **************************************************************************
+// **************************************************************************
+// ************** FINE PARTE NECESSARIA PER BLOCKCHAIN **********************
+// **************************************************************************
+// **************************************************************************
 
 </script>
 

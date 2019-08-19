@@ -331,7 +331,7 @@
 
 <!-- POPUP CHE CHIEDE SE SI VUOLE CANCELLARE LA FOTOGRAFIA -->
 <div id="overlay_foto" class="w3-left animate-in" onclick="off_foto()">
-  <div id="text"><i class="fa fa-trash"></i> Vuoi eliminare il file?</div>
+  <div id="text" class="w3-center"><i class="fa fa-trash" ></i> Vuoi eliminare il file?</div>
   <input type="button" id="text_button_no" style="width:5%;background-color:red;" class="w3-huge w3-button" value="NO" onclick="off()" />
   <form action="/authclick/new/esportaFile.php" method="post" >
       <input type="hidden" name="delete" value = 'Foto' >
@@ -346,7 +346,7 @@
 
 <!-- POPUP CHE CHIEDE SE SI VUOLE CANCELLARE LA SCHEDA -->
 <div id="overlay_scheda" class="w3-right animate-in" onclick="off_scheda()">
-  <div id="text"><i class="fa fa-trash"></i> Vuoi eliminare il file?</div>
+  <div id="text" class="w3-center"><i class="fa fa-trash"></i> Vuoi eliminare il file?</div>
   <input type="button" id="text_button_no" style="width:5%;background-color:red;" class="w3-huge w3-button" value="NO" onclick="off()" />
   <form action="/authclick/new/esportaFile.php" method="post" >
       <input type="hidden" name="delete" value = 'Scheda' >
@@ -461,7 +461,7 @@
 <div class="w3-padding-16"></div>
 <!-- BOTTONO PER RITORNARE ALLA HOME PAGE -->
 <div class="col-25 submitButton">
-  <button type="submit" class="submitButton" onclick="window.location.href='/authclick/new/files.html'"><i class="fa fa-backward"></i> <i class="prova">TORNA</i></button>
+  <button type="submit" class="submitButton" onclick="window.location.href='/authclick/new/files.html'"><i class="fa fa-backward"></i>TORNA</button>
 </div>
 <div class="w3-padding-16"></div>
 

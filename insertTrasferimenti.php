@@ -288,7 +288,7 @@ if($row = mysqli_num_rows($result) == 0){
   $contrattoAmmissibile = checkContratto($fileType);
   
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
-  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
+  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' ");
 
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
   if( $result->num_rows == 0 && $contrattoAmmissibile=="OK" ){
@@ -359,9 +359,15 @@ if($row = mysqli_num_rows($result) == 0){
       mkdir($targetDir, 0777, true);
 
       if(move_uploaded_file($_FILES["contratto"]["tmp_name"], $targetFilePath)){
+    
+        // PRENDO ID DELL'ULTIMO TRASFERIMENTO EFFETTUATO CHE MI SERVIRÀ PER INSERIRLO NELLA TABELLA FILE
+        $result = $db->query("SELECT MAX(`id`) FROM `Trasferimento` ");
+        $row = mysqli_fetch_array($result);
+        $lastTrasferimento = $row[0];
+
         // CONTRATTO CARICATO NEL SERVER WEB CORRETTAMENTE
         // AGGIUNGO IL NUOVO FILE AL DATABASE
-        $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId)");
+        $insert = $db->query("INSERT INTO `File`(`Tipologia`, `Nome`, `Fotografia_id`, `Path`, `Utente_id`, `Trasferimento_id`) VALUES ('$tipoFile','$fileName',$idPhoto,'$targetDir',$ownerId, $lastTrasferimento)");
 
         $statusMsgCaricamentoContratto = "<i class='fa fa-check'></i> Contratto caricato con successo.";
       } else {
