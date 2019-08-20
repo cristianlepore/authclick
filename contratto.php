@@ -269,13 +269,13 @@ $(document).ready(function(){
       /* Get input value on change */
       var inputVal = $(this).val();
       var resultDropdown = $(this).siblings(".result");
-      
+
       // LO TRASFORMO IN STRINGA PER PASSARLO DOPO ALLA FUNZIONE SUCCESSIVA
-      codiceIdentificativoFotografia = JSON.stringify(inputVal);
+      var codiceIdentificativoFotografia = JSON.stringify(inputVal);
 
       if(inputVal.length){
         $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
-            // Display the returned data in browser
+          // Display the returned data in browser
           resultDropdown.html(data);
 
           // STAMPO LA LISTA DEI CONTRATTI
@@ -304,10 +304,15 @@ $(document).ready(function(){
                 if(singoloContratto[i].Fine_cessione==null)
                   singoloContratto[i].Fine_cessione = "";
 
+                // PREPARO I VALORI DA PASSARE
+                var idTrasferimento = singoloContratto[i].idTrasferimento;
+                var path = JSON.stringify(singoloContratto[i].Path + singoloContratto[i].Nome);
+                var nomeFile = JSON.stringify(singoloContratto[i].Nome);
+
                 // GENERO I PULSANTI DA UTILIZZARE SU OGNI RIGA
                 var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + singoloContratto[i].Path + singoloContratto[i].Nome + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
-                var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";
-                var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + singoloContratto[i].idTrasferimento + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
+                var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";        
+                var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + [codiceIdentificativoFotografia,idTrasferimento,path,nomeFile] + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
 
                 // STAMPO I VALORI OTTENUTI
                 // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
@@ -379,13 +384,11 @@ $(document).ready(function(){
 });
 
 function on(codiceIdentificativo,idTrasferimento,path,nomeFile) {
-alert(nomeFile);
   document.getElementById("overlay").style.display = "block";
   getvalue();
 
   // RICHIAMO IL FILE PER ESTRARRE I DATI IMPORTANTI DA INSERIRE IN BLOCKCHAIN
   $.get("blockchain/sendToBlockchain.php", {codiceIdentificativo:codiceIdentificativo, idTrasferimento:idTrasferimento, path:path, nomeFile:nomeFile}).done(function(data){
-    alert(data);
     setvalue(data);
   });
 

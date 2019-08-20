@@ -15,7 +15,7 @@ if($db === false){
                                 INNER JOIN `Fotografia` ON `Fotografia`.`id` = `F`.`Fotografia_id`
                                 INNER JOIN `Trasferimento` ON `F`.`Utente_id` = `Trasferimento`.`id_acquirente`
                                 INNER JOIN `Utente` ON `Trasferimento`.`id_acquirente` = `Utente`.`id`
-                            WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' AND `F`.`Tipologia`='Contratto' 
+                            WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' AND `Trasferimento`.`id` = `F`.`Trasferimento_id` AND `F`.`Tipologia`='Contratto' 
                             GROUP BY `Trasferimento`.`id`
                             ORDER BY `F`.`id`
                         ");
