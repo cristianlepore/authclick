@@ -81,8 +81,7 @@
 
 <!-- PAGGINA SOVRAPPOSTA DI OVERLAY PER L'INSERIMENTO DEI DATI IN BLOCKCHAIN -->
 <div class="animate-in" id="overlay" onclick="off()">
-  <div id="text" style="top: 42%; left: 50%; width: 60%; height:50%;" class="w3-center" onclick="off_stopPropagation()">
-    <p id="testo">Ultimo valore inserito su blockchain.</p>
+  <div id="text" style="top: 42%; left: 50%; width: 60%;" class="w3-center" onclick="off_stopPropagation()">
     <p id='xbalance' class='w3-center' style='font-size:18px;'></p>
   </div>
 </div>
@@ -364,11 +363,15 @@ $(document).ready(function(){
         var idTrasferimento = singoloContratto[i].idTrasferimento;
         var path = JSON.stringify(singoloContratto[i].Path + singoloContratto[i].Nome);
         var nomeFile = JSON.stringify(singoloContratto[i].Nome);
+        var tipologia = JSON.stringify(singoloContratto[i].Tipologia);
+        var nomeProprietario = JSON.stringify(singoloContratto[i].Nome_proprietario);
+        var cognomeProprietario = JSON.stringify(singoloContratto[i].Cognome_proprietario);
+        var dataCessione = JSON.stringify(singoloContratto[i].Data_cessione);
 
         // GENERO I PULSANTI DA UTILIZZARE SU OGNI RIGA
         var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + singoloContratto[i].Path + singoloContratto[i].Nome + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
         var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";        
-        var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + [codiceIdentificativo,idTrasferimento,path,nomeFile] + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
+        var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + [codiceIdentificativo, idTrasferimento, path, nomeFile] + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
 
         // STAMPO I VALORI OTTENUTI
         // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
@@ -383,14 +386,53 @@ $(document).ready(function(){
 
 });
 
-function on(codiceIdentificativo,idTrasferimento,path,nomeFile) {
-  document.getElementById("overlay").style.display = "block";
-  getvalue();
-
+function on(codiceIdentificativo, idTrasferimento, path, nomeFile) {
+  
+  // CREAZIONE DELLA CLESSIDRA PER WAITING TIME
+  $('body').addClass('waiting');
+  
+  // DISABILITO TUTTI I CONTROLLI
+  $(document).ready(function(){
+      $('body :input').prop("disabled", true);
+  });
+  
+  /*
   // RICHIAMO IL FILE PER ESTRARRE I DATI IMPORTANTI DA INSERIRE IN BLOCKCHAIN
   $.get("blockchain/sendToBlockchain.php", {codiceIdentificativo:codiceIdentificativo, idTrasferimento:idTrasferimento, path:path, nomeFile:nomeFile}).done(function(data){
+
+    // CHIUDO L'ICONA DELLA CLESSIDRA
+    $('body').removeClass('waiting');
+
+    // ABILITO TUTTI I CONTROLLI
+    $(document).ready(function(){
+        $('body :input').prop("disabled", false);
+    });
+
+    // INVIO I DATI CIFRATI SU BLOCKCHAIN
     setvalue(data);
+
+
+
   });
+  */
+
+        // APRO IL LAYER DI OVERLAY
+        document.getElementById("overlay").style.display = "block";
+
+
+        // PREPARO IL MESSAGGIO DA VISUALIZZARE NEL LAYER DI OVERLAY
+        $.get("blockchain/viewAutentica.php", {codiceIdentificativo:codiceIdentificativo, idTrasferimento:idTrasferimento, path:path, nomeFile:nomeFile}).done(function(data){
+          var myJson = JSON.parse(data);
+
+          // PREPARO I MESSAGGI DA STAMPARE
+          var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
+          var autentica = "<div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ myJson.Nome + "</td></tr><tr><td>Cognome</td><td>"+ myJson.Cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ myJson.Luogo_nascita + "</td></tr><tr><td>Data di nascita</td><td>"+ myJson.Giorno_nascita +"/"+ myJson.Mese_nascita +"/"+ myJson.Anno_nascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ myJson.Luogo_morte + "</td></tr><tr><td>Data del decesso</td><td>"+ myJson.Giorno_morte +"/"+ myJson.Mese_morte +"/"+ myJson.Anno_morte +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ myJson.Titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ myJson.Giorno_scatto +"/"+ myJson.Mese_scatto +"/"+ myJson.Anno_scatto + "</td></tr><tr><td>Data di stampa</td><td>"+ myJson.Giorno_stampa +"/"+ myJson.Mese_stampa +"/"+ myJson.Anno_stampa + "</td></tr><tr><td>Lunghezza</td><td>"+ myJson.Lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ myJson.Larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ myJson.Tecnica_scatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ myJson.Tecnica_stampa + "</td></tr><tr><td>Supporto</td><td>"+ myJson.Supporto + "</td></tr><tr><td>Open edition</td><td>"+ myJson.Open_edition + "</td></tr><tr><td>Tiratura</td><td>"+ myJson.Tiratura + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ myJson.Note_tiratura + "</td></tr><tr><td>Artist's proof</td><td>"+ myJson.Artist_proof + "</td></tr><tr><td>Esemplare</td><td>"+ myJson.Esemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ myJson.Note_esemplare + "</td></tr><tr><td>Timbro</td><td>"+ myJson.Timbro + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ myJson.Annotazioni_timbro + "</td></tr><tr><td>Firma</td><td>"+ myJson.Firma + "</td></tr><tr><td>Annotazioni firma</td><td>"+ myJson.Annotazioni_firma + "</td></tr><tr><td>Annotazioni</td><td>"+ myJson.Annotazioni + "</td></tr></table><br>"
+          var scheda = "<br><hr class='horizontalLine'><div><b>SCHEDA</b></div><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/"+ myJson.Path_scheda +"&embedded=true'></iframe>";
+          var contratto = "<br><hr class='horizontalLine'><div><b>CONTRATTO</b></div><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/"+ path +"&embedded=true'></iframe>";
+          
+          // VISUALIZZO A SCHERMO I MESSAGGI
+          document.getElementById("text").innerHTML = messageToPrint + autentica + scheda + contratto;
+        });
 
 }
 

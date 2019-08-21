@@ -75,12 +75,12 @@ $result = $db->query(" SELECT `Fotografia`.`Open_edition`, `Fotografia`.`Artist_
 
 $i = 0;
 // METTO I DATI IN JSON
-while($row = mysqli_fetch_array($result)){
+while($row = mysqli_fetch_row($result)){
 
   // ELIMINO GLI ZERI NON NECESSARI DAL RISULTATO
   for($i = 0; $i < sizeof($row); $i++){
-  if($row[$i]=='0' || $row[$i]=='NULL')
-    $row[$i] = '';
+    if($row[$i]=='0' || $row[$i]=='NULL' || $row[$i]=="")
+      $row[$i] = '';
   }
 
   // CREO LA STRINGA JSON

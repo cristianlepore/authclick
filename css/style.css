@@ -603,7 +603,7 @@ input[type=submit] {
   position: fixed;
   bottom: 20px;
   margin-left: 4%;
-  z-index: 99;
+  z-index: 2;
   font-size: 14px;
   border: none;
   outline: none;
@@ -889,7 +889,7 @@ input:checked + .slider:after
 
 .result{
   position: absolute;        
-  z-index: 1;
+  z-index: 0;
   top: 100%;
   left: 0;
 }
@@ -999,18 +999,28 @@ tr:nth-child(even) {
 }
 
 #text{
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
+  margin-top:45px;
   width: 60%;
-  height: 50%;
-  font-size: 24px;
+  height: 90%;
+  font-size: 16px;
   background-color: white;
   padding: 75px;
   border-radius: 25px;
   color: black;
+  overflow: scroll;
   transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+width: 0px;
+height: 0px;
+}
+
+body.waiting * {
+  cursor: progress;
 }
 
 /*--------- END --------*/
