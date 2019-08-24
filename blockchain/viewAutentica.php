@@ -5,9 +5,6 @@ include 'dbConfig.php';
 
 // LEGGO IL VALORE CHE GLI VIENE PASSATO DAL FILE PRECEDENTE
 $codiceIdentificativo = $_REQUEST["codiceIdentificativo"];
-$idTrasferimento = $_REQUEST["idTrasferimento"];
-$pathContratto = $_REQUEST["path"];
-$nomeFile = $_REQUEST["nomeFile"];
 
 
 // ********************************************************************
@@ -16,20 +13,21 @@ $nomeFile = $_REQUEST["nomeFile"];
 
 // CREO IL JSON DELL'AUTENTICA
 // ESTRAGGO I DATI PER L'AUTENTICA DAL DATABASE
-$result = $db->query(" SELECT `Fotografia`.`Open_edition`, `Fotografia`.`Artist_proof`, `Fotografia`.`Annotazioni`, `Timbro`, `Fotografia`.`Annotazioni_timbro`, `Fotografia`.`Firma`, `Fotografia`.`Annotazioni_firma`, `Fotografia`.`Titolo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Note_esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Note_tiratura`, `Fotografia`.`Tecnica_stampa`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Supporto`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Fotografia`.`Tecnica_scatto`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte` FROM `Fotografia` INNER JOIN `Utente` ON `Fotografia`.`Autore_id`=`Utente`.`id` WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' ");
+$result = $db->query(" SELECT `Fotografia`.`Open_edition`, `Fotografia`.`Artist_proof`, `Fotografia`.`Annotazioni`, `Timbro`, `Fotografia`.`Annotazioni_timbro`, `Fotografia`.`Firma`, `Fotografia`.`Annotazioni_firma`, `Fotografia`.`Titolo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Note_esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Note_tiratura`, `Fotografia`.`Tecnica_stampa`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Supporto`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Fotografia`.`Tecnica_scatto`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`,`Fotografia`.`Codice_identificativo` FROM `Fotografia` INNER JOIN `Utente` ON `Fotografia`.`Autore_id`=`Utente`.`id` WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' ");
 
 // ESTRAGGO IL NOME DELLA SCHEDA CARICATA. MI SERVIRÀ PER LA VISUALIZZAZIONE
-$result2 = $db->query(" SELECT MAX(`File`.`id`) 
+$result2 = $db->query(" SELECT `File`.`id`, `File`.`Path`, `File`.`Nome`
                         FROM `File` 
                             INNER JOIN `Fotografia` ON `Fotografia`.`id` = `File`.`Fotografia_id`
                         WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' AND `File`.`Tipologia` = 'Scheda' 
+                        ORDER BY ID DESC  LIMIT 1;
                     ");
 
 $i = 0;
 // METTO I DATI IN JSON
 while($row = mysqli_fetch_row($result)){
 
-    $scheda = mysqli_fetch_row($resullt2);
+    $scheda = mysqli_fetch_row($result2);
 
     // ELIMINO GLI ZERI NON NECESSARI DAL RISULTATO
     for($i = 0; $i < sizeof($row); $i++){
@@ -72,8 +70,10 @@ while($row = mysqli_fetch_row($result)){
     $myObj->Mese_morte = $row[30];
     $myObj->Anno_morte = $row[31];
     $myObj->Luogo_morte = $row[32];
+    $myObj->Codice_identificativo = $row[33];
 
     $myObj->Path_scheda = $scheda[1].$scheda[2];
+
 
     // JSON DA INVIARE SU BLOCKCHAIN
     $myJSON = json_encode($myObj);

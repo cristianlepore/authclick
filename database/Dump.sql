@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 19, 2019 at 04:46 PM
+-- Generation Time: Aug 23, 2019 at 12:08 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.21
 
@@ -231,25 +231,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=337;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=602;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=606;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=608;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=620;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1041;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1053;
 
 --
 -- Constraints for dumped tables

@@ -413,7 +413,7 @@ foreach($files as $file){ // iterate files
         Numero esemplare:
       </div>
       <div class="w3-col m4 w3-left">
-        <input type="numeric" style="margin-top:8px;width:100%;" id="numeroEsemplare" name="numeroEsemplare" value="0" placeholder=" es: 2">
+        <input type="numeric" style="margin-top:8px;width:100%;" id="numeroEsemplare" name="numeroEsemplare" value="1" placeholder=" es: 2">
       </div>
     </div>
   </div>
@@ -652,7 +652,7 @@ function validateform(){
   // CONTROLLO SUL NUMERO DELL'ESEMPLARE DELLA FOTOGRAFIA
   if(numeroEsemplare!=0){
     if(!/^\d+$/.test(numeroEsemplare)){
-      alert("Il campo NUMERO ESEMPLARE in Esemplare può contenere solo un numero intero.");
+      alert("Il campo NUMERO ESEMPLARE in Esemplare può essere solo un campo numerico.");
       return false;
     }
   }
@@ -1053,6 +1053,7 @@ $(document).ready(function(){
       $(this).parents(".search-boxCognome").find('input[type="text"]').val($(this).text());
       $(this).parent(".result").empty();
   });
+  
 });
 
 // SLIDE DOWN DELLA PREVIEW DEL CODICE IDENTIFICATIVO QUANDO SI INIZIA A DIGITARE IL CAMPO NOME

@@ -90,35 +90,25 @@ $insertOK = 0;
 
 // PRENDO I VALORI CHE MI SONO PASSATI DAL FILE FORM.PHP
 $nome = $_POST['nome'];
-$nome = mysqli_real_escape_string($db,$nome);
-$nome = ucwords($nome);
 
 $cognome = $_POST['cognome'];
-$cognome = mysqli_real_escape_string($db,$cognome);
-$cognome = ucwords($cognome);
 
 $luogoNascita = $_POST['luogoNascita'];
-$luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
-$luogoNascita = ucwords($luogoNascita);
 
 $giornoNascita = (int)$_POST['giornoNascita'];
 $meseNascita = (int)$_POST['meseNascita'];
 $annoNascita = (int)$_POST['annoNascita'];
 
 $luogoMorte = $_POST['luogoMorte'];
-$luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
-$luogoMorte = ucwords($luogoMorte);
 
 $giornoMorte = (int)$_POST['giornoDecesso'];
 $meseMorte = (int)$_POST['meseDecesso'];
 $annoMorte = (int)$_POST['annoDecesso'];
 
 $keywordsAutore = $_POST['keywords'];
-$keywordsAutore = mysqli_real_escape_string($db,$keywordsAutore);
 
 // VALORI DA POST DI OPERA
 $titolo = $_POST['titolo'];
-$titolo = mysqli_real_escape_string($db,$titolo);
 
 $giornoScatto = (int)$_POST['giornoScatto'];
 $meseScatto = (int)$_POST['meseScatto'];
@@ -132,43 +122,85 @@ $lunghezza = $_POST['lunghezza'];
 $larghezza = $_POST['larghezza'];
 
 $tecnicaScatto = $_POST['tecnicaScatto'];
-$tecnicaScatto = mysqli_real_escape_string($db,$tecnicaScatto);
 
 $tecnicaStampa = $_POST['tecnicaStampa'];
-$tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
 
 $supporto = $_POST['supporto'];
-$supporto = mysqli_real_escape_string($db,$supporto);
 
 $openEdition = $_POST['openEdition'];
 $numeroCopie = (int)$_POST['numeroCopie'];
 
 $noteNumeroCopie = $_POST['noteNumeroCopie'];
-$noteNumeroCopie = mysqli_real_escape_string($db,$noteNumeroCopie);
 
 $artistProof = $_POST['artistProof'];
 $numeroEsemplare = (int)$_POST['numeroEsemplare'];
 
 $noteNumeroEsemplare = $_POST['noteNumeroEsemplare'];
-$noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
 
 $timbro = $_POST['timbro'];
 
 $noteTimbro = $_POST['noteTimbro'];
-$noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
 
 $firma = $_POST['firma'];
 
 $noteFirma = $_POST['noteFirma'];
-$noteFirma = mysqli_real_escape_string($db,$noteFirma);
 
 $annotazioni = $_POST['annotazioni'];
-$annotazioni = mysqli_real_escape_string($db,$annotazioni);
 
 $keywordsOpera = $_POST['keywordsOpera'];
-$keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
 
 $nuovoAutore = $_POST['nuovo_autore'];
+
+if(empty($nuovoAutore)){
+  $nome = mysqli_real_escape_string($db,$nome);
+  $nome = ucwords($nome);
+  $nome = str_replace("'","§", $nome);
+
+  $cognome = mysqli_real_escape_string($db,$cognome);
+  $cognome = ucwords($cognome);
+  $cognome = str_replace("'","§", $cognome);
+
+  $luogoNascita = mysqli_real_escape_string($db,$luogoNascita);
+  $luogoNascita = ucwords($luogoNascita);
+  $luogoNascita = str_replace("'","§", $luogoNascita);
+
+  $luogoMorte = mysqli_real_escape_string($db,$luogoMorte);
+  $luogoMorte = ucwords($luogoMorte);
+  $luogoMorte = str_replace("'","§", $luogoMorte);
+
+  $keywordsAutore = mysqli_real_escape_string($db,$keywordsAutore);
+  $keywordsAutore = str_replace("'","§", $keywordsAutore);
+
+  $titolo = mysqli_real_escape_string($db,$titolo);
+  $titolo = str_replace("'","§", $titolo);
+
+  $tecnicaScatto = mysqli_real_escape_string($db,$tecnicaScatto);
+  $tecnicaScatto = str_replace("'","§", $tecnicaScatto);
+
+  $tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
+  $tecnicaStampa = str_replace("'","§", $tecnicaStampa);
+
+  $supporto = mysqli_real_escape_string($db,$supporto);
+  $supporto = str_replace("'","§", $supporto);
+
+  $noteNumeroCopie = mysqli_real_escape_string($db,$noteNumeroCopie);
+  $noteNumeroCopie = str_replace("'","§", $noteNumeroCopie);
+
+  $noteNumeroEsemplare = mysqli_real_escape_string($db,$noteNumeroEsemplare);
+  $noteNumeroEsemplare = str_replace("'","§", $noteNumeroEsemplare);
+
+  $noteTimbro = mysqli_real_escape_string($db,$noteTimbro);
+  $noteTimbro = str_replace("'","§", $noteTimbro);
+
+  $noteFirma = mysqli_real_escape_string($db,$noteFirma);
+  $noteFirma = str_replace("'","§", $noteFirma);
+
+  $annotazioni = mysqli_real_escape_string($db,$annotazioni);
+  $annotazioni = str_replace("'","§", $annotazioni);
+
+  $keywordsOpera = mysqli_real_escape_string($db,$keywordsOpera);
+  $keywordsOpera = str_replace("'","§", $keywordsOpera);
+}
 
 // CONVERTO IL TOGGLE DEL TIMBRO E DELLA FIRMA E DI OPEN EDITION IN UN VALORE (0,1)
 if($timbro=='on')
@@ -193,31 +225,32 @@ if($timbro=='off')
 if($firma=='off')
   $noteFirma="";
 
-// INCREMENTE DI 1 IL NUMERO DEL MESE PER FARLO CORRISPONDERE AL VALORE REALE
-if($meseNascita==0 && $giornoNascita==0){
-  ;
-}else{
-  $meseNascita=$meseNascita+1;
-}
+  // INCREMENTE DI 1 IL NUMERO DEL MESE PER FARLO CORRISPONDERE AL VALORE REALE
+if(empty($nuovoAutore)){
+  if($meseNascita==0 && $giornoNascita==0){
+    ;
+  }else{
+    $meseNascita=$meseNascita+1;
+  }
 
-if($meseMorte==0 && $giornoMorte==0){
-  ;
-}else{
-  $meseMorte=$meseMorte+1;
-}
+  if($meseMorte==0 && $giornoMorte==0){
+    ;
+  }else{
+    $meseMorte=$meseMorte+1;
+  }
 
-if($meseScatto==0 && $giornoScatto==0){
-  ;
-}else{
-  $meseScatto=$meseScatto+1;
-}
+  if($meseScatto==0 && $giornoScatto==0){
+    ;
+  }else{
+    $meseScatto=$meseScatto+1;
+  }
 
-if($meseStampa==0 && $giornoStampa==0){
-  ;
-}else{
-  $meseStampa=$meseStampa+1;
+  if($meseStampa==0 && $giornoStampa==0){
+    ;
+  }else{
+    $meseStampa=$meseStampa+1;
+  }
 }
-
 
 // REGEX PER PRENDERE SOLTANTO CARATTERI ALFABETICI.
 $rgxOnlyString = "/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/";
@@ -311,13 +344,13 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
             <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
             <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
-            <input type="hidden" name="nuovo_autore" value = "1" >
+            <input type="hidden" name="nuovo_autore" value = '<?php echo "nuovo";?>' >
 
             <!-- BOTTONE -->
             <button type="submit" style="background-color:green;color:white;width:250px;" onclick="setvalue()" class="w3-button w3-small w3-center">
                 <i class="fa fa-plus"></i> AGGIUNGI COME NUOVO AUTORE
             </button>
-
+            
           </form>
           </div>
           <form action="/authclick/new/insertAutentica.php" method="post" >
@@ -360,7 +393,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="noteFirma" value = '<?php echo "$noteFirma";?>' >
             <input type="hidden" name="annotazioni" value = '<?php echo "$annotazioni";?>' >
             <input type="hidden" name="keywordsOpera" value = '<?php echo "$keywordsOpera";?>' >
-            <input type="hidden" name="nuovo_autore" value = "0"><br>
+            <input type="hidden" name="nuovo_autore" value = '<?php echo "esistente";?>'><br>
             
             <!-- BOTTONE -->
             <button type="submit" style="background-color:black;color:white;width:250px;" onclick="setvalue()" class="w3-button w3-small w3-center">
@@ -373,8 +406,24 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
     </div>
     <?php
     exit();
-}else if($nuovoAutore=='' || $nuovoAutore == 1) {
-
+}else if($nuovoAutore=='' || $nuovoAutore == 'nuovo') {
+  
+  $nome = str_replace("§","'", $nome);
+  $cognome = str_replace("§","'", $cognome);
+  $luogoNascita = str_replace("§","'", $luogoNascita);
+  $luogoMorte = str_replace("§","'", $luogoMorte);
+  $keywordsAutore = str_replace("§","'", $keywordsAutore);
+  $titolo = str_replace("§","'", $titolo);
+  $tecnicaScatto = str_replace("§","'", $tecnicaScatto);
+  $tecnicaStampa = str_replace("§","'", $tecnicaStampa);
+  $supporto = str_replace("§","'", $supporto);
+  $noteNumeroCopie = str_replace("§","'", $noteNumeroCopie);
+  $noteNumeroEsemplare = str_replace("§","'", $noteNumeroEsemplare);
+  $noteTimbro = str_replace("§","'", $noteTimbro);
+  $noteFirma = str_replace("§","'", $noteFirma);
+  $annotazioni = str_replace("§","'", $annotazioni);
+  $keywordsOpera = str_replace("§","'", $keywordsOpera);
+  
   // SE I DATI DI MORTE NON SONO STATI INSERITI
     if($luogoMorte == "" && $annoMorte == ''){
         $insert = $db->query("INSERT INTO `Utente`(`Nome`, `Cognome`, `Giorno_nascita`,`Mese_nascita`,`Anno_nascita`, `Luogo_nascita`, `Tipologia`, `Keywords`) VALUES ('$nome','$cognome',$giornoNascita,'$meseNascita',$annoNascita,'$luogoNascita', 'Autore', '$keywordsAutore')");
@@ -452,7 +501,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
                   }, 5000);
                </SCRIPT>");
 
-}else if($nuovoAutore==0){
+}else if($nuovoAutore=='esistente'){
   ?>
 
   <h4 class="w3-center">Seleziona uno di questi utenti.</h4>
