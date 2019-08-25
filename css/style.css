@@ -581,6 +581,24 @@ input[type=submit] {
   transition: .5s;
 }
 
+.previewButton{
+  display: block;
+  position: fixed;
+  bottom: 20px;
+  left:75%;
+  width:8%;
+  background-color: blue;
+  z-index: 0;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+  transition: .5s;
+}
+
 .caricaFileButton{
   display: block;
   bottom: 20px;

@@ -241,7 +241,7 @@ function myFunction() {
   
     // Verifico il codice identificativo.
     if(codIdentificativo!=''){
-      if(!/^[a-zA-Z]{3}\d{4,6}$/.test(codIdentificativo)){
+      if(!/^[a-zA-Z^#]{3}\d{1,11}$/.test(codIdentificativo)){
         alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
         return false;
       }
@@ -341,7 +341,7 @@ function myFunction() {
     }
   
       // Verifico il codice identificativo.
-      if(!/^[a-zA-Z]{3}\d{1,11}$/.test(codIdentificativo)){
+      if(!/^[a-zA-Z^#]{3}\d{1,11}$/.test(codIdentificativo)){
       alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
       return false;
     }
@@ -353,7 +353,7 @@ function myFunction() {
     var codIdentificativoEsporta=document.myFormEsporta.codIdentificativoEsporta.value;
   
     // Verifico il codice identificativo per la sezione esporta.
-    if(!/^[a-zA-Z]{3}\d{1,11}$/.test(codIdentificativoEsporta)){
+    if(!/^[a-zA-Z^#]{3}\d{1,11}$/.test(codIdentificativoEsporta)){
       alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
       return false;
     }

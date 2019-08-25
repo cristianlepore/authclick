@@ -1350,7 +1350,7 @@ function myFunction() {
     }
     
     // Verifico il codice identificativo.
-    if(!/^[a-zA-Z]{3}\d{1,11}$/.test(codIdentificativo)){
+    if(!/^[a-zA-Z^#]{3}\d{1,11}$/.test(codIdentificativo)){
       alert("Il campo CODICE IDENTIFICATIVO contiene una stringa non ammessa.");
       return false;
     }

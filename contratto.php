@@ -274,7 +274,7 @@ $(document).ready(function(){
         $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
           // Display the returned data in browser
           resultDropdown.html(data);
-
+          
           // STAMPO LA LISTA DEI CONTRATTI
           $.get("show-contracts.php", {code:inputVal}).done(function(data){
             // FACCIO IL PARSING DEL JSON E LO STAMPO
@@ -307,8 +307,8 @@ $(document).ready(function(){
                 var nomeFile = JSON.stringify(singoloContratto[i].Nome);
 
                 // GENERO I PULSANTI DA UTILIZZARE SU OGNI RIGA
-                var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + singoloContratto[i].Path + singoloContratto[i].Nome + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
-                var scarica = "<span title='Scarica documento'><a href=" + singoloContratto[i].Path + "/" + singoloContratto[i].Nome + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";        
+                var visualizza = "<span title='Visualizza documento caricato'><a href='https://docs.google.com/gview?url=http://192.168.1.6/authclick/new/" + path + "&embedded=true' class='w3-button' style='background-color:#6397d0; color:white;' target='_blank'><i class='fa fa-eye'></i></a></span>"; 
+                var scarica = "<span title='Scarica documento'><a href=" + path + " class='w3-button' style='background-color:red;color:white;'><i class='fa fa-download'></i></a></span>";        
                 var blockchian = "<span title='Invia dati su blockchain'><button class='w3-button' style='background-color:green;color:white;' onclick='on(" + [i,codiceIdentificativoFotografia,idTrasferimento,path,nomeFile] + ")'><i class='fa fa-chain'></i> BLOCKCHAIN</button></span>";
 
                 // STAMPO I VALORI OTTENUTI

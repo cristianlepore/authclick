@@ -116,6 +116,13 @@ foreach($files as $file){ // iterate files
 <!-- PREVIEW DEL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA -->
 <div class="w3-center" id="codiceIdentificativoPreview" style=" margin-top:-30px; margin-left:-123px; background-color:white; font-size:22px; "><br></div>
 
+<!-- PAGGINA SOVRAPPOSTA DI OVERLAY PER L'INSERIMENTO DEI DATI IN BLOCKCHAIN -->
+<div class="animate-in" id="overlay" onclick="off()">
+  <div id="text" style="top: 42%; left: 50%; width: 60%;" class="w3-center" onclick="off_stopPropagation()">
+    <p id='xbalance' class='w3-center' style='font-size:18px;'></p>
+  </div>
+</div>
+
 <div class="container">
   <h3 class="w3-center"><i class="fa fa-user"></i> AUTORE DELL'OPERA</h3>
   <p style="color:red;">In rosso i campi obbligatori.</p>
@@ -493,6 +500,11 @@ foreach($files as $file){ // iterate files
 </div>
 
 <div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
+<div class="col-25 previewButton">
+  <span title='Anteprima della scheda Autentica'>
+    <input type="button" class="w3-button previewButton" onclick=on(); value="ANTEPRIMA"/>
+  </span>
+</div>
 <div class="col-25 submitButton">
   <button type="submit" class="submitButton"><i class="fa fa-send"></i> <i class="invia">INVIA</i></button>
 </div>
@@ -674,6 +686,12 @@ function validateform(){
       alert("L'anno di scatto della fotografia deve essere successivo alla data di nascita dell'autore.");
       return false;
     }
+  }
+
+  // VERIFICO CHE IL NOME DEL TITOLO NON CONTENGA IL CARATTERE # COME PRIMA LETTERA
+  if(/^#\S+$/.test(titolo)){
+    alert("La prima lettera del titolo non può contenere il carattere #");
+    return false;
   }
 
 } 
@@ -1121,6 +1139,73 @@ inputBoxTitolo.onkeyup = function(){
     });
   }
 
+}
+
+function on(){
+
+  var name=document.myForm.nome.value;
+  name=name.charAt(0).toUpperCase() + name.slice(1);
+
+  var cognome=document.myForm.cognome.value;
+  cognome=cognome.charAt(0).toUpperCase() + cognome.slice(1);
+
+  var luogoNascita=document.myForm.luogoNascita.value;
+  luogoNascita=luogoNascita.charAt(0).toUpperCase() + luogoNascita.slice(1);
+
+  var giornoNascita=document.myForm.giornoNascita.value;
+  var meseNascita=document.myForm.meseNascita.value;
+  if(meseNascita!='')
+    meseNascita=parseInt(document.myForm.meseNascita.value)+1;
+  var annoNascita=document.myForm.annoNascita.value;  
+  var luogoMorte=document.myForm.luogoMorte.value; 
+  var giornoMorte=document.myForm.giornoDecesso.value;  
+  var meseMorte=document.myForm.meseDecesso.value;
+  if(meseMorte!='')
+    meseMorte=parseInt(document.myForm.meseMorte.value)+1;   
+  var annoMorte=document.myForm.annoDecesso.value;
+  var keywordsAutore=document.myForm.keywords.value;
+
+  // INFORMAZIONI RELATIVE ALL'OPERA
+  var titolo=document.myForm.titolo.value;
+  var giornoScatto=document.myForm.giornoScatto.value;
+  var meseScatto=document.myForm.meseScatto.value;
+  if(meseScatto!='')
+    meseScatto=parseInt(document.myForm.meseScatto.value)+1;   
+  var annoScatto=parseInt(document.myForm.annoScatto.value);    
+  var giornoStampa=document.myForm.giornoStampa.value;
+  var meseStampa=document.myForm.meseStampa.value;
+  if(meseStampa!='')
+  meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
+  var annoStampa=parseInt(document.myForm.annoStampa.value);
+  var lunghezza=document.myForm.lunghezza.value;
+  var larghezza=document.myForm.larghezza.value;
+  var tecnicaScatto=document.myForm.tecnicaScatto.value;
+  var tecnicaStampa=document.myForm.tecnicaStampa.value;
+  var supporto=document.myForm.supporto.value;
+  var openEdition=document.myForm.openEdition.value;
+  var numeroCopie=document.myForm.numeroCopie.value;
+  var noteNumeroCopie=document.myForm.noteNumeroCopie.value;
+  var numeroEsemplare=document.myForm.numeroEsemplare.value;
+  var noteNumeroEsemplare=document.myForm.noteNumeroEsemplare.value;
+  var noteTimbro=document.myForm.noteTimbro.value;
+  var noteFirma=document.myForm.noteFirma.value;
+  var annotazioni=document.myForm.annotazioni.value;
+  var keywordsOpera=document.myForm.annotazioni.value;
+
+  document.getElementById("overlay").style.display = "block";
+
+  var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
+  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition + "</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
+  document.getElementById("text").innerHTML = messageToPrint + autentica;
+}
+
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+
+function off_stopPropagation(){
+  document.getElementById("overlay").style.display = "block";
+  event.stopPropagation();
 }
 
 </script>
