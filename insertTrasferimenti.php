@@ -261,6 +261,8 @@ function checkContratto($fileType){
 
 // ***************************************************************
 // ***************************************************************
+// ***************************************************************
+
 
 // INIZIO DEL PROGRAMMA
 // VERIFICO CHE QUEL CODICE IDENTIFICATIVO ESISTA GIA NEL DATABASE ALTRIMENTI MANDO UN WARNING ALL'UTENTE
@@ -288,10 +290,11 @@ if($row = mysqli_num_rows($result) == 0){
   $contrattoAmmissibile = checkContratto($fileType);
   
   // VERFICO SE L'UTENTE ESISTE NEL DATABASE
-  $result = $db->query("SELECT `id`, `Tipologia` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' ");
+  $result = $db->query("SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' AND `Tipologia`!='Autore' ");
+  $result2 = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' AND `Cognome`='$cognome' AND `Tipologia`='Autore' ");
 
   // SE L'UTENTE NON ESISTE NEL DATABASE, LO POSSO AGGIUNGERE SENZA ALTRI PROBLEMI
-  if( $result->num_rows == 0 && $contrattoAmmissibile=="OK" ){
+  if( $result->num_rows == 0 && $result2->num_rows == 0 && $contrattoAmmissibile=="OK" ){
 
     // INSERISCO L'UTENTE PROPRIETARIO DELL'OPERA
     $resultArray = insertOwner($nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
@@ -381,30 +384,25 @@ if($row = mysqli_num_rows($result) == 0){
     // SE SONO QUI È PERCHÈ HANNO LO STESSO NOME E COGNOME DI UN'ALTRO UTENTE REGISTRATO NEL SISTEMA.
 
     // CIOÈ SE ESISTE GIÀ UN UTENTE CON QUEL CODICE FISCALE (O CODICE IDENTIFICATIVO) NEL DATABASE, STAMPO UN MESSAGGIO A VIDEO
-    $result = $db->query("SELECT `id` FROM `Utente` WHERE `Codice_fiscale`='$codFiscale' ");
-    if($result->num_rows > 0){
+    // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
+    move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
 
-      // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
-      move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
+    // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
+    $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
 
-      // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
-      $doubleOwnerMsg = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un utente con questo codice identificativo.<div class='w3-padding-16'> Vuoi proseguire aggiornando le sue informazioni? </div>  <hr class='horizontalLine'> ";
-
-    } else {
-      // SE ESISTE GIÀ UN AUTORE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
-      
-      // PRENDO TUTTA LA SERIE DI AUTORI CON QUELLO STESSO NOME E COGNOME ED IL CODICE IDENTIFICATIVO DELLA LORO PRIMA OPERA
-      $result = $db->query(" SELECT DISTINCT `F`.`Codice_identificativo`, `Utente`.* FROM (SELECT `Fotografia`.* FROM `Fotografia` GROUP BY `Fotografia`.`Autore_id` ) as `F` RIGHT JOIN `Utente` ON `Utente`.`id` = `F`.`Autore_id` WHERE `Utente`.`Tipologia` = 'Autore' AND `Utente`.`Nome` = '$nome' AND `Utente`.`Cognome` = '$cognome'; ");
+  } else if($result2->num_rows > 0 && $contrattoAmmissibile=="OK"){
+    // SE ESISTE GIÀ UN AUTORE CON QUEL NOME E COGNOME AL SISTEMA, MA NON HA UN CODICE IDENTIFICATIVO, DEVO LASCIARE LA SCELTA ALLA PERSONA CHE USA IL PROGRAMMA.
     
-      // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
-      move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
+    // PRENDO TUTTA LA SERIE DI AUTORI CON QUELLO STESSO NOME E COGNOME ED IL CODICE IDENTIFICATIVO DELLA LORO PRIMA OPERA
+    $result = $db->query(" SELECT DISTINCT `F`.`Codice_identificativo`, `Utente`.* FROM (SELECT `Fotografia`.* FROM `Fotografia` GROUP BY `Fotografia`.`Autore_id` ) as `F` RIGHT JOIN `Utente` ON `Utente`.`id` = `F`.`Autore_id` WHERE `Utente`.`Tipologia` = 'Autore' AND `Utente`.`Nome` = '$nome' AND `Utente`.`Cognome` = '$cognome'; ");
+  
+    // SPOSTO TEMPORANEAMENTE IL FILE NELLA CARTELLA UPLOADS PER POI POTERLO RIPRENDERE NELLA PAGINA WEB SUCCESSIVA
+    move_uploaded_file($_FILES["contratto"]["tmp_name"], "uploads/".$fileName);
 
-      // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
-      $doubleAuthor = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un autore con questo nome e cognome.<div class='w3-padding-16'></div>";
+    // ESISTE UN SOLO UTENTE CON LO STESSO CODICE FISCALE
+    $doubleAuthor = "<i class='fa fa-warning'></i> ATTENZIONE! Esiste già un autore con questo nome e cognome.<div class='w3-padding-16'></div>";
 
-    }
-
-  }else if($contrattoAmmissibile == "FAIL") {
+  } else if($contrattoAmmissibile == "FAIL") {
     $statusMsg = "<i class='fa fa-warning'></i><b style='color:red;'> ATTENZIONE!</b><b> Puoi caricare soltanto contratti nei formati previsti. </b><div class='w3-padding-16'>I formati previsti sono: <i> doc, docx, pdf, docm, dot, dotm, dotx, odt, jpg, jpeg, bmp, png, gif.</i></div>";
   }
 
