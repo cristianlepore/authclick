@@ -499,10 +499,11 @@ foreach($files as $file){ // iterate files
 <div class="w3-padding-32"></div>
 </div>
 
+<!-- OVERLAY PER LA PREVIEW DI AUTENTICA -->
 <div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
 <div class="col-25 previewButton">
   <span title='Anteprima della scheda Autentica'>
-    <input type="button" class="w3-button previewButton" onclick=on(); value="ANTEPRIMA"/>
+    <input type="button" class="w3-button previewButton" onclick=on(); value="&#10004"/>
   </span>
 </div>
 <div class="col-25 submitButton">
@@ -1182,7 +1183,6 @@ function on(){
   var tecnicaScatto=document.myForm.tecnicaScatto.value;
   var tecnicaStampa=document.myForm.tecnicaStampa.value;
   var supporto=document.myForm.supporto.value;
-  var openEdition=document.myForm.openEdition.value;
   var numeroCopie=document.myForm.numeroCopie.value;
   var noteNumeroCopie=document.myForm.noteNumeroCopie.value;
   var numeroEsemplare=document.myForm.numeroEsemplare.value;
@@ -1190,12 +1190,12 @@ function on(){
   var noteTimbro=document.myForm.noteTimbro.value;
   var noteFirma=document.myForm.noteFirma.value;
   var annotazioni=document.myForm.annotazioni.value;
-  var keywordsOpera=document.myForm.annotazioni.value;
+  var keywordsOpera=document.myForm.keywordsOpera.value;
 
   document.getElementById("overlay").style.display = "block";
 
   var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
-  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition + "</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
+  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
   document.getElementById("text").innerHTML = messageToPrint + autentica;
 }
 

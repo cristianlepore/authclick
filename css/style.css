@@ -585,9 +585,9 @@ input[type=submit] {
   display: block;
   position: fixed;
   bottom: 20px;
-  left:75%;
-  width:8%;
-  background-color: blue;
+  left:80%;
+  width:4%;
+  background-color: #6397d0;
   z-index: 0;
   font-size: 14px;
   border: none;

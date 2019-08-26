@@ -1202,7 +1202,20 @@
 <br>
 </div>
 
+<!-- PAGGINA SOVRAPPOSTA DI OVERLAY PER L'INSERIMENTO DEI DATI IN BLOCKCHAIN -->
+<div class="animate-in" id="overlay" onclick="off()">
+  <div id="text" style="top: 42%; left: 50%; width: 60%;" class="w3-center" onclick="off_stopPropagation()">
+    <p id='xbalance' class='w3-center' style='font-size:18px;'></p>
+  </div>
+</div>
+
+<!-- OVERLAY PER LA PREVIEW DI AUTENTICA -->
 <div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
+<div class="col-25 previewButton">
+  <span title='Anteprima della scheda Autentica'>
+    <input type="button" class="w3-button previewButton" onclick=on(); value="&#10004"/>
+  </span>
+</div>
 <div class="col-25 submitButton">
   <button type="submit" name="submit" class="submitButton" ><i class="fa fa-send"></i> <i class="prova">INVIA</i></button>
 </div>
@@ -1669,6 +1682,60 @@ $.get("show-codiceIdentificativo.php", {}).done(function(data){
   $("#codIdentificativo").val(data);
 
 });
+
+function on(){
+  var nome=document.myFormOpera.nome.value;
+  nome=nome.charAt(0).toUpperCase() + nome.slice(1);
+
+  var cognome=document.myFormOpera.cognome.value;
+  cognome=cognome.charAt(0).toUpperCase() + cognome.slice(1);
+
+  var codFiscale=document.myFormOpera.codFiscale.value;  
+  var partitaIVA=document.myFormOpera.partitaIVA.value;
+  var keywordsProprietario=document.myFormOpera.keywordsProprietario.value;
+  
+  var indirizzoNazione=document.myFormOpera.indirizzoNazione.value;
+  var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
+  indirizzoCittà=indirizzoCittà.charAt(0).toUpperCase() + indirizzoCittà.slice(1);
+  var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
+  var indirizzoVia_piazza=document.myFormOpera.indirizzoVia_piazza.value;
+  var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
+
+  var domicilioNazione=document.myFormOpera.domicilioNazione.value;
+  var domicilioCittà=document.myFormOpera.domicilioCittà.value;
+  domicilioCittà=domicilioCittà.charAt(0).toUpperCase() + domicilioCittà.slice(1);
+  var domicilioCAP=document.myFormOpera.domicilioCAP.value;
+  var domicilioVia_piazza=document.myFormOpera.domicilioVia_piazza.value;
+  var domicilioCivico=document.myFormOpera.domicilioCivico.value;
+
+  var residenzaNazione=document.myFormOpera.residenzaNazione.value;
+  var residenzaCittà=document.myFormOpera.residenzaCittà.value;
+  residenzaCittà=residenzaCittà.charAt(0).toUpperCase() + residenzaCittà.slice(1);
+  var residenzaCAP=document.myFormOpera.residenzaCAP.value;
+  var residenzaVia_piazza=document.myFormOpera.residenzaVia_piazza.value;
+  var residenzaCivico=document.myFormOpera.residenzaCivico.value;
+
+  var prezzo=document.myFormOpera.prezzo.value;
+  var dataCessione=document.myFormOpera.dataCessione.value;
+  var dataFineCessione=document.myFormOpera.dataFineCessione.value;
+  var nomeContratto=document.myFormOpera.nomeContratto.value;
+  var keywordsContratto=document.myFormOpera.keywordsContratto.value;
+  
+  document.getElementById("overlay").style.display = "block";
+
+  var messageToPrint = "<b>Informazioni riassuntive -- TRASFERIMENTO</b><br><hr class='horizontalLine'>";
+  var previewTrasferimento = "<div id='tabella'><div class='w3-center'><b>Proprietario</b></div><table><td>Nome</td><td>"+ nome + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Codice identificativo</td><td>"+ codFiscale + "</td></tr><tr><td>Partita IVA</td><td>"+ partitaIVA +"</td></tr><tr><td>Keywords proprietario</td><td>"+ keywordsProprietario + "</td></tr></table><br><b>Indirizzo</b></div><table><td>Nazione</td><td>"+ indirizzoNazione + "</td></tr><tr><td>Città</td><td>"+ indirizzoCittà + "</td></tr><tr><td>CAP</td><td>"+ indirizzoCAP + "</td></tr><tr><td>Via / Piazza</td><td>"+ indirizzoVia_piazza +"</td></tr><tr><td>Numero civico</td><td>"+ indirizzoCivico + "</td></tr></table><br><b>Domicilio</b></div><table><td>Nazione</td><td>"+ domicilioNazione + "</td></tr><tr><td>Città</td><td>"+ domicilioCittà + "</td></tr><tr><td>CAP</td><td>"+ domicilioCAP + "</td></tr><tr><td>Via / Piazza</td><td>"+ domicilioVia_piazza +"</td></tr><tr><td>Numero civico</td><td>"+ domicilioCivico + "</td></tr></table><br><b>Residenza</b></div><table><td>Nazione</td><td>"+ residenzaNazione + "</td></tr><tr><td>Città</td><td>"+ residenzaCittà + "</td></tr><tr><td>CAP</td><td>"+ residenzaCAP + "</td></tr><tr><td>Via / Piazza</td><td>"+ residenzaVia_piazza +"</td></tr><tr><td>Numero civico</td><td>"+ residenzaCivico + "</td></tr></table><br><b>Contratto</b></div><table><td>Prezzo di vendita (EUR)</td><td>"+ prezzo + "</td></tr><tr><td>Data cessione</td><td>"+ dataCessione + "</td></tr><tr><td>Data di fine cessione</td><td>"+ dataFineCessione+ "</td></tr><tr><td>Nome file</td><td>"+ nomeContratto +"</td></tr><tr><td>Keywords contratto</td><td>"+ keywordsContratto + "</td></tr></table>";
+  document.getElementById("text").innerHTML = messageToPrint + previewTrasferimento;
+}
+
+function off() {
+document.getElementById("overlay").style.display = "none";
+}
+
+function off_stopPropagation(){
+document.getElementById("overlay").style.display = "block";
+event.stopPropagation();
+}
 
 </script>
 
