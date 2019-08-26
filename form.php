@@ -595,6 +595,21 @@ function validateform(){
 
   }
 
+  if(annoNascita < 1901){
+    alert("Puoi inserire solamente date a partire dal 1901.")
+    return false;
+  }
+
+  if(annoScatto < 1901){
+    alert("Puoi inserire solamente date a partire dal 1901.")
+    return false;
+  }
+
+  if(annoStampa < 1901){
+    alert("Puoi inserire solamente date a partire dal 1901.")
+    return false;
+  }
+
   // VERIFICO LA CORRETTEZZA DELLA DATA DI NASCITA
   if(!/^\d{4}$/.test(annoNascita)){
     alert("ATTENZIONE, l'anno di nascita non è corretto.");
@@ -607,6 +622,12 @@ function validateform(){
       alert("ATTENZIONE, l'anno del decesso non è corretto.");
       return false;
     }
+
+    if(annoMorte < 1901){
+      alert("Puoi inserire solamente date a partire dal 1901.")
+      return false;    
+    }
+
   }
 
   if(annoMorte!=''){
@@ -830,7 +851,7 @@ const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno"
     monthElem.textContent = month;
     selectMonth.append(monthElem);
   }
-
+  
   var d = new Date();
   var month = "";
   var year = "";
@@ -851,7 +872,7 @@ const monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno"
     
     //get the last day, so the number of days in that month
     var days = new Date(year, month, 0).getDate(); 
-    
+
     //lets create the days of that month
     for (var d = 1; d <= days; d++){
       var dayElem = document.createElement("option");
@@ -1159,10 +1180,12 @@ function on(){
     meseNascita=parseInt(document.myForm.meseNascita.value)+1;
   var annoNascita=document.myForm.annoNascita.value;  
   var luogoMorte=document.myForm.luogoMorte.value; 
+  luogoMorte=luogoMorte.charAt(0).toUpperCase() + luogoMorte.slice(1);
+
   var giornoMorte=document.myForm.giornoDecesso.value;  
-  var meseMorte=document.myForm.meseDecesso.value;
+  var meseMorte=document.myForm.meseDecesso.value;  
   if(meseMorte!='')
-    meseMorte=parseInt(document.myForm.meseMorte.value)+1;   
+    meseMorte=parseInt(document.myForm.meseDecesso.value)+1;   
   var annoMorte=document.myForm.annoDecesso.value;
   var keywordsAutore=document.myForm.keywords.value;
 
