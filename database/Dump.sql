@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 23, 2019 at 12:08 PM
+-- Generation Time: Aug 28, 2019 at 01:11 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.21
 
@@ -139,7 +139,9 @@ CREATE TABLE `Trasferimento` (
   `id_acquirente` bigint(30) NOT NULL,
   `Fotografia_id` bigint(30) NOT NULL,
   `Cessione_diritti` text,
-  `Keywords` varchar(5000) DEFAULT NULL
+  `Keywords` varchar(5000) DEFAULT NULL,
+  `Stringa_blockchain` varchar(5000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `Flag` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -231,25 +233,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=606;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=684;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=620;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=634;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1053;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1126;
 
 --
 -- Constraints for dumped tables

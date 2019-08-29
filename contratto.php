@@ -122,6 +122,7 @@
               <th>Data trasferimento</th>
               <th>Fine cessione</th>
               <th>Proprietario</th>
+              <th>ID proprietario</th>
               <th></th>
             </tr>
           </table>
@@ -289,7 +290,7 @@ $(document).ready(function(){
               document.getElementById("contratti").innerHTML = "";
 
               // RICREO LA TABELLA CHE È STATA DISTRUTTA PRIMA
-              var tabella = '<table id="contratti"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th></th></tr></table>';
+              var tabella = '<table id="contratti"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th>ID proprietario</th><th></th></tr></table>';
               document.getElementById('newTable').innerHTML = tabella;
               var titolo = '<h4 id="storicoTrasferimenti"><i class="fa fa-history"></i> STORICO TRASFERIMENTI</h4>';
               document.getElementById('storicoTrasferimenti').innerHTML = titolo;
@@ -314,7 +315,7 @@ $(document).ready(function(){
                 // STAMPO I VALORI OTTENUTI
                 // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
                 var tr = document.createElement('TR');
-                tr.innerHTML = '<tr><td>' + (i+1) + "</td><td>" + singoloContratto[i].Nome + "</td><td>" + singoloContratto[i].Tipologia + "</td><td>" + singoloContratto[i].Data_cessione +  "</td><td>" + singoloContratto[i].Fine_cessione +  "</td><td>" + singoloContratto[i].Nome_proprietario + " " + singoloContratto[i].Cognome_proprietario + "</td><td>" + visualizza + "&nbsp  &nbsp" + scarica + "&nbsp  &nbsp &nbsp  &nbsp &nbsp" + blockchian + "</td></tr>";
+                tr.innerHTML = '<tr><td>' + (i+1) + "</td><td>" + singoloContratto[i].Nome + "</td><td>" + singoloContratto[i].Tipologia + "</td><td>" + singoloContratto[i].Data_cessione +  "</td><td>" + singoloContratto[i].Fine_cessione +  "</td><td>" + singoloContratto[i].Nome_proprietario + " " + singoloContratto[i].Cognome_proprietario + "</td><td>"+ singoloContratto[i].Codice_fiscale +"</td><td>" + visualizza + "&nbsp  &nbsp" + scarica + "&nbsp  &nbsp &nbsp  &nbsp &nbsp" + blockchian + "</td></tr>";
                 document.getElementById('contratti').appendChild(tr);
               
               }
@@ -374,7 +375,7 @@ $(document).ready(function(){
         // STAMPO I VALORI OTTENUTI
         // STAMPO L'ULTIMO CODICE IDENTIFICATIVO INSERITO NEL DATABASE
         var tr = document.createElement('TR');
-        tr.innerHTML = '<tr><td>' + (i+1) + "</td><td>" + singoloContratto[i].Nome + "</td><td>" + singoloContratto[i].Tipologia + "</td><td>" + singoloContratto[i].Data_cessione +  "</td><td>" + singoloContratto[i].Fine_cessione +  "</td><td>" + singoloContratto[i].Nome_proprietario + " " + singoloContratto[i].Cognome_proprietario + "</td><td>" + visualizza + "&nbsp  &nbsp" + scarica + "&nbsp  &nbsp &nbsp  &nbsp &nbsp" + blockchian + "</td></tr>";
+        tr.innerHTML = '<tr><td>' + (i+1) + "</td><td>" + singoloContratto[i].Nome + "</td><td>" + singoloContratto[i].Tipologia + "</td><td>" + singoloContratto[i].Data_cessione +  "</td><td>" + singoloContratto[i].Fine_cessione +  "</td><td>" + singoloContratto[i].Nome_proprietario + " " + singoloContratto[i].Cognome_proprietario + "</td><td>"+ singoloContratto[i].Codice_fiscale +"</td><td>" + visualizza + "&nbsp  &nbsp" + scarica + "&nbsp  &nbsp &nbsp  &nbsp &nbsp" + blockchian + "</td></tr>";
         document.getElementById('contratti').appendChild(tr);
 
       }

@@ -147,12 +147,29 @@
   <hr class="horizontalLine">
   <br>
 
+  <div class="row" id="contrattoForm">
+    <div class="col-25">
+      <label for="nazionalità"><i class="fa fa-flag"></i> Nazionalità italiana</label>
+    </div>
+    <div class="col-75" style="margin-top:12px;">
+      <label class="switch">
+        <input type="checkbox" id="nazionalità" name="nazionalità" onclick="myFunctionNazionalità()" checked>
+        <div class="slider round">
+          <div class="w3-row" id="text1" style="margin-top:3px;width:200px;font-size:16px;margin-left:80px;color:black;display:none">
+            <i class="fa fa-check"></i> Cessione diritti
+          </div>
+        </div>
+      </label>
+    </div>
+  </div>
+  <br>
+
   <div class="row">
     <div class="col-25">
       <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Identificativo</label>
     </div>
     <div class="col-75 search-boxCodFiscale">
-      <input type="text" style="text-transform: uppercase;" autocomplete="off" id="codFiscale" name="codFiscale" placeholder="es: VRDLGU75A01F205W" required>
+      <input type="text" style="text-transform: uppercase;" autocomplete="off" id="codFiscale" name="codFiscale" placeholder="es: codice fiscale" required>
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -1259,22 +1276,36 @@ function myFunction() {
   
     var nome=document.myFormOpera.nome.value;
     var cognome=document.myFormOpera.cognome.value;
-    var codFiscale=document.myFormOpera.codFiscale.value;
     var partitaIVA=document.myFormOpera.partitaIVA.value;
     var keywordsProprietario=document.myFormOpera.keywordsProprietario.value;
   
+    var indirizzoNazione=document.myFormOpera.indirizzoNazione.value;
     var indirizzoCittà=document.myFormOpera.indirizzoCittà.value;
     var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
     var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
-  
+    var indirizzoVia_piazza=document.myFormOpera.indirizzoVia_piazza.value;
+    if(indirizzoCivico != ""){
+      indirizzoCivico = parseInt(indirizzoCivico);
+    }
+
+    var domicilioNazione=document.myFormOpera.domicilioNazione.value;
+    var domicilioVia_piazza=document.myFormOpera.domicilioVia_piazza.value;
     var domicilioCittà=document.myFormOpera.domicilioCittà.value;
     var domicilioCAP=document.myFormOpera.domicilioCAP.value;
     var domicilioCivico=document.myFormOpera.domicilioCivico.value;
-  
+    if(domicilioCivico != ""){
+      domicilioCivico = parseInt(domicilioCivico);
+    }
+
+    var residenzaNazione=document.myFormOpera.residenzaNazione.value;
+    var residenzaVia_piazza=document.myFormOpera.residenzaVia_piazza.value;
     var residenzaCittà=document.myFormOpera.residenzaCittà.value;
     var residenzaCAP=document.myFormOpera.residenzaCAP.value;
     var residenzaCivico=document.myFormOpera.residenzaCivico.value;
-  
+    if(residenzaCivico != ""){
+      residenzaCivico = parseInt(residenzaCivico);
+    }
+
     var prezzo=document.myFormOpera.prezzo.value;
     var codIdentificativo=document.myFormOpera.codIdentificativo.value;
     var dataCessione=document.myFormOpera.dataCessione.value;
@@ -1283,22 +1314,16 @@ function myFunction() {
     var dataFineCessione=document.myFormOpera.dataFineCessione.value;
     var nomeContratto=document.myFormOpera.nomeContratto.value;
     var keywordsContratto=document.myFormOpera.keywordsContratto.value;
-  
+
     // VERIFICA SUL CAMPO NOME
     if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nome)){
       alert("Il campo NOME contiene caratteri non ammessi.");  
       return false; 
     }
-  
+
     // VERIFICA SUL CAMPO COGNOME
     if(!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognome)){
       alert("Il campo COGNOME contiene caratteri non ammessi.");  
-      return false; 
-    }
-  
-    // VERIFICA SUL CODICE FISCALE
-    if(!/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/i.test(codFiscale)){
-      alert("Il campo CODICE FISCALE non è formattato correttamente.");  
       return false; 
     }
   
@@ -1307,18 +1332,33 @@ function myFunction() {
       alert("Il campo PARTITA IVA deve contenere 11 cifre.");
       return false;
     }
-  
+
     // VERIFICA LA CORRETTEZZA DEI CAMPI INDIRIZZO
     if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(indirizzoCittà)){
       alert("Il campo CITTÀ (indirizzo) non è formattato correttamente.");  
       return false; 
     }
     
+    if((indirizzoCAP!='' || indirizzoCittà!='' || indirizzoCivico!='' || indirizzoVia_piazza!='') && indirizzoNazione==''){
+      alert("Completare anche il campo nazione nella sezione Indirizzo.")
+      return false;
+    }
+
+    if((domicilioCAP!='' || domicilioCittà!='' || domicilioCivico!='' || domicilioVia_piazza!='') && domicilioNazione==''){
+      alert("Completare anche il campo nazione nella sezione Domicilio.")
+      return false;
+    }
+
+    if((residenzaCAP!='' || residenzaCittà!='' || residenzaCivico!='' || residenzaVia_piazza!='') && residenzaNazione==''){
+      alert("Completare anche il campo nazione nella sezione Residenza.")
+      return false;
+    }
+
     if(!/^$|^\d{5}$/.test(indirizzoCAP)){
       alert("Il campo CAP (indirizzo) non è formattato correttamente. Deve essere un numero a 5 cifre.");  
       return false; 
     }
-    
+
     if(!/^$|^\d{1,10}$/.test(indirizzoCivico)){
       alert("Il campo CIVICO (indirizzo) non è formattato correttamente.");  
       return false; 
@@ -1355,11 +1395,13 @@ function myFunction() {
       alert("Il campo CIVICO (residenza) non è formattato correttamente.");  
       return false; 
     }
-  
+
     // VERIFICO LA CORRETTEZZA DEL VALORE INSERITO NEL CAMPO PREZZO
-    if(!/^$|^\d{1,10}\.?\d{0,2}$/.test(prezzo)){
-      alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
-      return false; 
+    if(prezzo!=''){
+      if(!/^(0|[1-9][0-9]{1,10})\.?\d{0,2}$/.test(prezzo)){
+        alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
+        return false; 
+      }
     }
     
     // Verifico il codice identificativo.
@@ -1375,7 +1417,7 @@ function myFunction() {
         return false;
       }
     }
-    
+
     // VERIFICO CHE IL NOME DEL FILE INSERITO DALL'UTENTE NON CONTENGA DEI CARATTERI NON AMMESSI AL SUO INTERNO
     if(nomeContratto.includes("'") || nomeContratto.includes("/") ||  nomeContratto.includes("#") ||  nomeContratto.includes("%") || nomeContratto.includes("§") ){
       alert("Il campo NOME DEL CONTRATTO contiene caratteri non ammessi. Il nome non deve contenere i seguenti caratteri: ' / § # % ");
@@ -1700,6 +1742,9 @@ function on(){
   var indirizzoCAP=document.myFormOpera.indirizzoCAP.value;
   var indirizzoVia_piazza=document.myFormOpera.indirizzoVia_piazza.value;
   var indirizzoCivico=document.myFormOpera.indirizzoCivico.value;
+  if(indirizzoCivico != ""){
+    indirizzoCivico = parseInt(indirizzoCivico);
+  }
 
   var domicilioNazione=document.myFormOpera.domicilioNazione.value;
   var domicilioCittà=document.myFormOpera.domicilioCittà.value;
@@ -1707,6 +1752,9 @@ function on(){
   var domicilioCAP=document.myFormOpera.domicilioCAP.value;
   var domicilioVia_piazza=document.myFormOpera.domicilioVia_piazza.value;
   var domicilioCivico=document.myFormOpera.domicilioCivico.value;
+  if(domicilioCivico != ""){
+    domicilioCivico = parseInt(domicilioCivico);
+  }
 
   var residenzaNazione=document.myFormOpera.residenzaNazione.value;
   var residenzaCittà=document.myFormOpera.residenzaCittà.value;
@@ -1714,6 +1762,9 @@ function on(){
   var residenzaCAP=document.myFormOpera.residenzaCAP.value;
   var residenzaVia_piazza=document.myFormOpera.residenzaVia_piazza.value;
   var residenzaCivico=document.myFormOpera.residenzaCivico.value;
+  if(residenzaCivico != ""){
+    residenzaCivico = parseInt(residenzaCivico);
+  }
 
   var prezzo=document.myFormOpera.prezzo.value;
   var dataCessione=document.myFormOpera.dataCessione.value;

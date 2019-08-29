@@ -10,7 +10,7 @@ if($db === false){
     $codiceIdentificativo = $_REQUEST["code"];
 
     // QUERY PER PRENDERE I CONTRATTI CARICATI CON QUEL CODICE IDENTIFICATIVO
-    $result = $db->query("  SELECT `Trasferimento`.`id`,`F`.`id`, `F`.`Nome`, `Trasferimento`.`Tipologia`, `Trasferimento`.`id` AS `idTrasferimento`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Utente`.`Nome` AS `Nome_proprietario`, `Utente`.`Cognome` AS `Cognome_proprietario`, `F`.`Path`
+    $result = $db->query("  SELECT `Trasferimento`.`id`,`F`.`id`, `F`.`Nome`, `Trasferimento`.`Tipologia`, `Trasferimento`.`id` AS `idTrasferimento`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Utente`.`Nome` AS `Nome_proprietario`, `Utente`.`Cognome` AS `Cognome_proprietario`, `F`.`Path`, `Utente`.`Codice_fiscale` AS `Codice_fiscale` 
                             FROM `File` `F`
                                 INNER JOIN `Fotografia` ON `Fotografia`.`id` = `F`.`Fotografia_id`
                                 INNER JOIN `Trasferimento` ON `F`.`Utente_id` = `Trasferimento`.`id_acquirente`

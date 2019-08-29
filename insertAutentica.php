@@ -118,8 +118,8 @@ $giornoStampa = (int)$_POST['giornoStampa'];
 $meseStampa = (int)$_POST['meseStampa'];
 $annoStampa = (int)$_POST['annoStampa'];
 
-$lunghezza = $_POST['lunghezza'];
-$larghezza = $_POST['larghezza'];
+$lunghezza = (float)$_POST['lunghezza'];
+$larghezza = (float)$_POST['larghezza'];
 
 $tecnicaScatto = $_POST['tecnicaScatto'];
 

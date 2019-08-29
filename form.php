@@ -565,7 +565,11 @@ function validateform(){
   var meseStampa=document.myForm.meseStampa.value;
   var annoStampa=parseInt(document.myForm.annoStampa.value);
   var lunghezza=document.myForm.lunghezza.value;
+  if(lunghezza!='')
+    var lunghezza = parseFloat(lunghezza);
   var larghezza=document.myForm.larghezza.value;
+  if(larghezza!='')
+    var larghezza = parseFloat(larghezza);
   var numeroCopie=parseInt(document.myForm.numeroCopie.value);
   var numeroEsemplare=parseInt(document.myForm.numeroEsemplare.value);
 
@@ -1164,7 +1168,6 @@ inputBoxTitolo.onkeyup = function(){
 }
 
 function on(){
-
   var name=document.myForm.nome.value;
   name=name.charAt(0).toUpperCase() + name.slice(1);
 
@@ -1199,16 +1202,20 @@ function on(){
   var giornoStampa=document.myForm.giornoStampa.value;
   var meseStampa=document.myForm.meseStampa.value;
   if(meseStampa!='')
-  meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
+    meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
   var annoStampa=parseInt(document.myForm.annoStampa.value);
   var lunghezza=document.myForm.lunghezza.value;
+  if(lunghezza!='')
+    var lunghezza = parseFloat(lunghezza);
   var larghezza=document.myForm.larghezza.value;
+  if(larghezza!='')
+    var larghezza = parseFloat(larghezza);
   var tecnicaScatto=document.myForm.tecnicaScatto.value;
   var tecnicaStampa=document.myForm.tecnicaStampa.value;
   var supporto=document.myForm.supporto.value;
-  var numeroCopie=document.myForm.numeroCopie.value;
+  var numeroCopie=parseInt(document.myForm.numeroCopie.value);
   var noteNumeroCopie=document.myForm.noteNumeroCopie.value;
-  var numeroEsemplare=document.myForm.numeroEsemplare.value;
+  var numeroEsemplare=parseInt(document.myForm.numeroEsemplare.value);
   var noteNumeroEsemplare=document.myForm.noteNumeroEsemplare.value;
   var noteTimbro=document.myForm.noteTimbro.value;
   var noteFirma=document.myForm.noteFirma.value;

@@ -123,21 +123,21 @@ $keywordsProprietario = $_POST['keywordsProprietario'];
 // VALORI DA POST DI INDIRIZZO
 $nazione = $_POST['indirizzoNazione'];
 $città = $_POST['indirizzoCittà'];
-$CAP = (int)$_POST['indirizzoCAP'];
+$CAP = $_POST['indirizzoCAP'];
 $via_piazza = $_POST['indirizzoVia_piazza'];
 $civico = (int)$_POST['indirizzoCivico'];
 
 // VALORI DA POST DI DOMICILIO
 $nazione_domicilio = $_POST['domicilioNazione'];
 $città_domicilio = $_POST['domicilioCittà'];
-$CAP_domicilio = (int)$_POST['domicilioCAP'];
+$CAP_domicilio = $_POST['domicilioCAP'];
 $via_piazza_domicilio = $_POST['domicilioVia_piazza'];
 $civico_domicilio = (int)$_POST['domicilioCivico'];
 
 // VALORI DA POST DI RESIDENZA
 $nazione_residenza = $_POST['residenzaNazione'];
 $città_residenza = $_POST['residenzaCittà'];
-$CAP_residenza = (int)$_POST['residenzaCAP'];
+$CAP_residenza = $_POST['residenzaCAP'];
 $via_piazza_residenza = $_POST['residenzaVia_piazza'];
 $civico_residenza = (int)$_POST['residenzaCivico'];
 
@@ -212,11 +212,11 @@ function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $authorI
 
   // AGGIUNGO I DATI SUGLI INDIRIZZI, DOMICILIO E RESIDENZA DELL'ACQUIRENTE
   if($nazione != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $authorID)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', '$CAP', '$via_piazza', $civico, $authorID)");
   if($nazione_residenza != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $authorID)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', '$CAP_residenza', '$via_piazza_residenza', $civico_residenza, $authorID)");
   if($nazione_domicilio != "")
-      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $authorID)");
+      $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', '$CAP_domicilio', '$via_piazza_domicilio', $civico_domicilio, $authorID)");
 
 }
 
@@ -310,9 +310,9 @@ function insertCessioneDiritti($codIdentificativo, $newOwnerId, $prezzo, $dataCe
 $resultArray = updateOwner($authorID, $nome, $cognome, $codFiscale, $partitaIVA, $keywordsProprietario);
 
 // PRENDO L'ID DELL'UTENTE CON QUEL CODICE IDENTIFICATIVO
-//$result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
-//$row = mysqli_fetch_row($result);
-//$ownerId = (int)$row[0];
+$result = $db->query("SELECT `id` FROM `Utente` WHERE `Nome`='$nome' && `Cognome`='$cognome' && `Codice_fiscale`='$codFiscale' ");
+$row = mysqli_fetch_row($result);
+$ownerId = (int)$row[0];
 
 // SE È UNA VENDITA E NON UNA SEMPLICE CESSIONE DI DIRITTI
 if($cessioneDiritti=="off"){

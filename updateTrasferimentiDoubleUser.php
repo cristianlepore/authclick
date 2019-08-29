@@ -122,21 +122,21 @@ $keywordsProprietario = $_POST['keywordsProprietario'];
 // VALORI DA POST DI INDIRIZZO
 $nazione = $_POST['indirizzoNazione'];
 $città = $_POST['indirizzoCittà'];
-$CAP = (int)$_POST['indirizzoCAP'];
+$CAP = $_POST['indirizzoCAP'];
 $via_piazza = $_POST['indirizzoVia_piazza'];
 $civico = (int)$_POST['indirizzoCivico'];
 
 // VALORI DA POST DI DOMICILIO
 $nazione_domicilio = $_POST['domicilioNazione'];
 $città_domicilio = $_POST['domicilioCittà'];
-$CAP_domicilio = (int)$_POST['domicilioCAP'];
+$CAP_domicilio = $_POST['domicilioCAP'];
 $via_piazza_domicilio = $_POST['domicilioVia_piazza'];
 $civico_domicilio = (int)$_POST['domicilioCivico'];
 
 // VALORI DA POST DI RESIDENZA
 $nazione_residenza = $_POST['residenzaNazione'];
 $città_residenza = $_POST['residenzaCittà'];
-$CAP_residenza = (int)$_POST['residenzaCAP'];
+$CAP_residenza = $_POST['residenzaCAP'];
 $via_piazza_residenza = $_POST['residenzaVia_piazza'];
 $civico_residenza = (int)$_POST['residenzaCivico'];
 
@@ -212,16 +212,16 @@ function updateIndirizzi($nazione, $città, $CAP, $via_piazza, $civico, $ownerId
 
   // SE L'ACQUIRENTE È GIÀ A SISTEMA, GLI AGGIORNO SOLO GLI INDIRIZZI.
   if($nazione != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', $CAP, '$via_piazza', $civico, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`=$CAP, `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Indirizzo', '$nazione', '$città', '$CAP', '$via_piazza', $civico, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione', `Città`='$città', `CAP`='$CAP', `Via/piazza`='$via_piazza', `Civico`=$civico WHERE `Utente_id`=$ownerId && `Tipologia`='Indirizzo'");
   }
   if($nazione_residenza != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', $CAP_residenza, '$via_piazza_residenza', $civico_residenza, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_residenza', `Città`='$città_residenza', `CAP`=$CAP_residenza, `Via/piazza`='$via_piazza_residenza', `Civico`=$civico_residenza WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza' ");
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Residenza', '$nazione_residenza', '$città_residenza', '$CAP_residenza', '$via_piazza_residenza', $civico_residenza, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_residenza', `Città`='$città_residenza', `CAP`='$CAP_residenza', `Via/piazza`='$via_piazza_residenza', `Civico`=$civico_residenza WHERE `Utente_id`=$ownerId && `Tipologia`='Residenza' ");
   }                               
   if($nazione_domicilio != ""){
-    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', $CAP_domicilio, '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
-    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_domicilio', `Città`='$città_domicilio', `CAP`=$CAP_domicilio, `Via/piazza`='$via_piazza_domicilio', `Civico`=$civico_domicilio WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
+    $insert = $db->query("INSERT INTO `Indirizzo`(`Tipologia`, `Nazione`, `Città`, `CAP`, `Via/piazza`, `Civico`, `Utente_id`) VALUES ('Domicilio', '$nazione_domicilio', '$città_domicilio', '$CAP_domicilio', '$via_piazza_domicilio', $civico_domicilio, $ownerId)");
+    $update = $db->query("UPDATE `Indirizzo` SET `Nazione`='$nazione_domicilio', `Città`='$città_domicilio', `CAP`='$CAP_domicilio', `Via/piazza`='$via_piazza_domicilio', `Civico`=$civico_domicilio WHERE `Utente_id`=$ownerId && `Tipologia`='Domicilio'");
   }
 
 }
