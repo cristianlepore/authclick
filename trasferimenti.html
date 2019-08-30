@@ -1266,7 +1266,7 @@
       <div class="col-25"></div>
       <div class="col-25 previewButton">
         <span title='Anteprima della scheda Autentica'>
-          <input type="button" class="w3-button previewButton" onclick=on(); value="&#10004" />
+          <input type="button" class="w3-button previewButton" onclick=on(); value="&#128065" />
         </span>
       </div>
       <div class="col-25 submitButton">
@@ -1769,6 +1769,12 @@
       var cognome = document.myFormOpera.cognome.value;
       cognome = cognome.charAt(0).toUpperCase() + cognome.slice(1);
 
+      var checkBoxNazionalità = document.getElementById("nazionalità");
+      if (checkBoxNazionalità.checked == true)
+        var nazionalità = "Italiana";
+      else
+        var nazionalità = "Estera";
+
       var codFiscale = document.myFormOpera.codFiscale.value;
       codFiscale = codFiscale.toUpperCase();
       var idEstero = document.myFormOpera.idEstero.value;
@@ -1809,6 +1815,13 @@
 
       var prezzo = document.myFormOpera.prezzo.value;
       var dataCessione = document.myFormOpera.dataCessione.value;
+      
+      var checkBoxCessioneDiritti = document.getElementById("myCheck");
+      if (checkBoxCessioneDiritti.checked == true)
+        var cessioneDiritti = "SI";
+      else
+        var cessioneDiritti = "NO";
+
       var dataFineCessione = document.myFormOpera.dataFineCessione.value;
       var nomeContratto = document.myFormOpera.nomeContratto.value;
       var keywordsContratto = document.myFormOpera.keywordsContratto.value;
@@ -1816,7 +1829,7 @@
       document.getElementById("overlay").style.display = "block";
 
       var messageToPrint = "<b>Informazioni riassuntive -- TRASFERIMENTO</b><br><hr class='horizontalLine'>";
-      var previewTrasferimento = "<div id='tabella'><div class='w3-center'><b>Proprietario</b></div><table><td>Nome</td><td>" + nome + "</td></tr><tr><td>Cognome</td><td>" + cognome + "</td></tr><tr><td>Codice identificativo (Italia)</td><td>" + codFiscale + "</td></tr><tr><td>Codice identificativo (estero)</td><td>" + idEstero + "</td></tr><tr><td>Partita IVA</td><td>" + partitaIVA + "</td></tr><tr><td>Keywords proprietario</td><td>" + keywordsProprietario + "</td></tr></table><br><b>Indirizzo</b></div><table><td>Nazione</td><td>" + indirizzoNazione + "</td></tr><tr><td>Città</td><td>" + indirizzoCittà + "</td></tr><tr><td>CAP</td><td>" + indirizzoCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + indirizzoVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + indirizzoCivico + "</td></tr></table><br><b>Domicilio</b></div><table><td>Nazione</td><td>" + domicilioNazione + "</td></tr><tr><td>Città</td><td>" + domicilioCittà + "</td></tr><tr><td>CAP</td><td>" + domicilioCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + domicilioVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + domicilioCivico + "</td></tr></table><br><b>Residenza</b></div><table><td>Nazione</td><td>" + residenzaNazione + "</td></tr><tr><td>Città</td><td>" + residenzaCittà + "</td></tr><tr><td>CAP</td><td>" + residenzaCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + residenzaVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + residenzaCivico + "</td></tr></table><br><b>Contratto</b></div><table><td>Prezzo di vendita (EUR)</td><td>" + prezzo + "</td></tr><tr><td>Data cessione</td><td>" + dataCessione + "</td></tr><tr><td>Data di fine cessione</td><td>" + dataFineCessione + "</td></tr><tr><td>Nome file</td><td>" + nomeContratto + "</td></tr><tr><td>Keywords contratto</td><td>" + keywordsContratto + "</td></tr></table>";
+      var previewTrasferimento = "<div id='tabella'><div class='w3-center'><b>Proprietario</b></div><table><td>Nome</td><td>" + nome + "</td></tr><tr><td>Cognome</td><td>" + cognome + "</td></tr><tr><td>Nazionalità</td><td>" + nazionalità + "</td></tr><tr><td>Codice identificativo (Italia)</td><td>" + codFiscale + "</td></tr><tr><td>Codice identificativo (estero)</td><td>" + idEstero + "</td></tr><tr><td>Partita IVA</td><td>" + partitaIVA + "</td></tr><tr><td>Keywords proprietario</td><td>" + keywordsProprietario + "</td></tr></table><br><b>Indirizzo</b></div><table><td>Nazione</td><td>" + indirizzoNazione + "</td></tr><tr><td>Città</td><td>" + indirizzoCittà + "</td></tr><tr><td>CAP</td><td>" + indirizzoCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + indirizzoVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + indirizzoCivico + "</td></tr></table><br><b>Domicilio</b></div><table><td>Nazione</td><td>" + domicilioNazione + "</td></tr><tr><td>Città</td><td>" + domicilioCittà + "</td></tr><tr><td>CAP</td><td>" + domicilioCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + domicilioVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + domicilioCivico + "</td></tr></table><br><b>Residenza</b></div><table><td>Nazione</td><td>" + residenzaNazione + "</td></tr><tr><td>Città</td><td>" + residenzaCittà + "</td></tr><tr><td>CAP</td><td>" + residenzaCAP + "</td></tr><tr><td>Via / Piazza</td><td>" + residenzaVia_piazza + "</td></tr><tr><td>Numero civico</td><td>" + residenzaCivico + "</td></tr></table><br><b>Contratto</b></div><table><td>Prezzo di vendita (EUR)</td><td>" + prezzo + "</td></tr><tr><td>Data cessione</td><td>" + dataCessione + "</td></tr><tr><td>Cessione diritti</td><td>"+ cessioneDiritti +"</td></tr><tr><td>Data di fine cessione</td><td>" + dataFineCessione + "</td></tr><tr><td>Nome file</td><td>" + nomeContratto + "</td></tr><tr><td>Keywords contratto</td><td>" + keywordsContratto + "</td></tr></table>";
       document.getElementById("text").innerHTML = messageToPrint + previewTrasferimento;
     }
 

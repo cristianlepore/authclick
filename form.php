@@ -503,7 +503,7 @@ foreach($files as $file){ // iterate files
 <div class="col-25"></div><div class="col-25"></div><div class="col-25"></div>
 <div class="col-25 previewButton">
   <span title='Anteprima della scheda Autentica'>
-    <input type="button" class="w3-button previewButton" onclick=on(); value="&#10004"/>
+    <input type="button" class="w3-button previewButton" onclick=on(); value="&#128065"/>
   </span>
 </div>
 <div class="col-25 submitButton">
@@ -1198,12 +1198,12 @@ function on(){
   var meseScatto=document.myForm.meseScatto.value;
   if(meseScatto!='')
     meseScatto=parseInt(document.myForm.meseScatto.value)+1;   
-  var annoScatto=parseInt(document.myForm.annoScatto.value);    
+  var annoScatto=document.myForm.annoScatto.value;    
   var giornoStampa=document.myForm.giornoStampa.value;
   var meseStampa=document.myForm.meseStampa.value;
   if(meseStampa!='')
     meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
-  var annoStampa=parseInt(document.myForm.annoStampa.value);
+  var annoStampa=document.myForm.annoStampa.value;
   var lunghezza=document.myForm.lunghezza.value;
   if(lunghezza!='')
     var lunghezza = parseFloat(lunghezza);
@@ -1213,11 +1213,32 @@ function on(){
   var tecnicaScatto=document.myForm.tecnicaScatto.value;
   var tecnicaStampa=document.myForm.tecnicaStampa.value;
   var supporto=document.myForm.supporto.value;
+
+  var checkBoxOpenEdition = document.getElementById("openEdition");
+  if(checkBoxOpenEdition.checked == true)
+    var openEdition = "SI";
+  else
+    var openEdition = "NO";
+
   var numeroCopie=parseInt(document.myForm.numeroCopie.value);
   var noteNumeroCopie=document.myForm.noteNumeroCopie.value;
   var numeroEsemplare=parseInt(document.myForm.numeroEsemplare.value);
   var noteNumeroEsemplare=document.myForm.noteNumeroEsemplare.value;
+
+  var checkBoxTimbro = document.getElementById("myCheck");
+  if(checkBoxTimbro.checked == true)
+    var timbro = "SI";
+  else
+    var timbro = "NO";
+
   var noteTimbro=document.myForm.noteTimbro.value;
+
+  var checkBoxFirma = document.getElementById("myCheck2");
+  if(checkBoxFirma.checked == true)
+    var firma = "SI";
+  else
+    var firma = "NO";
+
   var noteFirma=document.myForm.noteFirma.value;
   var annotazioni=document.myForm.annotazioni.value;
   var keywordsOpera=document.myForm.keywordsOpera.value;
@@ -1225,7 +1246,7 @@ function on(){
   document.getElementById("overlay").style.display = "block";
 
   var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
-  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
+  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition +"</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Timbro</td><td>"+ timbro +"</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td></tr><tr><td>Firma</td><td>"+ firma +"</td></tr><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
   document.getElementById("text").innerHTML = messageToPrint + autentica;
 }
 
