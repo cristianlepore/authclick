@@ -1231,7 +1231,12 @@ function on(){
   else
     var timbro = "NO";
 
-  var noteTimbro=document.myForm.noteTimbro.value;
+  if(timbro == "SI")
+    var noteTimbro=document.myForm.noteTimbro.value;
+  else {
+    document.getElementById("textTimbro").value = "";
+    var noteTimbro = "";
+  }
 
   var checkBoxFirma = document.getElementById("myCheck2");
   if(checkBoxFirma.checked == true)
@@ -1239,7 +1244,13 @@ function on(){
   else
     var firma = "NO";
 
-  var noteFirma=document.myForm.noteFirma.value;
+  if(firma == "SI")
+    var noteFirma=document.myForm.noteFirma.value;
+  else {
+    document.getElementById("textFirma").value = "";
+    var noteFirma = "";
+  }
+
   var annotazioni=document.myForm.annotazioni.value;
   var keywordsOpera=document.myForm.keywordsOpera.value;
 

@@ -1819,8 +1819,10 @@
       var checkBoxCessioneDiritti = document.getElementById("myCheck");
       if (checkBoxCessioneDiritti.checked == true)
         var cessioneDiritti = "SI";
-      else
+      else {
         var cessioneDiritti = "NO";
+        document.myFormOpera.dataFineCessione.value = "";
+      }
 
       var dataFineCessione = document.myFormOpera.dataFineCessione.value;
       var nomeContratto = document.myFormOpera.nomeContratto.value;
