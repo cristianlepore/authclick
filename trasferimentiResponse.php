@@ -156,6 +156,7 @@
         <!-- PASSO TUTTI I VALORI ALLA PAGINA SUCCESSIVA PER INSERIRE I DATI -->    
         <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
         <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
+        <input type="hidden" name="codFiscale" value = '<?php echo "$nazionalitàItaliana";?>' >
         <input type="hidden" name="codFiscale" value = '<?php echo "$codFiscale";?>' >
         <input type="hidden" name="partitaIVA" value = '<?php echo "$partitaIVA";?>' >
         <input type="hidden" name="keywordsProprietario" value = '<?php echo "$keywordsProprietario";?>' >
@@ -203,6 +204,7 @@
         <!-- PASSO TUTTI I VALORI ALLA PAGINA SUCCESSIVA PER INSERIRE I DATI -->    
         <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
         <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
+        <input type="hidden" name="codFiscale" value = '<?php echo "$nazionalitàItaliana";?>' >
         <input type="hidden" name="codFiscale" value = '<?php echo "$codFiscale";?>' >
         <input type="hidden" name="partitaIVA" value = '<?php echo "$partitaIVA";?>' >
         <input type="hidden" name="keywordsProprietario" value = '<?php echo "$keywordsProprietario";?>' >
@@ -254,6 +256,7 @@
           <!-- PASSO TUTTI I VALORI ALLA PAGINA SUCCESSIVA PER INSERIRE I DATI -->    
           <input type="hidden" name="nome" value = '<?php echo "$nome";?>' >
           <input type="hidden" name="cognome" value = '<?php echo "$cognome";?>' >
+          <input type="hidden" name="codFiscale" value = '<?php echo "$nazionalitàItaliana";?>' >
           <input type="hidden" name="codFiscale" value = '<?php echo "$codFiscale";?>' >
           <input type="hidden" name="partitaIVA" value = '<?php echo "$partitaIVA";?>' >
           <input type="hidden" name="keywordsProprietario" value = '<?php echo "$keywordsProprietario";?>' >

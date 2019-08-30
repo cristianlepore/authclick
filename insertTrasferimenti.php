@@ -12,7 +12,12 @@ $cognome = $_POST['cognome'];
 $cognome = mysqli_real_escape_string($db,$cognome);
 $cognome = ucwords($cognome);
 
-$codFiscale = $_POST['codFiscale'];
+$nazionalitàItaliana = $_POST['nazionalità'];
+if($nazionalitàItaliana == 'on'){
+  $codFiscale = $_POST['codFiscale'];
+} else {
+  $codFiscale = $_POST['idEstero'];
+}
 $codFiscale = strtoupper($codFiscale);
 
 $partitaIVA = $_POST['partitaIVA'];
