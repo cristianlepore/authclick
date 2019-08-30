@@ -1060,9 +1060,17 @@ $(document).ready(function(){
           $.get("backend-searchNome.php", {cognome: cognome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
+              if(data != '') {
+                $('#nome').css("color", "red");
+                $('#cognome').css("color", "red");
+              } else {
+                $('#nome').css("color", "black");
+                $('#cognome').css("color", "black");
+              }
           });
       } else{
           resultDropdown.empty();
+          $('#nome').css("color", "black");
       }
   });
   
@@ -1086,9 +1094,17 @@ $(document).ready(function(){
           $.get("backend-searchCognome.php", {nome: nome, term: inputVal}).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
+              if(data != '') {
+                $('#cognome').css("color", "red");
+                $('#nome').css("color", "red");
+              } else {
+                $('#cognome').css("color", "black");
+                $('#nome').css("color", "black");
+              }
           });
       } else{
           resultDropdown.empty();
+          $('#cognome').css("color", "black");
       }
   });
   

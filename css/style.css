@@ -893,6 +893,11 @@ input:checked + .slider:after
   position: relative;
 }
 
+.search-box-codIdentificativoEsporta{
+  position: relative;
+}
+
+
 .search-box-nomeFile{
   position: relative;
 }
@@ -923,6 +928,11 @@ input:checked + .slider:after
 }
 
 .search-box-codIdentificativo input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-box-codIdentificativoEsporta input[type="text"], .result{
   width: 100%;
   box-sizing: border-box;
 }

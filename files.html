@@ -186,7 +186,7 @@
     </div>
     <form name="myFormEsporta" action="/authclick/new/esportaFile.php" method="post" onsubmit="return validateformEsporta()">
       <div class="w3-col m6">
-        <div class="w3-center search-box-codIdentificativo">
+        <div class="w3-center search-box-codIdentificativoEsporta">
           <input type="text" style="text-transform: uppercase;" autocomplete="off" placeholder="es: MRT000100" id="codIdentificativoEsporta" name="codIdentificativoEsporta" required>
           <div class="result" style="width:100%;"></div>
         </div>
@@ -414,10 +414,16 @@ $(document).ready(function(){
           $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
               // Display the returned data in browser
             resultDropdown.html(data);
+            if(data != '') {
+                $('#codIdentificativo').css("color", "darkgreen");
+            } else {
+                $('#codIdentificativo').css("color", "red");
+            }
           });
 
       } else{
           resultDropdown.empty();
+          $('#codIdentificativo').css("color", "darkgreen");
       }
 
   });
@@ -426,6 +432,40 @@ $(document).ready(function(){
   $(document).on("click", ".result p", function(){
       $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
       $(this).parent(".result").empty();
+      $('#codIdentificativo').css("color", "darkgreen");
+  });
+
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA IL CODICE IDENTIFICATIVO DELLA FOTOGRAFIA, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function(){
+  $('.search-box-codIdentificativoEsporta input[type="text"]').on("keyup input", function(){
+      /* Get input value on change */
+      var inputVal = $(this).val();
+      var resultDropdown = $(this).siblings(".result");
+      if(inputVal.length){
+          $.get("backend-search-codIdentificativo.php", {term: inputVal}).done(function(data){
+              // Display the returned data in browser
+            resultDropdown.html(data);
+            if(data != '') {
+                $('#codIdentificativoEsporta').css("color", "darkgreen");
+            } else {
+                $('#codIdentificativoEsporta').css("color", "red");
+            }
+          });
+
+      } else{
+          resultDropdown.empty();
+          $('#codIdentificativoEsporta').css("color", "darkgreen");
+      }
+
+  });
+  
+  // Set search input value on click of result item
+  $(document).on("click", ".result p", function(){
+      $(this).parents(".search-box-codIdentificativoEsporta").find('input[type="text"]').val($(this).text());
+      $(this).parent(".result").empty();
+      $('#codIdentificativoEsporta').css("color", "darkgreen");
   });
 
 });
