@@ -95,9 +95,12 @@ foreach($files as $file){ // iterate files
       <a style="font-size:14px;" href="#opera"><i>Titolo</i></a>
       <a style="font-size:14px;" href="#titolo"><i>Data di scatto</i></a>
       <a style="font-size:14px;" href="#giornoScatto"><i>Data di stampa</i></a>
-      <a style="font-size:14px;" href="#giornoStampa"><i>Dimensioni</i></a>
-      <a style="font-size:14px;" href="#giornoStampa"><i>Tecnica di scatto</i></a>
-      <a style="font-size:14px;" href="#giornoStampa"><i>Tecnica di stampa</i></a>
+      <a style="font-size:14px;" href="#giornoScatto"><i>Nome stampatore</i></a>
+      <a style="font-size:14px;" href="#nomeStampatore"><i>Cognome stampatore</i></a>
+      <a style="font-size:14px;" href="#cognomeStampatore"><i>Nome committente</i></a>
+      <a style="font-size:14px;" href="#cognomeStampatore"><i>Dimensioni</i></a>
+      <a style="font-size:14px;" href="#lunghezza"><i>Tecnica di scatto</i></a>
+      <a style="font-size:14px;" href="#lunghezza"><i>Tecnica di stampa</i></a>
       <a style="font-size:14px;" href="#tecnicaStampa"><i>Supporto</i></a>
       <a style="font-size:14px;" href="#supporto"><i>Open edition</i></a>
       <a style="font-size:14px;" href="#supporto"><i>Tiratura</i></a>
@@ -308,6 +311,39 @@ foreach($files as $file){ // iterate files
   <br>
   <hr class="horizontalLine">
 
+  <br>
+  <div class="row">
+    <div class="col-25">
+      <label><b style="font-size:18px;">&#128438</b> Nome stampatore</label>
+    </div>
+    <div class="col-75">
+      <input type="text" style="text-transform: capitalize;" id="nomeStampatore" name="nomeStampatore" placeholder="es: Giovanni">
+    </div>
+  </div>
+  <br>
+
+  <br>
+  <div class="row">
+    <div class="col-25">
+      <label><b style="font-size:18px;">&#128438</b> Cognome stampatore</label>
+    </div>
+    <div class="col-75">
+      <input type="text" style="text-transform: capitalize;" id="cognomeStampatore" name="cognomeStampatore" placeholder="es: Russo">
+    </div>
+  </div>
+  <br>
+
+  <br>
+  <div class="row">
+    <div class="col-25">
+      <label><i class="fa fa-briefcase"></i> Nome committente</label>
+    </div>
+    <div class="col-75">
+      <input type="text" style="text-transform: capitalize;" id="nomeCommittente" name="nomeCommittente" placeholder="es: Feltrinelli">
+    </div>
+  </div>
+  <br>
+  <hr class="horizontalLine">
   
   <div class="row">
     <div class="col-25">
@@ -564,6 +600,11 @@ function validateform(){
   var giornoStampa=document.myForm.giornoStampa.value;
   var meseStampa=document.myForm.meseStampa.value;
   var annoStampa=parseInt(document.myForm.annoStampa.value);
+
+  var nomeStampatore=document.myForm.nomeStampatore.value;
+  var cognomeStampatore=document.myForm.cognomeStampatore.value;
+  var nomeCommittente=document.myForm.nomeCommittente.value;
+
   var lunghezza=document.myForm.lunghezza.value;
   if(lunghezza!='')
     var lunghezza = parseFloat(lunghezza);
@@ -583,6 +624,31 @@ function validateform(){
   }else if (!/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(luogoNascita)){
     alert("Il campo LUOGO DI NASCITA contiene caratteri non ammessi.");  
     return false; 
+  }
+
+  if(nomeStampatore!='' && !/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nomeStampatore)){
+    alert("Il campo Nome stampatore contiene caratteri non ammessi.");  
+    return false;
+  }
+
+  if(cognomeStampatore!='' && !/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(cognomeStampatore)){
+    alert("Il campo Cognome stampatore contiene caratteri non ammessi.");  
+    return false;
+  }
+
+  if(nomeCommittente!='' && !/^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(nomeCommittente)){
+    alert("Il campo Nome committente contiene caratteri non ammessi.");  
+    return false;
+  }
+
+  if(nomeStampatore!='' && cognomeStampatore==''){
+    alert("Completare anche il campo Cognome stampatore");
+    return false;
+  }
+
+  if(nomeStampatore=='' && cognomeStampatore!=''){
+    alert("Completare anche il campo Nome stampatore");
+    return false;
   }
 
   // VERIFICO IL CONTENUTO DEI CAMPI OPZIONALI RELATIVI ALL'AUTORE.
@@ -1076,7 +1142,7 @@ $(document).ready(function(){
   
   // Set search input value on click of result item
   $(document).on("click", ".result p", function(){
-      $(this).parents(".search-boxNome").find('input[type="text"]').val($(this).text());
+      $(this).parents(".search-boxNome").find('input[type="text"]').val();
       $(this).parent(".result").empty();
   });
 });
@@ -1110,7 +1176,7 @@ $(document).ready(function(){
   
   // Set search input value on click of result item
   $(document).on("click", ".result p", function(){
-      $(this).parents(".search-boxCognome").find('input[type="text"]').val($(this).text());
+      $(this).parents(".search-boxCognome").find('input[type="text"]').val();
       $(this).parent(".result").empty();
   });
   
@@ -1220,6 +1286,14 @@ function on(){
   if(meseStampa!='')
     meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
   var annoStampa=document.myForm.annoStampa.value;
+
+  var nomeStampatore=document.myForm.nomeStampatore.value;
+  nomeStampatore=nomeStampatore.charAt(0).toUpperCase() + nomeStampatore.slice(1);
+  var cognomeStampatore=document.myForm.cognomeStampatore.value;
+  cognomeStampatore=cognomeStampatore.charAt(0).toUpperCase() + cognomeStampatore.slice(1);
+  var nomeCommittente=document.myForm.nomeCommittente.value;
+  nomeCommittente=nomeCommittente.charAt(0).toUpperCase() + nomeCommittente.slice(1);
+
   var lunghezza=document.myForm.lunghezza.value;
   if(lunghezza!='')
     var lunghezza = parseFloat(lunghezza);
@@ -1273,7 +1347,7 @@ function on(){
   document.getElementById("overlay").style.display = "block";
 
   var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
-  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition +"</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Timbro</td><td>"+ timbro +"</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td></tr><tr><td>Firma</td><td>"+ firma +"</td></tr><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
+  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Nome stampatore</td><td>"+ nomeStampatore +"</td></tr><tr><td>Cognome stampatore</td><td>"+ cognomeStampatore +"</td></tr><tr><td>Nome committente</td><td>"+ nomeCommittente +"</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition +"</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Timbro</td><td>"+ timbro +"</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td></tr><tr><td>Firma</td><td>"+ firma +"</td></tr><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
   document.getElementById("text").innerHTML = messageToPrint + autentica;
 }
 

@@ -430,7 +430,7 @@ $(document).ready(function(){
   
   // Set search input value on click of result item
   $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val($(this).text());
+      $(this).parents(".search-box-codIdentificativo").find('input[type="text"]').val();
       $(this).parent(".result").empty();
       $('#codIdentificativo').css("color", "darkgreen");
   });
@@ -463,7 +463,7 @@ $(document).ready(function(){
   
   // Set search input value on click of result item
   $(document).on("click", ".result p", function(){
-      $(this).parents(".search-box-codIdentificativoEsporta").find('input[type="text"]').val($(this).text());
+      $(this).parents(".search-box-codIdentificativoEsporta").find('input[type="text"]').val();
       $(this).parent(".result").empty();
       $('#codIdentificativoEsporta').css("color", "darkgreen");
   });

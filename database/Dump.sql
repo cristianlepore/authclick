@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2019 at 01:11 PM
+-- Generation Time: Sep 01, 2019 at 02:19 PM
 -- Server version: 8.0.16
 -- PHP Version: 7.2.21
 
@@ -83,6 +83,9 @@ CREATE TABLE `Fotografia` (
   `Giorno_stampa` int(11) DEFAULT NULL,
   `Mese_stampa` int(11) DEFAULT NULL,
   `Anno_stampa` year(4) DEFAULT NULL,
+  `Nome_stampatore` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Cognome_stampatore` text,
+  `Nome_committente` varchar(1000) DEFAULT NULL,
   `Supporto` varchar(100) DEFAULT NULL,
   `Giorno_scatto` int(11) DEFAULT NULL,
   `Mese_scatto` int(11) DEFAULT NULL,
@@ -102,7 +105,7 @@ CREATE TABLE `Indirizzo` (
   `Tipologia` varchar(500) NOT NULL,
   `Nazione` text,
   `Città` text,
-  `CAP` int(11) DEFAULT NULL,
+  `CAP` varchar(11) DEFAULT NULL,
   `Via/piazza` text,
   `Civico` int(11) DEFAULT NULL,
   `Utente_id` bigint(30) NOT NULL,
@@ -233,25 +236,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=377;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=423;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=684;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=713;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=634;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=700;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1126;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1209;
 
 --
 -- Constraints for dumped tables

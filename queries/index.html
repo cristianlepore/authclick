@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>App</title>
+<meta charset="UTF-8">
+
+<!-- HASH AUTORE DELLA PAGINA WEB -->
+<meta name="author"
+    content="68bf9588feee255538e722cce5971af3c9f50e5ed8e06b876032e9fb98c5a9f62036c47cf20f4022eac95154f1a88b65aef367eefa36898fc8e9e850be1af275">
+<!-- CONSENTE LA VISUALIZZAZIONE SU SMARTPHONES -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- CARICO IL MIO FOGLIO DI STILE -->
+<link rel="stylesheet" href="../css/style.css">
+<!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- INSERISCO LO SCRIPT AJAX PER LE DATE -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- CODICE PER IMPORTARE JQUERY -->
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+
+<style>
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+    #w3-top {
+        transition: margin-left .5s;
+    }
+</style>
+
+<body class="animate-in" id="animate-in">
+
+    <!-- BOTTONE IN BASSO A DESTRA DI RITORNO AD INIZIO PAGINA -->
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top <i class="fa fa-caret-up"></i></button>
+
+    <!-- BARRA DI NAVIGAZIONE -->
+    <div id="w3-top" class="w3-top">
+        <div class="w3-bar w3-black w3-card">
+            <button style="font-size:20px;cursor:pointer;" class="w3-button w3-left"
+                onclick="openNav()">&#9776;</button>
+            <div onclick="closeNav()"><a
+                    class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right"
+                    href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i
+                        class="fa fa-bars"></i></a></div>
+            <a href="../form.php" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">AUTENTICA</a>
+            <a href="../files.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small"
+                onclick="myFunction()">GESTISCI FILE</a>
+            <a href="../trasferimenti.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small"
+                onclick="myFunction()">TRASFERIMENTI</a>
+            <a href="../contratto.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small"
+                onclick="myFunction()">CONTRATTI</a>
+            <a href="#" style="border-bottom: 2px solid white;"
+                class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">RICHIESTE</a>
+        </div>
+    </div>
+    </div>
+
+    <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+        <a href="../files.html" class="w3-bar-item w3-button w3-padding-large">GESTISCI FILE</a>
+        <a href="../trasferimenti.html" class="w3-bar-item w3-button w3-padding-large">TRASFERIMENTI</a>
+        <a href="../contratto.php" class="w3-bar-item w3-button w3-padding-large">CONTRATTI</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding-large">RICHIESTE</a>
+    </div>
+
+    <!-- INDICATORE DELLA BARRA DEL PROGRESSO -->
+    <div id="header" class="header">
+        <div id="progress-container" class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
+        </div>
+    </div>
+
+    <!-- BARRA LATERALE SINISTRA -->
+    <div id="mySidebar" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="w3-padding-16"></div>
+        <div id="dropdown">
+            <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput"
+                    onkeyup="myFunctionSearch()"></div>
+            <a class="collapsible"><i class=""></i> </a>
+            <div class="content" style="margin-left:30px;">
+                <a style="font-size:14px;" href=""><i></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="main" onclick="closeNav2()">
+        <!-- SLIDEUP E SLIDEDOWN MENU DI ESPORTA -->
+        <div id="panel_esporta">
+            <div class="main w3-padding-8">
+                <div class="container">
+                    <h3 class="w3-wide w3-center"><i>&#128269;</i>
+                        INFORMAZIONI SU AUTORI ED ACQUIRENTI
+                    </h3>
+                    <p class="w3-opacity w3-center"><i>Ricerca per nome e cognome</i></p>
+
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-left w3-col m4 w3-medium w3-padding-16"><i class="fa fa-user"></i>
+                            Inserisci nome e cognome
+                        </div>
+                        <div class="w3-col m8">
+                            <div class="w3-col m6">
+                                <div class="search-box-codIdentificativo">
+                                    <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
+                                        placeholder="Nome" required>
+                                </div>
+                            </div>
+                            <div class="w3-col m6">
+                                <div class="search-box-codIdentificativo">
+                                    <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
+                                        placeholder="Cognome" id="codIdentificativo" name="codIdentificativo" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="horizontalLine">
+                    <br>
+
+                    <h4 id="risultati"><i class="fa fa-eye"></i> MOSTRA RISULTATI</h4>
+                    <div id="newTable">
+                        <table id="risultati">
+                            <tr>
+                                <th>Numero</th>
+                                <th>Contratto</th>
+                                <th>Tipologia</th>
+                                <th>Data trasferimento</th>
+                                <th>Fine cessione</th>
+                                <th>Proprietario</th>
+                                <th>ID proprietario</th>
+                                <th></th>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="w3-padding-32"></div>
+
+    <script type="text/javascript" src="script.js"></script>
+
+</body>
+
+</html>

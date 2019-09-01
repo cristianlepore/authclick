@@ -71,7 +71,7 @@ $nomeFile = $_REQUEST["nomeFile"];
 
 // CREO IL JSON DELL'AUTENTICA DA CARICARE SU BLOCKCHAIN
 // ESTRAGGO I DATI PER L'AUTENTICA DAL DATABASE
-$result = $db->query(" SELECT `Fotografia`.`Open_edition`, `Fotografia`.`Artist_proof`, `Fotografia`.`Annotazioni`, `Timbro`, `Fotografia`.`Annotazioni_timbro`, `Fotografia`.`Firma`, `Fotografia`.`Annotazioni_firma`, `Fotografia`.`Titolo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Note_esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Note_tiratura`, `Fotografia`.`Tecnica_stampa`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Supporto`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Fotografia`.`Tecnica_scatto`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte` FROM `Fotografia` INNER JOIN `Utente` ON `Fotografia`.`Autore_id`=`Utente`.`id` WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' ");
+$result = $db->query(" SELECT `Fotografia`.`Open_edition`, `Fotografia`.`Artist_proof`, `Fotografia`.`Annotazioni`, `Timbro`, `Fotografia`.`Annotazioni_timbro`, `Fotografia`.`Firma`, `Fotografia`.`Annotazioni_firma`, `Fotografia`.`Titolo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Note_esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Note_tiratura`, `Fotografia`.`Tecnica_stampa`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Supporto`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Fotografia`.`Tecnica_scatto`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente` FROM `Fotografia` INNER JOIN `Utente` ON `Fotografia`.`Autore_id`=`Utente`.`id` WHERE `Fotografia`.`Codice_identificativo`='$codiceIdentificativo' ");
 
 $i = 0;
 // METTO I DATI IN JSON
@@ -118,6 +118,9 @@ while($row = mysqli_fetch_row($result)){
   $myObj->Mese_morte = $row[30];
   $myObj->Anno_morte = $row[31];
   $myObj->Luogo_morte = $row[32];
+  $myObj->Nome_stampatore = $row[33];
+  $myObj->Cognome_stampatore = $row[34];
+  $myObj->Nome_committente = $row[35];
 
   // JSON DA INVIARE SU BLOCKCHAIN
   $myJSON = json_encode($myObj);

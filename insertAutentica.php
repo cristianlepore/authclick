@@ -118,6 +118,10 @@ $giornoStampa = (int)$_POST['giornoStampa'];
 $meseStampa = (int)$_POST['meseStampa'];
 $annoStampa = (int)$_POST['annoStampa'];
 
+$nomeStampatore = $_POST['nomeStampatore'];
+$cognomeStampatore = $_POST['cognomeStampatore'];
+$nomeCommittente = $_POST['nomeCommittente'];
+
 $lunghezza = (float)$_POST['lunghezza'];
 $larghezza = (float)$_POST['larghezza'];
 
@@ -179,6 +183,18 @@ if(empty($nuovoAutore)){
 
   $tecnicaStampa = mysqli_real_escape_string($db,$tecnicaStampa);
   $tecnicaStampa = str_replace("'","§", $tecnicaStampa);
+
+  $nomeStampatore = mysqli_real_escape_string($db,$nomeStampatore);
+  $nomeStampatore = ucwords($nomeStampatore);
+  $nomeStampatore = str_replace("'","§", $nomeStampatore);
+
+  $cognomeStampatore = mysqli_real_escape_string($db,$cognomeStampatore);
+  $cognomeStampatore = ucwords($cognomeStampatore);
+  $cognomeStampatore = str_replace("'","§", $cognomeStampatore);
+
+  $nomeCommittente = mysqli_real_escape_string($db,$nomeCommittente);
+  $nomeCommittente = ucwords($nomeCommittente);
+  $nomeCommittente = str_replace("'","§", $nomeCommittente);
 
   $supporto = mysqli_real_escape_string($db,$supporto);
   $supporto = str_replace("'","§", $supporto);
@@ -327,6 +343,9 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
             <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
             <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
+            <input type="hidden" name="nomeStampatore" value = '<?php echo "$nomeStampatore";?>' >
+            <input type="hidden" name="cognomeStampatore" value = '<?php echo "$cognomeStampatore";?>' >
+            <input type="hidden" name="nomeCommittente" value = '<?php echo "$nomeCommittente";?>' >
             <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
             <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
             <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
@@ -376,6 +395,9 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
             <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
             <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
             <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
+            <input type="hidden" name="nomeStampatore" value = '<?php echo "$nomeStampatore";?>' >
+            <input type="hidden" name="cognomeStampatore" value = '<?php echo "$cognomeStampatore";?>' >
+            <input type="hidden" name="nomeCommittente" value = '<?php echo "$nomeCommittente";?>' >
             <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
             <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
             <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
@@ -466,7 +488,7 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
       $codiceIdentificativo = $firstCharacterNome.$firstCharacterCognome.$firstCharacterTitolo.$targa;
 
       // INSERISCO I DATI DELL'OPERA
-      $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $lastAuthorId, '$keywordsOpera')");
+      $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Nome_stampatore`,  `Cognome_stampatore`,  `Nome_committente`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$nomeStampatore', '$cognomeStampatore', '$nomeCommittente', '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $lastAuthorId, '$keywordsOpera')");
       if($insert){
         $statusMsg = "Inserimento dei dati relativi all'opera avvenuto con successo.";
         ?>
@@ -529,6 +551,9 @@ if($nomeOK == 1 && $cognomeOK == 1 && $luogoNascitaOK == 1){
         <input type="hidden" name="giornoStampa" value = '<?php echo "$giornoStampa";?>' >
         <input type="hidden" name="meseStampa" value = '<?php echo "$meseStampa";?>' >
         <input type="hidden" name="annoStampa" value = '<?php echo "$annoStampa";?>' >
+        <input type="hidden" name="nomeStampatore" value = '<?php echo "$nomeStampatore";?>' >
+        <input type="hidden" name="cognomeStampatore" value = '<?php echo "$cognomeStampatore";?>' >
+        <input type="hidden" name="nomeCommittente" value = '<?php echo "$nomeCommittente";?>' >
         <input type="hidden" name="lunghezza" value = '<?php echo "$lunghezza";?>' >
         <input type="hidden" name="larghezza" value = '<?php echo "$larghezza";?>' >
         <input type="hidden" name="tecnicaScatto" value = '<?php echo "$tecnicaScatto";?>' >
