@@ -113,7 +113,7 @@
         <br>
 
         <h4 id="storicoTrasferimenti"><i class="fa fa-history"></i> STORICO TRASFERIMENTI</h4>
-        <div id="newTable">
+        <div id="newTable" style="overflow-x:auto;">
           <table id="contratti">
             <tr>
               <th>Numero</th>
@@ -290,7 +290,7 @@ $(document).ready(function(){
               document.getElementById("contratti").innerHTML = "";
 
               // RICREO LA TABELLA CHE È STATA DISTRUTTA PRIMA
-              var tabella = '<table id="contratti"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th>ID proprietario</th><th></th></tr></table>';
+              var tabella = '<table id="contratti" style="overflow-x:auto;"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th>ID proprietario</th><th></th></tr></table>';
               document.getElementById('newTable').innerHTML = tabella;
               var titolo = '<h4 id="storicoTrasferimenti"><i class="fa fa-history"></i> STORICO TRASFERIMENTI</h4>';
               document.getElementById('storicoTrasferimenti').innerHTML = titolo;

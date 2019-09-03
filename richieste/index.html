@@ -79,9 +79,9 @@
         <div id="dropdown">
             <div style="margin:15px;"><input type="text" placeholder="Cerca..." id="myInput"
                     onkeyup="myFunctionSearch()"></div>
-            <a class="collapsible"><i class=""></i> </a>
+            <a class="collapsible"><i class="fa fa-search"></i> Ricerche</a>
             <div class="content" style="margin-left:30px;">
-                <a style="font-size:14px;" href=""><i></i></a>
+                <a style="font-size:14px;" href="#"><i>Autori ed acquirenti</i></a>
             </div>
         </div>
     </div>
@@ -92,7 +92,7 @@
             <div class="main w3-padding-8">
                 <div class="container">
                     <h3 class="w3-wide w3-center"><i>&#128269;</i>
-                        INFORMAZIONI SU AUTORI ED ACQUIRENTI
+                        RICERCA AUTORI ED ACQUIRENTI
                     </h3>
                     <p class="w3-opacity w3-center"><i>Ricerca per nome e cognome</i></p>
 
@@ -102,15 +102,17 @@
                         </div>
                         <div class="w3-col m8">
                             <div class="w3-col m6">
-                                <div class="search-box-codIdentificativo">
-                                    <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
-                                        placeholder="Nome" required>
+                                <div class="search-boxNome">
+                                    <input type="text" id="nome" style="text-transform: capitalize; width:80%;"
+                                        autocomplete="off" placeholder="Nome">
+                                    <div class="result" style="margin-left:10%;width:80%;"></div>
                                 </div>
                             </div>
                             <div class="w3-col m6">
-                                <div class="search-box-codIdentificativo">
+                                <div class="search-boxCognome">
                                     <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
-                                        placeholder="Cognome" id="codIdentificativo" name="codIdentificativo" required>
+                                        placeholder="Cognome" id="cognome" name="codIdentificativo">
+                                    <div class="result" style="margin-left:10%;width:80%;"></div>
                                 </div>
                             </div>
                         </div>
@@ -119,20 +121,19 @@
                     <br>
 
                     <h4 id="risultati"><i class="fa fa-eye"></i> MOSTRA RISULTATI</h4>
-                    <div id="newTable">
-                        <table id="risultati">
+                    <div id="divTabella" style="overflow-x:auto;">
+                        <table id="tabellaAutoriAcquirenti">
                             <tr>
-                                <th>Numero</th>
-                                <th>Contratto</th>
-                                <th>Tipologia</th>
-                                <th>Data trasferimento</th>
-                                <th>Fine cessione</th>
-                                <th>Proprietario</th>
-                                <th>ID proprietario</th>
                                 <th></th>
+                                <th>Nome</th>
+                                <th>Cognome</th>
+                                <th>Data di nascita</th>
+                                <th>Luogo di nascita</th>
+                                <th>Data decesso</th>
+                                <th>Luogo del decesso</th>
+                                <th>Codice fiscale</th>
                             </tr>
                         </table>
-
                     </div>
 
                 </div>

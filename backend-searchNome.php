@@ -10,14 +10,14 @@ if($db === false){
 
 if(isset($_REQUEST["term"])){
     // PRENDO IL VALORE DEL COGNOME
-    $cognome = $_REQUEST["cognome"];
+    $cognome = $_REQUEST["cognome"] . '%';
 
     if($cognome==""){
         // Prepare a select statement
         $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Nome LIKE ?";
     }else {
         // Prepare a select statement
-        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE `Cognome`='$cognome' AND Nome LIKE ?";
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ?";
     }
 
     if($stmt = mysqli_prepare($db, $sql)){

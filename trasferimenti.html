@@ -1692,10 +1692,10 @@
         var resultDropdown = $(this).siblings(".result");
         if (inputVal.length) {
           // PRENDO IL VALORE DEL NOME DA PASSARGLI
-          var nome = document.myFormOpera.nome.value;
+          var nome = document.getElementById("nome").value;
 
           // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
-          var cognome = document.myFormOpera.cognome.value;
+          var cognome = document.getElementById("cognome").value;
 
           $.get("backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal }).done(function (data) {
             // Display the returned data in browser
