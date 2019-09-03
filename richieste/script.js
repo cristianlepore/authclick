@@ -146,12 +146,12 @@ $(document).ready(function () {
                     destroyHTMLTable();
                 }
 
-                if (document.getElementById("nome").value == '') {
-                    track.setUltimo = 0;
-                    destroyHTMLTable();
-                }
             });
         } else {
+            track.setUltimo = 0;
+            if (document.getElementById("cognome").value == '') {
+                destroyHTMLTable();
+            }
             resultDropdown.empty();
             $('#cognome').css("color", "red");
         }
@@ -198,19 +198,15 @@ $(document).ready(function () {
                             document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
                             createHTMLTable(singoloUtente);
                         }
-                    } else {
-                        track.setUltimo = 0;
-                        destroyHTMLTable();
-                    }
-
-                    if (document.getElementById("nome").value == '') {
-                        track.setUltimo = 0;
-                        destroyHTMLTable();
                     }
                 });
 
             });
         } else {
+            track.setUltimo = 0;
+            if (document.getElementById("nome").value == '') {
+                destroyHTMLTable();
+            }
             resultDropdown.empty();
             $('#cognome').css("color", "red");
         }
@@ -227,7 +223,7 @@ $(document).ready(function () {
 const createHTMLTable = function (singoloUtente) {
 
     if (singoloUtente != '') {
-        document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th></tr></table></div>";
+        document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th><th>Partita IVA</th></tr></table></div>";
 
         for (var i = 0; i < singoloUtente.length; i++) {
             if (singoloUtente[i].Giorno_nascita == null || singoloUtente[i].Giorno_nascita == '0')
@@ -244,8 +240,14 @@ const createHTMLTable = function (singoloUtente) {
                 singoloUtente[i].Luogo_morte = '';
             if (singoloUtente[i].Codice_fiscale == null || singoloUtente[i].Codice_fiscale == '0')
                 singoloUtente[i].Codice_fiscale = '';
+            if (singoloUtente[i].Partita_IVA == null || singoloUtente[i].Partita_IVA == '')
+                singoloUtente[i].Partita_IVA = '';
 
-            document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + " / " + singoloUtente[i].Mese_nascita + " / " + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + " / " + singoloUtente[i].Mese_morte + " / " + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td></tr>";
+            if (i % 2 == 0)
+                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr style='background-color: #dddddd;'><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + " / " + singoloUtente[i].Mese_nascita + " / " + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + " / " + singoloUtente[i].Mese_morte + " / " + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
+            else
+                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + " / " + singoloUtente[i].Mese_nascita + " / " + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + " / " + singoloUtente[i].Mese_morte + " / " + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
+
         }
 
     }
@@ -254,11 +256,11 @@ const createHTMLTable = function (singoloUtente) {
 
 const destroyHTMLTable = function () {
 
-    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th></tr></table></div>";
+    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th><th>Partita IVA</th></tr></table></div>";
 
 }
 
-var track = {
+const track = {
     last: 0,
     get getUltimo() {
         return this.last;
