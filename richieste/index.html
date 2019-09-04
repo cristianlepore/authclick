@@ -54,7 +54,6 @@
                 class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">RICHIESTE</a>
         </div>
     </div>
-    </div>
 
     <!-- BARRA DI NAVIGAZIONE PER SMARTPHONES -->
     <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
@@ -94,26 +93,73 @@
                     <h3 class="w3-wide w3-center"><i>&#128269;</i>
                         RICERCA AUTORI ED ACQUIRENTI
                     </h3>
-                    <p class="w3-opacity w3-center"><i>Ricerca per nome e cognome</i></p>
+                    <p class="w3-opacity w3-center"><i>Ambito di ricerca</i></p>
 
                     <div class="w3-row w3-padding-16">
-                        <div class="w3-left w3-col m4 w3-medium w3-padding-16"><i class="fa fa-user"></i>
-                            Inserisci nome e cognome
+                        <div class="w3-col m3">
+                            <div class="search-boxNome">
+                                <input type="text" id="nome" style="text-transform: capitalize; width:80%;"
+                                    autocomplete="off" placeholder="Nome">
+                                <div class="result" style="margin-left:10%;width:80%;"></div>
+                            </div>
                         </div>
+                        <div class="w3-col m3">
+                            <div class="search-boxCognome">
+                                <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
+                                    placeholder="Cognome" id="cognome" name="codIdentificativo">
+                                <div class="result" style="margin-left:10%;width:80%;"></div>
+                            </div>
+                        </div>
+                        <div class="w3-col m3">
+                            <div class="search-boxCodFiscale">
+                                <input type="text" id="codFiscale" style="text-transform: uppercase; width:80%;"
+                                    autocomplete="off" placeholder="Codice identificativo">
+                                <div class="result" style="margin-left:10%;width:80%;"></div>
+                            </div>
+                        </div>
+                        <div class="w3-col m3">
+                            <div class="search-boxLuogoNascita">
+                                <input type="text" id="luogoNascita" style="text-transform: capitalize; width:80%;"
+                                    autocomplete="off" placeholder="Luogo nascita">
+                                <div class="result" style="margin-left:10%;width:80%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-row w3-padding-0">
                         <div class="w3-col m8">
-                            <div class="w3-col m6">
-                                <div class="search-boxNome">
-                                    <input type="text" id="nome" style="text-transform: capitalize; width:80%;"
-                                        autocomplete="off" placeholder="Nome">
-                                    <div class="result" style="margin-left:10%;width:80%;"></div>
+                            <div class="col-75 w3-center">
+                                <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
+                                <div class="w3-col m3 w3-center">
+                                    <select style="width:80%;" id="giornoNascita" name="giornoNascita">
+                                        <option value=0> Giorno </option>
+                                    </select>
+                                </div>
+                                <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
+                                <div class="w3-col m3 w3-center">
+                                    <select style="width:80%;" id="meseNascita" name="meseNascita">
+                                        <option value="NULL"> Mese </option>
+                                    </select>
+                                </div>
+                                <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
+                                <div class="w3-col m3 w3-center">
+                                    <input type="numeric" style="width:80%;margin-top:8px;" id="annoNascita"
+                                        name="annoNascita" placeholder=" Anno -- yyyy">
                                 </div>
                             </div>
-                            <div class="w3-col m6">
-                                <div class="search-boxCognome">
-                                    <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
-                                        placeholder="Cognome" id="cognome" name="codIdentificativo">
-                                    <div class="result" style="margin-left:10%;width:80%;"></div>
+                        </div>
+                        <div class="w3-col m4 tipologia">
+                            <div class="w3-center">
+                                <div class="w3-col m6">
+                                    <select name="tipo" style="width:80%; background-color:lightgrey; margin-top:10px;"
+                                        id="tipo" class="w3-huge w3-button w3-content">
+                                        <option value="Scheda" class="w3-button w3-white w3-section w3-center">Scheda
+                                        </option>
+                                        <option value="Foto" class="w3-button w3-white w3-section w3-center">Miniatura
+                                        </option>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="scheda" style="margin-top:8px">
                             </div>
                         </div>
                     </div>
@@ -131,7 +177,7 @@
                                 <th>Luogo di nascita</th>
                                 <th>Data decesso</th>
                                 <th>Luogo del decesso</th>
-                                <th>Codice fiscale</th>
+                                <th>Codice identificativo</th>
                                 <th>Partita IVA</th>
                             </tr>
                         </table>
@@ -140,7 +186,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
     <div class="w3-padding-32"></div>

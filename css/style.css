@@ -906,6 +906,10 @@ input:checked + .slider:after
   position: relative;
 }
 
+.search-boxLuogoNascita{
+  position: relative;
+}
+
 .search-box-nomeContratto{
   position: relative;
 }
@@ -951,6 +955,12 @@ input:checked + .slider:after
   width: 100%;
   box-sizing: border-box;
 }
+
+.search-boxLuogoNascita input[type="text"], .result{
+  width: 100%;
+  box-sizing: border-box;
+}
+
 
 /* Formatting result items */
 .result p{

@@ -162,8 +162,9 @@ foreach($files as $file){ // iterate files
     <div class="col-25">
       <label for="luogoNascita"><i class="fa fa-institution"></i> Luogo di nascita</label>
     </div>
-    <div class="col-75">
-      <input type="text" style="text-transform: capitalize;" id="luogoNascita" name="luogoNascita" placeholder="es: Milano" required>
+    <div class="search-boxLuogoNascita col-75">
+      <input type="text" style="text-transform: capitalize;" id="luogoNascita" autocomplete="off" name="luogoNascita" placeholder="es: Milano" required>
+      <div class="result" style="width:100%;"></div>
     </div>
   </div>
   <br>
@@ -1124,21 +1125,27 @@ $(document).ready(function(){
       if(inputVal.length){
           // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
           var cognome=document.myForm.cognome.value;
+          var codFiscale = "";
+          var luogoNascita = document.myForm.luogoNascita.value;
 
-          $.get("backend-searchNome.php", {cognome: cognome, term: inputVal}).done(function(data){
+          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
               if(data != '') {
                 $('#nome').css("color", "red");
                 $('#cognome').css("color", "red");
+                $('#luogoNascita').css("color", "red");
               } else {
                 $('#nome').css("color", "black");
                 $('#cognome').css("color", "black");
+                $('#luogoNascita').css("color", "black");
               }
           });
       } else{
           resultDropdown.empty();
+          $('#cognome').css("color", "black");
           $('#nome').css("color", "black");
+          $('#luogoNascita').css("color", "black");
       }
   });
   
@@ -1158,21 +1165,27 @@ $(document).ready(function(){
       if(inputVal.length){
           // PRENDO IL VALORE DEL NOME DA PASSARGLI
           var nome=document.myForm.nome.value;
+          var luogoNascita = document.myForm.luogoNascita.value;
+          var codFiscale = "";
 
-          $.get("backend-searchCognome.php", {nome: nome, term: inputVal}).done(function(data){
+          $.get("backend-searchCognome.php",{ nome: nome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
               if(data != '') {
                 $('#cognome').css("color", "red");
                 $('#nome').css("color", "red");
+                $('#luogoNascita').css("color", "red");
               } else {
                 $('#cognome').css("color", "black");
                 $('#nome').css("color", "black");
+                $('#luogoNascita').css("color", "black");
               }
           });
       } else{
           resultDropdown.empty();
+          $('#nome').css("color", "black");
           $('#cognome').css("color", "black");
+          $('#luogoNascita').css("color", "black");
       }
   });
   
@@ -1361,6 +1374,49 @@ function off_stopPropagation(){
   document.getElementById("overlay").style.display = "block";
   event.stopPropagation();
 }
+
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function () {
+    $('.search-boxLuogoNascita input[type="text"]').on("keyup input", function () {
+        /* Get input value on change */
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+
+        if (inputVal.length) {
+            // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+            var nome = document.getElementById("nome").value;
+            var cognome = document.getElementById("cognome").value;
+            var codFiscale = "";
+
+            $.get("backend-searchLuogoNascita.php", { nome: nome, cognome: cognome, codFiscale: codFiscale, luogoNascita: inputVal }).done(function (data) {
+                // Display the returned data in browser
+                resultDropdown.html(data);
+                if(data != '') {
+                  $('#cognome').css("color", "red");
+                  $('#nome').css("color", "red");
+                  $('#luogoNascita').css("color", "red");
+                } else {
+                  $('#cognome').css("color", "black");
+                  $('#nome').css("color", "black");
+                  $('#luogoNascita').css("color", "black");
+                }
+
+            });
+        } else {
+            resultDropdown.empty();
+            $('#cognome').css("color", "black");
+            $('#nome').css("color", "black");
+            $('#luogoNascita').css("color", "black");
+        }
+
+    });
+
+    // Set search input value on click of result item
+    $(document).on("click", ".result p", function () {
+        $(this).parents(".search-boxLuogoNascita").find('input[type="text"]').val();
+        $(this).parent(".result").empty();
+    });
+});
 
 </script>
 

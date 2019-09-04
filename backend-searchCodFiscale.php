@@ -11,12 +11,14 @@ if($db === false){
 if(isset($_REQUEST["term"])){
     // PRENDO IL VALORE DEL NOME
     $nome = $_REQUEST["nome"] . '%';
-
-    // PRENDO IL NOME DEL COGNOME
     $cognome = $_REQUEST["cognome"] . '%';
-    
-    // Prepare a select statement
-    $sql = " SELECT DISTINCT `Codice_fiscale` FROM `Utente` WHERE Codice_fiscale LIKE ? AND Nome LIKE '$nome' AND Cognome LIKE '$cognome' ";
+    $luogoNascita = $_REQUEST["luogoNascita"] . '%';
+
+    if($luogoNascita == '%')
+        $sql = "SELECT DISTINCT `Codice_fiscale` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE '$nome' AND Codice_fiscale LIKE ? ";
+    else
+        $sql = "SELECT DISTINCT `Codice_fiscale` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE '$nome' AND Codice_fiscale LIKE ? AND Luogo_nascita LIKE '$luogoNascita' ";
+
 
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters

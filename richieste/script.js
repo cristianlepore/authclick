@@ -117,22 +117,29 @@ $(document).ready(function () {
         if (inputVal.length) {
             // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
             var cognome = document.getElementById("cognome").value;
+            var codFiscale = document.getElementById("codFiscale").value;
+            var luogoNascita = document.getElementById("luogoNascita").value;
 
-            $.get("../backend-searchNome.php", { cognome: cognome, term: inputVal }).done(function (data) {
+            $.get("../backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function (data) {
                 // Display the returned data in browser
                 resultDropdown.html(data);
                 if (data != '') {
                     $('#nome').css("color", "black");
                     $('#cognome').css("color", "black");
+                    $('#codFiscale').css("color", "black");
+                    $('#luogoNascita').css("color", "black");
                 } else {
                     $('#nome').css("color", "red");
                     $('#cognome').css("color", "red");
+                    $('#codFiscale').css("color", "red");
+                    $('#luogoNascita').css("color", "red");
+                    track.setUltimo = 0;
+                    destroyHTMLTable();
                 }
             });
 
-            $.get("queryAutoriAcquirenti.php", { cognome: cognome, nome: inputVal }).done(function (data) {
+            $.get("queryAutoriAcquirenti.php", { cognome: cognome, nome: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function (data) {
                 if (data != '') {
-                    //alert(track.getUltimo)
                     let myJson = JSON.parse(data);
                     var singoloUtente = JSON.parse(myJson.Dati_utente);
 
@@ -149,11 +156,10 @@ $(document).ready(function () {
             });
         } else {
             track.setUltimo = 0;
-            if (document.getElementById("cognome").value == '') {
+            if (document.getElementById("codFiscale").value == '' && document.getElementById("cognome").value == '' && document.getElementById("luogoNascita").value == '') {
                 destroyHTMLTable();
             }
             resultDropdown.empty();
-            $('#cognome').css("color", "red");
         }
 
     });
@@ -175,21 +181,28 @@ $(document).ready(function () {
         if (inputVal.length) {
             // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
             var nome = document.getElementById("nome").value;
+            var codFiscale = document.getElementById("codFiscale").value;
+            var luogoNascita = document.getElementById("luogoNascita").value;
 
-            $.get("../backend-searchCognome.php", { nome: nome, term: inputVal }).done(function (data) {
+            $.get("../backend-searchCognome.php", { nome: nome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function (data) {
                 // Display the returned data in browser
                 resultDropdown.html(data);
                 if (data != '') {
                     $('#cognome').css("color", "black");
                     $('#nome').css("color", "black");
+                    $('#codFiscale').css("color", "black");
+                    $('#luogoNascita').css("color", "black");
                 } else {
                     $('#cognome').css("color", "red");
                     $('#nome').css("color", "red");
+                    $('#codFiscale').css("color", "red");
+                    $('#luogoNascita').css("color", "red");
+                    track.setUltimo = 0;
+                    destroyHTMLTable();
                 }
 
-                $.get("queryAutoriAcquirenti.php", { cognome: inputVal, nome: nome }).done(function (data) {
+                $.get("queryAutoriAcquirenti.php", { cognome: inputVal, nome: nome, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function (data) {
                     if (data != '') {
-                        //alert(track.getUltimo)
                         let myJson = JSON.parse(data);
                         var singoloUtente = JSON.parse(myJson.Dati_utente);
 
@@ -204,11 +217,10 @@ $(document).ready(function () {
             });
         } else {
             track.setUltimo = 0;
-            if (document.getElementById("nome").value == '') {
+            if (document.getElementById("nome").value == '' && document.getElementById("codFiscale").value == '' && document.getElementById("luogoNascita").value == '') {
                 destroyHTMLTable();
             }
             resultDropdown.empty();
-            $('#cognome').css("color", "red");
         }
 
     });
@@ -220,20 +232,148 @@ $(document).ready(function () {
     });
 });
 
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function () {
+    $('.search-boxCodFiscale input[type="text"]').on("keyup input", function () {
+        /* Get input value on change */
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+
+        if (inputVal.length) {
+            // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+            var nome = document.getElementById("nome").value;
+            var cognome = document.getElementById("cognome").value;
+            var luogoNascita = document.getElementById("luogoNascita").value;
+
+            $.get("../backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal, luogoNascita: luogoNascita }).done(function (data) {
+                // Display the returned data in browser
+                resultDropdown.html(data);
+                if (data != '') {
+                    $('#cognome').css("color", "black");
+                    $('#nome').css("color", "black");
+                    $('#codFiscale').css("color", "black");
+                    $('#luogoNascita').css("color", "black");
+                } else {
+                    $('#cognome').css("color", "red");
+                    $('#nome').css("color", "red");
+                    $('#codFiscale').css("color", "red");
+                    $('#luogoNascita').css("color", "red");
+                    track.setUltimo = 0;
+                    destroyHTMLTable();
+                }
+
+                $.get("queryAutoriAcquirenti.php", { cognome: cognome, nome: nome, codFiscale: inputVal, luogoNascita: luogoNascita }).done(function (data) {
+                    if (data != '') {
+                        let myJson = JSON.parse(data);
+                        var singoloUtente = JSON.parse(myJson.Dati_utente);
+
+                        if (singoloUtente.length != track.getUltimo) {
+                            track.setUltimo = singoloUtente.length;
+                            document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
+                            createHTMLTable(singoloUtente);
+                        }
+                    }
+                });
+            });
+        } else {
+            track.setUltimo = 0;
+            if (document.getElementById("nome").value == '' && document.getElementById("cognome").value == '' && document.getElementById("luogoNascita").value == '') {
+                destroyHTMLTable();
+            }
+            resultDropdown.empty();
+        }
+
+    });
+
+    // Set search input value on click of result item
+    $(document).on("click", ".result p", function () {
+        $(this).parents(".search-boxCodFiscale").find('input[type="text"]').val();
+        $(this).parent(".result").empty();
+    });
+});
+
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function () {
+    $('.search-boxLuogoNascita input[type="text"]').on("keyup input", function () {
+        /* Get input value on change */
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+
+        if (inputVal.length) {
+            // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
+            var nome = document.getElementById("nome").value;
+            var cognome = document.getElementById("cognome").value;
+            var codFiscale = document.getElementById("codFiscale").value;
+
+            $.get("../backend-searchLuogoNascita.php", { nome: nome, cognome: cognome, codFiscale: codFiscale, luogoNascita: inputVal }).done(function (data) {
+                // Display the returned data in browser
+                resultDropdown.html(data);
+                if (data != '') {
+                    $('#cognome').css("color", "black");
+                    $('#nome').css("color", "black");
+                    $('#codFiscale').css("color", "black");
+                    $('#luogoNascita').css("color", "black");
+                } else {
+                    $('#cognome').css("color", "red");
+                    $('#nome').css("color", "red");
+                    $('#codFiscale').css("color", "red");
+                    $('#luogoNascita').css("color", "red");
+                    track.setUltimo = 0;
+                    destroyHTMLTable();
+                }
+
+                $.get("queryAutoriAcquirenti.php", { cognome: cognome, nome: nome, codFiscale: codFiscale, luogoNascita: inputVal }).done(function (data) {
+                    if (data != '') {
+                        let myJson = JSON.parse(data);
+                        var singoloUtente = JSON.parse(myJson.Dati_utente);
+
+                        if (singoloUtente.length != track.getUltimo) {
+                            track.setUltimo = singoloUtente.length;
+                            document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
+                            createHTMLTable(singoloUtente);
+                        }
+                    }
+                });
+            });
+        } else {
+            track.setUltimo = 0;
+            if (document.getElementById("nome").value == '' && document.getElementById("cognome").value == '' && document.getElementById("codFiscale").value == '') {
+                destroyHTMLTable();
+            }
+            resultDropdown.empty();
+        }
+
+    });
+
+    // Set search input value on click of result item
+    $(document).on("click", ".result p", function () {
+        $(this).parents(".search-boxLuogoNascita").find('input[type="text"]').val();
+        $(this).parent(".result").empty();
+    });
+});
+
 const createHTMLTable = function (singoloUtente) {
 
     if (singoloUtente != '') {
-        document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th><th>Partita IVA</th></tr></table></div>";
+        document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice identificativo</th><th>Partita IVA</th></tr></table></div>";
 
         for (var i = 0; i < singoloUtente.length; i++) {
             if (singoloUtente[i].Giorno_nascita == null || singoloUtente[i].Giorno_nascita == '0')
                 singoloUtente[i].Giorno_nascita = '';
+            else
+                singoloUtente[i].Giorno_nascita += ' / ';
             if (singoloUtente[i].Mese_nascita == null || singoloUtente[i].Mese_nascita == '0')
                 singoloUtente[i].Mese_nascita = '';
+            else
+                singoloUtente[i].Mese_nascita += ' / ';
             if (singoloUtente[i].Giorno_morte == null || singoloUtente[i].Giorno_morte == '0')
                 singoloUtente[i].Giorno_morte = '';
+            else
+                singoloUtente[i].Giorno_morte += ' / ';
             if (singoloUtente[i].Mese_morte == null || singoloUtente[i].Mese_morte == '0')
                 singoloUtente[i].Mese_morte = '';
+            else
+                singoloUtente[i].Mese_morte += ' / ';
             if (singoloUtente[i].Anno_morte == null || singoloUtente[i].Anno_morte == '0')
                 singoloUtente[i].Anno_morte = '';
             if (singoloUtente[i].Luogo_morte == null || singoloUtente[i].Luogo_morte == '0')
@@ -244,9 +384,9 @@ const createHTMLTable = function (singoloUtente) {
                 singoloUtente[i].Partita_IVA = '';
 
             if (i % 2 == 0)
-                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr style='background-color: #dddddd;'><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + " / " + singoloUtente[i].Mese_nascita + " / " + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + " / " + singoloUtente[i].Mese_morte + " / " + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
+                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr style='background-color: #dddddd;'><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
             else
-                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + " / " + singoloUtente[i].Mese_nascita + " / " + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + " / " + singoloUtente[i].Mese_morte + " / " + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
+                document.getElementById("tabellaAutoriAcquirenti").innerHTML += "<tr><td>" + singoloUtente[i].Tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td>" + singoloUtente[i].Luogo_nascita + "</td><td>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td>" + singoloUtente[i].Luogo_morte + "</td><td>" + singoloUtente[i].Codice_fiscale + "</td><td>" + singoloUtente[i].Partita_IVA + "</td></tr>";
 
         }
 
@@ -256,7 +396,7 @@ const createHTMLTable = function (singoloUtente) {
 
 const destroyHTMLTable = function () {
 
-    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice fiscale</th><th>Partita IVA</th></tr></table></div>";
+    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice identificativo</th><th>Partita IVA</th></tr></table></div>";
 
 }
 

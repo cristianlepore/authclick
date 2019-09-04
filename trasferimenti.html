@@ -1627,16 +1627,19 @@
         if (inputVal.length) {
           // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
           var cognome = document.myFormOpera.cognome.value;
+          var codFiscale = document.myFormOpera.codFiscale.value;
 
-          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal }).done(function (data) {
+          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale}).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
             if (data != '') {
               $('#nome').css("color", "red");
               $('#cognome').css("color", "red");
+              $('#codFiscale').css("color", "red");
             } else {
               $('#nome').css("color", "black");
               $('#cognome').css("color", "black");
+              $('#codFiscale').css("color", "black");
             }
           });
         } else {
@@ -1661,16 +1664,19 @@
         if (inputVal.length) {
           // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
           var nome = document.myFormOpera.nome.value;
+          var codFiscale = document.myFormOpera.codFiscale.value;
 
-          $.get("backend-searchCognome.php", { nome: nome, term: inputVal }).done(function (data) {
+          $.get("backend-searchCognome.php", { nome: nome, term: inputVal, codFiscale: codFiscale }).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
             if (data != '') {
               $('#cognome').css("color", "red");
               $('#nome').css("color", "red");
+              $('#codFiscale').css("color", "red");
             } else {
               $('#cognome').css("color", "black");
               $('#nome').css("color", "black");
+              $('#codFiscale').css("color", "black");
             }
           });
         } else {
@@ -1698,10 +1704,20 @@
 
           // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
           var cognome = document.getElementById("cognome").value;
+          var luogoNascita = "";
 
-          $.get("backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal }).done(function (data) {
+          $.get("backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal, luogoNascita: luogoNascita }).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
+            if (data != '') {
+              $('#cognome').css("color", "red");
+              $('#nome').css("color", "red");
+              $('#codFiscale').css("color", "red");
+            } else {
+              $('#cognome').css("color", "black");
+              $('#nome').css("color", "black");
+              $('#codFiscale').css("color", "black");
+            }
           });
         } else {
           resultDropdown.empty();

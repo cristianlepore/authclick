@@ -11,14 +11,18 @@ if($db === false){
 if(isset($_REQUEST["term"])){
     // PRENDO IL VALORE DEL COGNOME
     $cognome = $_REQUEST["cognome"] . '%';
+    $codFiscale = $_REQUEST["codFiscale"] . '%';
+    $luogoNascita = $_REQUEST["luogoNascita"] . '%';
 
-    if($cognome==""){
-        // Prepare a select statement
-        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Nome LIKE ?";
-    }else {
-        // Prepare a select statement
-        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ?";
-    }
+    if($codFiscale == '%' && $luogoNascita == '%')
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ? ";
+    else if($codFiscale != '%' && $luogoNascita == '%')
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ? AND Codice_fiscale LIKE '$codFiscale' ";
+    else if($codFiscale == '%' && $luogoNascita != '%')
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ? AND Luogo_nascita LIKE '$luogoNascita' ";
+    else
+        $sql = "SELECT DISTINCT `Nome` FROM `Utente` WHERE Cognome LIKE '$cognome' AND Nome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Luogo_nascita LIKE '$luogoNascita' ";
+
 
     if($stmt = mysqli_prepare($db, $sql)){
 
@@ -27,7 +31,7 @@ if(isset($_REQUEST["term"])){
 
         // Set parameters
         $param_term = $_REQUEST["term"] . '%';
-        
+
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);

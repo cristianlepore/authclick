@@ -8,28 +8,26 @@ if($db === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 
-if(isset($_REQUEST["term"])){
-    // PRENDO IL VALORE DEL NOME
+if(isset($_REQUEST["luogoNascita"])){
+    // PRENDO IL VALORE DEL COGNOME
     $nome = $_REQUEST["nome"] . '%';
+    $cognome = $_REQUEST["cognome"] . '%';
     $codFiscale = $_REQUEST["codFiscale"] . '%';
-    $luogoNascita = $_REQUEST["luogoNascita"] . '%';
 
-    if($codFiscale == '%' && $luogoNascita == '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? ";
-    else if($codFiscale != '%' && $luogoNascita == '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' ";
-    else if($codFiscale == '%' && $luogoNascita != '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Luogo_nascita LIKE '$luogoNascita' ";
+    if($codFiscale == '%')
+        $sql = " SELECT DISTINCT `Luogo_nascita` FROM `Utente` WHERE Luogo_nascita LIKE ? AND Cognome LIKE '$cognome' AND Nome LIKE '$nome' ";
     else
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Luogo_nascita LIKE '$luogoNascita' ";
+        $sql = " SELECT DISTINCT `Luogo_nascita` FROM `Utente` WHERE Luogo_nascita LIKE ? AND Cognome LIKE '$cognome' AND Nome LIKE '$nome' AND Codice_fiscale LIKE '$codFiscale'";
+
 
     if($stmt = mysqli_prepare($db, $sql)){
+
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $param_term);
 
         // Set parameters
-        $param_term = $_REQUEST["term"] . '%';
-        
+        $param_term = $_REQUEST["luogoNascita"] . '%';
+
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
@@ -39,7 +37,7 @@ if(isset($_REQUEST["term"])){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-                    echo "<p>" . $row["Cognome"] . "</p>";
+                    echo "<p>" . $row["Luogo_nascita"] . "</p>";
                 }
             } else{
                 ;

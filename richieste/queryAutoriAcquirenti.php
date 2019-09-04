@@ -7,17 +7,15 @@ include '../dbConfig.php';
 // PRENDO IL VALORE DEL COGNOME
 $cognome = $_REQUEST["cognome"] . '%';
 $nome = $_REQUEST["nome"] . '%';
+$codFiscale = $_REQUEST["codFiscale"] . '%';
+$luogoNascita = $_REQUEST["luogoNascita"] . '%';
 
-$sql = autoriAcquirenti($nome, $cognome);
-
+$sql = autoriAcquirenti($nome, $cognome, $codFiscale, $luogoNascita);
 
 if($stmt = mysqli_prepare($db, $sql)){
 
     // Bind variables to the prepared statement as parameters
     mysqli_stmt_bind_param($stmt, "s", $param_term);
-
-    // Set parameters
-    $param_term = $_REQUEST["nome"] . '%';
 
     // Attempt to execute the prepared statement
     if(mysqli_stmt_execute($stmt)){
