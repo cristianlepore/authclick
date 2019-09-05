@@ -13,15 +13,27 @@ if(isset($_REQUEST["term"])){
     $nome = $_REQUEST["nome"] . '%';
     $codFiscale = $_REQUEST["codFiscale"] . '%';
     $luogoNascita = $_REQUEST["luogoNascita"] . '%';
+    $tipologia = $_REQUEST["tipologia"];
 
-    if($codFiscale == '%' && $luogoNascita == '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? ";
-    else if($codFiscale != '%' && $luogoNascita == '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' ";
-    else if($codFiscale == '%' && $luogoNascita != '%')
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Luogo_nascita LIKE '$luogoNascita' ";
-    else
-        $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Luogo_nascita LIKE '$luogoNascita' ";
+    if($tipologia == "Tutti"){
+        if($codFiscale == '%' && $luogoNascita == '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? ";
+        else if($codFiscale != '%' && $luogoNascita == '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' ";
+        else if($codFiscale == '%' && $luogoNascita != '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Luogo_nascita LIKE '$luogoNascita' ";
+        else
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Luogo_nascita LIKE '$luogoNascita' ";
+    } else {
+        if($codFiscale == '%' && $luogoNascita == '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Tipologia = '$tipologia' ";
+        else if($codFiscale != '%' && $luogoNascita == '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Tipologia = '$tipologia' ";
+        else if($codFiscale == '%' && $luogoNascita != '%')
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Luogo_nascita LIKE '$luogoNascita' AND Tipologia = '$tipologia' ";
+        else
+            $sql = "SELECT DISTINCT `Cognome` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE ? AND Codice_fiscale LIKE '$codFiscale' AND Luogo_nascita LIKE '$luogoNascita' AND Tipologia = '$tipologia' ";
+    }
 
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters

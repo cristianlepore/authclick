@@ -1629,7 +1629,7 @@
           var cognome = document.myFormOpera.cognome.value;
           var codFiscale = document.myFormOpera.codFiscale.value;
 
-          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale}).done(function (data) {
+          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale, tipologia: "Tutti" }).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
             if (data != '') {
@@ -1666,7 +1666,7 @@
           var nome = document.myFormOpera.nome.value;
           var codFiscale = document.myFormOpera.codFiscale.value;
 
-          $.get("backend-searchCognome.php", { nome: nome, term: inputVal, codFiscale: codFiscale }).done(function (data) {
+          $.get("backend-searchCognome.php", { nome: nome, term: inputVal, codFiscale: codFiscale, tipologia: "Tutti" }).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
             if (data != '') {
@@ -1706,7 +1706,7 @@
           var cognome = document.getElementById("cognome").value;
           var luogoNascita = "";
 
-          $.get("backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal, luogoNascita: luogoNascita }).done(function (data) {
+          $.get("backend-searchCodFiscale.php", { nome: nome, cognome: cognome, term: inputVal, luogoNascita: luogoNascita, tipologia: "Tutti" }).done(function (data) {
             // Display the returned data in browser
             resultDropdown.html(data);
             if (data != '') {

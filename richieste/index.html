@@ -126,7 +126,7 @@
                         </div>
                     </div>
                     <div class="w3-row w3-padding-0">
-                        <div class="w3-col m8">
+                        <div class="w3-col m7">
                             <div class="col-75 w3-center">
                                 <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
                                 <div class="w3-col m3 w3-center">
@@ -147,19 +147,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w3-col m4 tipologia">
+                        <div class="w3-col m5 tipologia" style="margin-top: 10px;">
                             <div class="w3-center">
-                                <div class="w3-col m6">
-                                    <select name="tipo" style="width:80%; background-color:lightgrey; margin-top:10px;"
-                                        id="tipo" class="w3-huge w3-button w3-content">
-                                        <option value="Scheda" class="w3-button w3-white w3-section w3-center">Scheda
-                                        </option>
-                                        <option value="Foto" class="w3-button w3-white w3-section w3-center">Miniatura
-                                        </option>
-                                    </select>
+                                <div>
+                                    <span style="vertical-align: middle;"><b style="margin-right: 1em;">Tipologia: </b>
+                                        <select name="tipologia" style="width:50%; background-color:lightgrey;"
+                                            id="tipologia" class="w3-huge w3-button w3-content">
+                                            <option value="Tutti" class="w3-button w3-white w3-section w3-center">
+                                                TUTTI
+                                            </option>
+                                            <option value="Autore" class="w3-button w3-white w3-section w3-center">
+                                                AUTORE
+                                            </option>
+                                            <option value="Altro"
+                                                class="w3-button w3-white w3-section w3-center">
+                                                PROPRIETARIO
+                                            </option>
+                                            <option value="Autore/altro"
+                                                class="w3-button w3-white w3-section w3-center">
+                                                AUTORE & PROPRIETARIO
+                                            </option>
+                                        </select>
+                                    </span>
                                 </div>
-                            </div>
-                            <div class="scheda" style="margin-top:8px">
                             </div>
                         </div>
                     </div>

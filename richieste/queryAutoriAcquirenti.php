@@ -9,8 +9,9 @@ $cognome = $_REQUEST["cognome"] . '%';
 $nome = $_REQUEST["nome"] . '%';
 $codFiscale = $_REQUEST["codFiscale"] . '%';
 $luogoNascita = $_REQUEST["luogoNascita"] . '%';
+$tipologia = $_REQUEST["tipologia"];
 
-$sql = autoriAcquirenti($nome, $cognome, $codFiscale, $luogoNascita);
+$sql = autoriAcquirenti($nome, $cognome, $codFiscale, $luogoNascita, $tipologia);
 
 if($stmt = mysqli_prepare($db, $sql)){
 

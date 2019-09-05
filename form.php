@@ -1128,7 +1128,7 @@ $(document).ready(function(){
           var codFiscale = "";
           var luogoNascita = document.myForm.luogoNascita.value;
 
-          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function(data){
+          $.get("backend-searchNome.php", { cognome: cognome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita, tipologia: "Tutti" }).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
               if(data != '') {
@@ -1168,7 +1168,7 @@ $(document).ready(function(){
           var luogoNascita = document.myForm.luogoNascita.value;
           var codFiscale = "";
 
-          $.get("backend-searchCognome.php",{ nome: nome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita }).done(function(data){
+          $.get("backend-searchCognome.php",{ nome: nome, term: inputVal, codFiscale: codFiscale, luogoNascita: luogoNascita, tipologia: "Tutti" }).done(function(data){
               // Display the returned data in browser
               resultDropdown.html(data);
               if(data != '') {
@@ -1388,7 +1388,7 @@ $(document).ready(function () {
             var cognome = document.getElementById("cognome").value;
             var codFiscale = "";
 
-            $.get("backend-searchLuogoNascita.php", { nome: nome, cognome: cognome, codFiscale: codFiscale, luogoNascita: inputVal }).done(function (data) {
+            $.get("backend-searchLuogoNascita.php", { nome: nome, cognome: cognome, codFiscale: codFiscale, luogoNascita: inputVal, tipologia: "Tutti" }).done(function (data) {
                 // Display the returned data in browser
                 resultDropdown.html(data);
                 if(data != '') {
