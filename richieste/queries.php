@@ -11,22 +11,125 @@ function autoriAcquirenti($nome, $cognome, $codFiscale, $luogoNascita, $tipologi
 
     if($tipologia == "Tutti"){
         if($codFiscale == '%' && $luogoNascita == '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome'
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
         else if($codFiscale != '%' && $luogoNascita == '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Codice_fiscale LIKE '$codFiscale' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Codice_fiscale LIKE '$codFiscale' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
         else if($codFiscale == '%' && $luogoNascita != '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' ";
-        else 
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND Codice_fiscale LIKE '$codFiscale' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
+        else
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND Codice_fiscale LIKE '$codFiscale' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
     } else {
         if($codFiscale == '%' && $luogoNascita == '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Tipologia = '$tipologia' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND `Utente`.`Tipologia` = '$tipologia' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
         else if($codFiscale != '%' && $luogoNascita == '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Codice_fiscale LIKE '$codFiscale' AND Tipologia = '$tipologia' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Codice_fiscale LIKE '$codFiscale' AND `Utente`.`Tipologia` = '$tipologia' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+
         else if($codFiscale == '%' && $luogoNascita != '%')
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND Tipologia = '$tipologia' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia`
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id`
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND `Utente`.`Tipologia` = '$tipologia'
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
+        
         else 
-            $autoriAcquirenti = " SELECT `Nome`, `Cognome`, `Giorno_nascita`, `Mese_nascita`, `Anno_nascita`, `Luogo_nascita`, `Giorno_morte`, `Mese_morte`, `Anno_morte`, `Luogo_morte`, `Codice_fiscale`, `Tipologia`, `Partita_IVA` FROM `Utente` WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND Codice_fiscale LIKE '$codFiscale' AND Tipologia = '$tipologia' ";
+            $autoriAcquirenti = "   SELECT `Utente`.`id`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Giorno_nascita`, `Utente`.`Mese_nascita`, `Utente`.`Anno_nascita`, `Utente`.`Luogo_nascita`, `Utente`.`Giorno_morte`, `Utente`.`Mese_morte`, `Utente`.`Anno_morte`, `Utente`.`Luogo_morte`, `Utente`.`Codice_fiscale`, `Utente`.`Tipologia` AS `Utente_tipologia`, `Utente`.`Partita_IVA`, `Fotografia`.`Titolo`, `Fotografia`.`Codice_identificativo`, `Fotografia`.`Lunghezza`, `Fotografia`.`Larghezza`, `Fotografia`.`Esemplare`, `Fotografia`.`Tiratura`, `Fotografia`.`Giorno_stampa`, `Fotografia`.`Mese_stampa`, `Fotografia`.`Anno_stampa`, `Fotografia`.`Nome_stampatore`, `Fotografia`.`Cognome_stampatore`, `Fotografia`.`Nome_committente`, `Fotografia`.`Giorno_scatto`, `Fotografia`.`Mese_scatto`, `Fotografia`.`Anno_scatto`, `Trasferimento`.`Tipologia`, `Trasferimento`.`Prezzo`, `Trasferimento`.`Data_cessione`, `Trasferimento`.`Fine_cessione`, `Foto`.`Codice_identificativo` AS `Foto_acquistata`, `Possiede`.`Utente_id` AS `Acquirente`
+                                    FROM `Utente` 
+                                    LEFT JOIN `Fotografia` 
+                                    ON `Utente`.`id` = `Fotografia`.`Autore_id` 
+                                    LEFT JOIN `Trasferimento`
+                                    ON `Utente`.`id` = `Trasferimento`.`id_acquirente`
+                                    LEFT JOIN `Fotografia` AS `Foto`
+                                    ON `Trasferimento`.`Fotografia_id` = `Foto`.`id`
+                                    LEFT JOIN `Possiede`
+                                    ON `Trasferimento`.`Fotografia_id` = `Possiede`.`Fotografia_id`
+                                    WHERE Nome LIKE '$nome' AND Cognome LIKE '$cognome' AND Luogo_nascita LIKE '$luogoNascita' AND Codice_fiscale LIKE '$codFiscale' AND `Utente`.`Tipologia` = '$tipologia' 
+                                    ORDER BY `Utente`.`id` ASC 
+                                ";
     }
 
     // close connection

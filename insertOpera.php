@@ -77,6 +77,11 @@ $annoScatto = (int)$_POST['annoScatto'];
 $giornoStampa = (int)$_POST['giornoStampa'];
 $meseStampa = (int)$_POST['meseStampa'];
 $annoStampa = (int)$_POST['annoStampa'];
+
+$nomeStampatore = $_POST['nomeStampatore'];
+$cognomeStampatore = $_POST['cognomeStampatore'];
+$nomeCommittente = $_POST['nomeCommittente'];
+
 $lunghezza = $_POST['lunghezza'];
 $larghezza = $_POST['larghezza'];
 $tecnicaScatto = $_POST['tecnicaScatto'];
@@ -153,7 +158,7 @@ else
       $codiceIdentificativo = $firstCharacterNome.$firstCharacterCognome.$firstCharacterTitolo.$targa;
 
       // INSERISCO I DATI DELL'OPERA
-      $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Nome_stampatore`,  `Cognome_stampatore`,  `Nome_committente`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$nomeStampatore', '$cognomeStampatore', '$nomeCommittente', '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $lastAuthorId, '$keywordsOpera')");
+      $insert = $db->query("INSERT INTO `Fotografia`(`Open_edition`, `Artist_proof`, `Annotazioni`, `Targa`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`, `Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Note_esemplare`, `Codice_identificativo`, `Tiratura`, `Note_tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Nome_stampatore`,  `Cognome_stampatore`,  `Nome_committente`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Autore_id`, `Keywords`)VALUES ('$openEdition', '$artistProof','$annotazioni', '$targa', '$timbro', '$noteTimbro', '$firma', '$noteFirma', '$titolo', $lunghezza, $larghezza, $numeroEsemplare, '$noteNumeroEsemplare', '$codiceIdentificativo', $numeroCopie, '$noteNumeroCopie', '$tecnicaStampa', $giornoStampa, '$meseStampa', $annoStampa, '$nomeStampatore', '$cognomeStampatore', '$nomeCommittente', '$supporto', $giornoScatto, '$meseScatto', '$annoScatto', '$tecnicaScatto', $autoreID, '$keywordsOpera')");
 
       $result = $db->query("SELECT `Tipologia` FROM `Utente` WHERE `id`=$autoreID");
       if($row = mysqli_fetch_row($result)[0] != "Autore"){

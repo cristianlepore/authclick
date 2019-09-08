@@ -13,7 +13,7 @@
 <!-- CARICO LE IMMAGINE PRENDENDOLE ONLINE -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <!-- INSERISCO LO SCRIPT AJAX PER LE DATE -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- CODICE PER IMPORTARE JQUERY -->
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
@@ -72,7 +72,6 @@
 
     <!-- BARRA LATERALE SINISTRA -->
     <div id="mySidebar" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="w3-padding-16"></div>
         <div id="dropdown">
@@ -100,28 +99,24 @@
                             <div class="search-boxNome">
                                 <input type="text" id="nome" style="text-transform: capitalize; width:80%;"
                                     autocomplete="off" placeholder="Nome">
-                                <div class="result" style="margin-left:10%;width:80%;"></div>
                             </div>
                         </div>
                         <div class="w3-col m3">
                             <div class="search-boxCognome">
                                 <input type="text" style="text-transform: capitalize; width:80%;" autocomplete="off"
                                     placeholder="Cognome" id="cognome" name="codIdentificativo">
-                                <div class="result" style="margin-left:10%;width:80%;"></div>
                             </div>
                         </div>
                         <div class="w3-col m3">
                             <div class="search-boxCodFiscale">
                                 <input type="text" id="codFiscale" style="text-transform: uppercase; width:80%;"
                                     autocomplete="off" placeholder="Codice identificativo">
-                                <div class="result" style="margin-left:10%;width:80%;"></div>
                             </div>
                         </div>
                         <div class="w3-col m3">
                             <div class="search-boxLuogoNascita">
                                 <input type="text" id="luogoNascita" style="text-transform: capitalize; width:80%;"
                                     autocomplete="off" placeholder="Luogo nascita">
-                                <div class="result" style="margin-left:10%;width:80%;"></div>
                             </div>
                         </div>
                     </div>
@@ -159,8 +154,7 @@
                                             <option value="Autore" class="w3-button w3-white w3-section w3-center">
                                                 AUTORE
                                             </option>
-                                            <option value="Altro"
-                                                class="w3-button w3-white w3-section w3-center">
+                                            <option value="Altro" class="w3-button w3-white w3-section w3-center">
                                                 PROPRIETARIO
                                             </option>
                                             <option value="Autore/altro"
@@ -179,17 +173,19 @@
                     <h4 id="risultati"><i class="fa fa-eye"></i> MOSTRA RISULTATI</h4>
                     <div id="divTabella" style="overflow-x:auto;">
                         <table id="tabellaAutoriAcquirenti">
-                            <tr>
-                                <th></th>
-                                <th>Nome</th>
-                                <th>Cognome</th>
-                                <th>Data di nascita</th>
-                                <th>Luogo di nascita</th>
-                                <th>Data decesso</th>
-                                <th>Luogo del decesso</th>
-                                <th>Codice identificativo</th>
-                                <th>Partita IVA</th>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Nome</th>
+                                    <th>Cognome</th>
+                                    <th>Data di nascita</th>
+                                    <th>Luogo di nascita</th>
+                                    <th>Data decesso</th>
+                                    <th>Luogo del decesso</th>
+                                    <th>Codice identificativo</th>
+                                    <th>Partita IVA</th>
+                                </tr>
+                            </thead>
                         </table>
                     </div>
 
