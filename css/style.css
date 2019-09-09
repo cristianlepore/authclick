@@ -1061,4 +1061,18 @@ body.waiting * {
   cursor: progress;
 }
 
+.square2 {
+  height: 13px;
+  width: 13px;
+  background-color: lightblue;
+  border: 1px solid black;
+}
+
+.square1 {
+  height: 13px;
+  width: 13px;
+  background-color: rgb(171, 236, 171);
+  border: 1px solid black;
+}
+
 /*--------- END --------*/

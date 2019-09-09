@@ -355,6 +355,8 @@ $(document).ready(function () {
 
 const createHTMLTable = function (singoloUtente) {
 
+    createLegend();
+
     if (singoloUtente != '') {
         document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice identificativo</th><th>Partita IVA</th></tr></table></div>";
         var arr = [];
@@ -424,34 +426,91 @@ const createHTMLTable = function (singoloUtente) {
                     if (singoloUtente[i].Codice_identificativo != singoloUtente[i - 1].Codice_identificativo)
                         photoFeatures = "<tr style='background-color: rgb(171, 236, 171); display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Titolo:</b> " + singoloUtente[i].Titolo + "</td><td><b>Cod ID: </b>" + singoloUtente[i].Codice_identificativo + "</td><td><b> Scatto: </b>" + singoloUtente[i].Giorno_scatto + singoloUtente[i].Mese_scatto + singoloUtente[i].Anno_scatto + "</td><td><b> Stampa: </b>" + singoloUtente[i].Giorno_stampa + singoloUtente[i].Mese_stampa + singoloUtente[i].Anno_stampa + "</td><td><b>Lungheza: </b>" + singoloUtente[i].Lunghezza + "</td><td><b>Larghezza: </b>" + singoloUtente[i].Larghezza + "</td><td><b>Tiratura: </b>" + singoloUtente[i].Tiratura + "</td><td><b>Esemplare: </b>" + singoloUtente[i].Esemplare + "</td></tr>";
 
-                    if (singoloUtente[i].id == singoloUtente[i].Acquirente)
-                        arr.push(singoloUtente[i]);
-                } else if (singoloUtente[i].Utente_tipologia == 'Proprietario')
-                    photoFeatures = "<tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Tipologia:</b> " + singoloUtente[i].Tipologia + "</td><td><b>Prezzo: </b>" + singoloUtente[i].Prezzo + " Euro</td><td><b>Data cessione: </b>" + singoloUtente[i].Data_cessione + "</td><td><b>Fine cessione: </b>" + singoloUtente[i].Fine_cessione + "</td><td><b>Lungheza: </b>" + singoloUtente[i].Lunghezza + "</td><td><b>Larghezza: </b>" + singoloUtente[i].Larghezza + "</td><td><b>Tiratura: </b>" + singoloUtente[i].Tiratura + "</td><td><b>Esemplare: </b>" + singoloUtente[i].Esemplare + "</td></tr>";
+                    if (singoloUtente[i].id == singoloUtente[i].Acquirente) {
+                        var flag = false;
+                        for (var j = 0; j < i; j++) {
+                            if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata && singoloUtente[i].Acquirente == singoloUtente[j].Acquirente && singoloUtente[i].id == singoloUtente[j].id)
+                                flag = true;
+                        }
 
-                var tabella = tabella + photoFeatures;
+
+                        for (var j = 0; j < arr.length; j++)
+                            if (arr[j].id_trasferimento == singoloUtente[i].id_trasferimento)
+                                flag = true;
+
+                        if (flag == false && singoloUtente[i].Tipologia != 'Cessione')
+                            arr.push(singoloUtente[i]);
+                    }
+
+                } else if (singoloUtente[i].Utente_tipologia == 'Proprietario') {
+                    if (singoloUtente[i].id == singoloUtente[i].Acquirente) {
+                        var flag = false;
+                        for (var j = 0; j < i; j++) {
+                            if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata)
+                                if (singoloUtente[j].Acquirente == singoloUtente[j].Venditore) {
+                                    flag = true;
+                                }
+                        }
+
+                        if (flag == true && singoloUtente[i].Tipologia != 'Cessione')
+                            for (var j = 0; j < arr.length; j++)
+                                if (arr[j].Foto_acquistata == singoloUtente[i].Foto_acquistata)
+                                    flag = false;
+                        if (flag == true)
+                            arr.push(singoloUtente[i]);
+                    }
+
+                }
             } else {
                 for (var j = 0; j < arr.length; j++) {
-                    var user = "<tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Tipologia:</b> " + arr[j].Tipologia + "</td><td><b>Prezzo: </b>" + arr[j].Prezzo + " Euro</td><td><b>Data cessione: </b>" + arr[j].Data_cessione + "</td><td><b>Fine cessione: </b>" + arr[j].Fine_cessione + "</td><td><b>Lungheza: </b>" + arr[j].Lunghezza + "</td><td><b>Larghezza: </b>" + arr[j].Larghezza + "</td><td><b>Tiratura: </b>" + arr[j].Tiratura + "</td><td><b>Esemplare: </b>" + arr[j].Esemplare + "</td></tr>";
+                    var user = "<tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Tipologia:</b> " + arr[j].Tipologia + "</td><td><b>Cod ID: </b>" + arr[j].Foto_acquistata + "</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                     var tabella = tabella + user;
                 }
 
                 var arr = [];
                 if (singoloUtente[i].Utente_tipologia == 'Autore')
                     var user = "<tr style='background-color: white; font-size: 12px;' class='breakrow'><td style='font-size: 12pxx;'>" + singoloUtente[i].Utente_tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Codice_fiscale + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Partita_IVA + "</td></tr><tr style='background-color: rgb(171, 236, 171); display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Titolo:</b> " + singoloUtente[i].Titolo + "</td><td><b>Cod ID: </b>" + singoloUtente[i].Codice_identificativo + "</td><td><b> Scatto: </b>" + singoloUtente[i].Giorno_scatto + singoloUtente[i].Mese_scatto + singoloUtente[i].Anno_scatto + "</td><td><b> Stampa: </b>" + singoloUtente[i].Giorno_stampa + singoloUtente[i].Mese_stampa + singoloUtente[i].Anno_stampa + "</td><td><b>Lungheza: </b>" + singoloUtente[i].Lunghezza + "</td><td><b>Larghezza: </b>" + singoloUtente[i].Larghezza + "</td><td><b>Tiratura: </b>" + singoloUtente[i].Tiratura + "</td><td><b>Esemplare: </b>" + singoloUtente[i].Esemplare + "</td></tr>";
-                else if (singoloUtente[i].Utente_tipologia == 'Proprietario')
-                    var user = "<tr style='background-color: white; font-size: 12px;' class='breakrow'><td style='font-size: 12pxx;'>" + singoloUtente[i].Utente_tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Codice_fiscale + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Partita_IVA + "</td></tr><tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Tipologia:</b> " + singoloUtente[i].Tipologia + "</td><td><b>Prezzo: </b>" + singoloUtente[i].Prezzo + " Euro</td><td><b>Data cessione: </b>" + singoloUtente[i].Data_cessione + "</td><td><b>Fine cessione: </b>" + singoloUtente[i].Fine_cessione + "</td><td><b>Lungheza: </b>" + singoloUtente[i].Lunghezza + "</td><td><b>Larghezza: </b>" + singoloUtente[i].Larghezza + "</td><td><b>Tiratura: </b>" + singoloUtente[i].Tiratura + "</td><td><b>Esemplare: </b>" + singoloUtente[i].Esemplare + "</td></tr>";
-                else if (singoloUtente[i].Utente_tipologia == 'Autore & Proprietario') {
+                else if (singoloUtente[i].Utente_tipologia == 'Proprietario') {
+                    if (singoloUtente[i].id == singoloUtente[i].Acquirente) {
+                        var flag = false;
+                        for (var j = 0; j < i; j++) {
+                            if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata)
+                                if (singoloUtente[j].Acquirente == singoloUtente[j].Venditore) {
+                                    flag = true;
+                                }
+                        }
+
+                        if (flag == true && singoloUtente[i].Tipologia != 'Cessione')
+                            for (var j = 0; j < arr.length; j++)
+                                if (arr[j].Foto_acquistata == singoloUtente[i].Foto_acquistata)
+                                    flag = false;
+                        if (flag == true)
+                            arr.push(singoloUtente[i]);
+                    }
+                    var user = "<tr style='background-color: white; font-size: 12px;' class='breakrow'><td style='font-size: 12pxx;'>" + singoloUtente[i].Utente_tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Codice_fiscale + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Partita_IVA + "</td></tr>";
+                } else if (singoloUtente[i].Utente_tipologia == 'Autore & Proprietario') {
                     var user = "<tr style='background-color: white; font-size: 12px;' class='breakrow'><td style='font-size: 12pxx;'>" + singoloUtente[i].Utente_tipologia + "</td><td>" + singoloUtente[i].Nome + "</td><td>" + singoloUtente[i].Cognome + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_nascita + singoloUtente[i].Mese_nascita + singoloUtente[i].Anno_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_nascita + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Giorno_morte + singoloUtente[i].Mese_morte + singoloUtente[i].Anno_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Luogo_morte + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Codice_fiscale + "</td><td style='font-size: 12pxx;'>" + singoloUtente[i].Partita_IVA + "</td></tr><tr style='background-color: rgb(171, 236, 171); display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Titolo:</b> " + singoloUtente[i].Titolo + "</td><td><b>Cod ID: </b>" + singoloUtente[i].Codice_identificativo + "</td><td><b> Scatto: </b>" + singoloUtente[i].Giorno_scatto + singoloUtente[i].Mese_scatto + singoloUtente[i].Anno_scatto + "</td><td><b> Stampa: </b>" + singoloUtente[i].Giorno_stampa + singoloUtente[i].Mese_stampa + singoloUtente[i].Anno_stampa + "</td><td><b>Lungheza: </b>" + singoloUtente[i].Lunghezza + "</td><td><b>Larghezza: </b>" + singoloUtente[i].Larghezza + "</td><td><b>Tiratura: </b>" + singoloUtente[i].Tiratura + "</td><td><b>Esemplare: </b>" + singoloUtente[i].Esemplare + "</td></tr>";
-                    if (singoloUtente[i].id == singoloUtente[i].Acquirente)
-                        arr.push(singoloUtente[i]);
+                    if (singoloUtente[i].id == singoloUtente[i].Acquirente) {
+                        var flag = false;
+                        for (var j = 0; j < i; j++)
+                            if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata && singoloUtente[i].Acquirente == singoloUtente[j].Acquirente && singoloUtente[i].id == singoloUtente[j].id)
+                                flag = true;
+
+
+                        for (var j = 0; j < arr.length; j++)
+                            if (arr[j].id_trasferimento == singoloUtente[i].id_trasferimento)
+                                flag = true;
+
+                        if (flag == false && singoloUtente[i].Tipologia != 'Cessione')
+                            arr.push(singoloUtente[i]);
+                    }
                 }
                 var tabella = tabella + user;
             }
 
         }
         for (var j = 0; j < arr.length; j++) {
-            var user = "<tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td> <b>Tipologia:</b> " + arr[j].Tipologia + "</td><td><b>Prezzo: </b>" + arr[j].Prezzo + " Euro</td><td><b>Data cessione: </b>" + arr[j].Data_cessione + "</td><td><b>Fine cessione: </b>" + arr[j].Fine_cessione + "</td><td><b>Lungheza: </b>" + arr[j].Lunghezza + "</td><td><b>Larghezza: </b>" + arr[j].Larghezza + "</td><td><b>Tiratura: </b>" + arr[j].Tiratura + "</td><td><b>Esemplare: </b>" + arr[j].Esemplare + "</td></tr>";
+            var user = "<tr style='background-color: lightblue; display: none; font-size: 12px;' class='datarow'><td></td><td><b>Tipologia:</b> " + arr[j].Tipologia + "</td><td><b>Cod ID: </b>" + arr[j].Foto_acquistata + "</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
             var tabella = tabella + user;
         }
 
@@ -461,6 +520,8 @@ const createHTMLTable = function (singoloUtente) {
 }
 
 const destroyHTMLTable = function () {
+
+    destroyLegend();
 
     document.getElementById("tabellaAutoriAcquirenti").innerHTML = "<div id='divTabella' style='overflow-x:auto;'><table id='tabellaAutoriAcquirenti'><tr><th></th><th>Nome</th><th>Cognome</th><th>Data di nascita</th><th>Luogo di nascita</th><th>Data decesso</th><th>Luogo del decesso</th><th>Codice identificativo</th><th>Partita IVA</th></tr></table></div>";
 
@@ -484,3 +545,15 @@ $(document).ready(function () {
     });
 
 });
+
+const createLegend = function () {
+
+    document.getElementById("legenda").style.display = "block";
+
+}
+
+const destroyLegend = function () {
+
+    document.getElementById("legenda").style.display = "none";
+
+}
