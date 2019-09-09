@@ -47,7 +47,8 @@
         onclick="myFunction()">TRASFERIMENTI</a>
       <a href="contratto.php" class="w3-bar-item w3-button w3-padding-large w3-hide-small"
         onclick="myFunction()">CONTRATTI</a>
-      <a href="richieste/index.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small" onclick="myFunction()">RICHIESTE</a>
+      <a href="richieste/index.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small"
+        onclick="myFunction()">RICHIESTE</a>
     </div>
   </div>
 
@@ -1437,7 +1438,7 @@
 
       // VERIFICO LA CORRETTEZZA DEL VALORE INSERITO NEL CAMPO PREZZO
       if (prezzo != '') {
-        if (!/^(0|[1-9][0-9]{1,10})\.?\d{0,2}$/.test(prezzo)) {
+        if (!/^(0|[1-9][0-9]{0,10})\.?\d{0,2}$/.test(prezzo)) {
           alert("Il campo PREZZO non contiene un valore valido. I decimali devono essere separati da un punto. Es: 50.25");
           return false;
         }
@@ -1770,8 +1771,13 @@
         if (inputVal.length) {
           // PRENDO IL CODICE IDENTIFICATIVO COMPLETATO SOPRA
           var codIdentificativo = document.myFormOpera.codIdentificativo.value;
-          // PRENDO IL CODICE IDENTIFICATIVO (COD. FISCALE) DELL'UTENTE
-          var codFiscale = document.myFormOpera.codFiscale.value;
+
+          var checkBoxNazionalità = document.getElementById("nazionalità");
+          if (checkBoxNazionalità.checked == true)
+            // PRENDO IL CODICE IDENTIFICATIVO (COD. FISCALE) DELL'UTENTE
+            var codFiscale = document.myFormOpera.codFiscale.value;
+          else
+            var codFiscale = document.myFormOpera.idEstero.value;
 
           $.get("backend-search-nomeContratto.php", { codeFiscale: codFiscale, code: codIdentificativo, term: inputVal }).done(function (data) {
             // Display the returned data in browser
