@@ -181,13 +181,13 @@
             <div class="col-25">
               <label for="codFiscale"><i class="fa fa-credit-card"></i> Codice Identificativo</label>
             </div>
-            <div class="col-75 search-boxCodFiscale">
+            <div class="col-75">
               <div class="w3-col m6">
                 <input type="text" style="text-transform: uppercase; width: 70%" autocomplete="off" id="codFiscale"
                   name="codFiscale" placeholder="Codice fiscale" required>
                 <div class="result" style="width:35%;"></div>
               </div>
-              <div class="w3-col m6 search-box-codFiscale">
+              <div class="w3-col m6 search-boxCodFiscale">
                 <input type="text" style="text-transform: uppercase; width: 70%" autocomplete="off" id="idEstero"
                   name="idEstero" placeholder="ID estero" required disabled>
               </div>
@@ -1970,17 +1970,19 @@
       if (checkBox.checked == false)
         document.getElementById('idEstero').value = nome + cognome;
 
-      checkIfDoubleIdEstero(idEstero);
+      checkIfDoubleIdEstero(nome, cognome, idEstero);
 
     }
 
-    function checkIfDoubleIdEstero(idEstero) {
+    function checkIfDoubleIdEstero(nome, cognome, idEstero) {
       idEstero = document.getElementById('idEstero').value;
       $.get("show-codiceFiscale.php", { term: idEstero }).done(function (data) {
         // Display the returned data in browser
         if (data != '0') {
-          var nome = document.getElementById('nome').value;
-          var cognome = document.getElementById('cognome').value;
+          if(nome == undefined && cognome == undefined){
+            nome = document.getElementById("nome").value;
+            cognome = document.getElementById("cognome").value;
+          }
           idEstero = nome + cognome + data;
           document.getElementById('idEstero').value = idEstero;
         }

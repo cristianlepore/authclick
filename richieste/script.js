@@ -452,8 +452,8 @@ const createHTMLTable = function (singoloUtente) {
                                 }
                         }
 
-                        if(singoloUtente[i].Utente_tipologia == 'Proprietario' && flag == false)
-                        arr.push(singoloUtente[i]);
+                        if (singoloUtente[i].Utente_tipologia == 'Proprietario' && flag == false)
+                            arr.push(singoloUtente[i]);
 
                         if (flag == true && singoloUtente[i].Tipologia != 'Cessione')
                             for (var j = 0; j < arr.length; j++)
@@ -484,8 +484,10 @@ const createHTMLTable = function (singoloUtente) {
                                 }
                         }
 
-                        if(singoloUtente[i].Utente_tipologia == 'Proprietario' && flag == false)
-                            arr.push(singoloUtente[i]);
+                        if (singoloUtente[i].Utente_tipologia == 'Proprietario' && flag == false)
+                            for (var j = 0; j < i; j++)
+                                if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata)
+                                    arr.push(singoloUtente[i]);
 
                         if (flag == true && singoloUtente[i].Tipologia != 'Cessione')
                             for (var j = 0; j < arr.length; j++)
@@ -565,3 +567,38 @@ const destroyLegend = function () {
     document.getElementById("legenda").style.display = "none";
 
 }
+
+// SCRIPT AJAX. MENTRE SI DIGITA UN COGNOME, CERCA NEL DATABASE DEI SUGGERIMENTI PER QUEL VALORE
+$(document).ready(function () {
+    $('.search-boxCodFotografia input[type="text"]').on("keyup input", function () {
+        /* Get input value on change */
+        var inputVal = $(this).val();
+        var resultDropdown = $(this).siblings(".result");
+
+        if (inputVal.length) {
+            $.get("../backend-search-codIdentificativo.php", { term: tipologia }).done(function (data) {
+                if (data != '') {
+                    let myJson = JSON.parse(data);
+                    var singoloUtente = JSON.parse(myJson.Dati_utente);
+
+                    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
+                    createHTMLTable(singoloUtente);
+
+                }
+            });
+        } else {
+            track.setUltimo = 0;
+            if (document.getElementById("nome").value == '' && document.getElementById("cognome").value == '' && document.getElementById("codFiscale").value == '') {
+                destroyHTMLTable();
+            }
+            resultDropdown.empty();
+        }
+
+    });
+
+    // Set search input value on click of result item
+    $(document).on("click", ".result p", function () {
+        $(this).parents(".search-boxLuogoNascita").find('input[type="text"]').val();
+        $(this).parent(".result").empty();
+    });
+});

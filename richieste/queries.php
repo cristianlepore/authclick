@@ -139,4 +139,22 @@ function autoriAcquirenti($nome, $cognome, $codFiscale, $luogoNascita, $tipologi
 
 }
 
+function opere($codFotografia) {
+
+    include 'dbConfig.php';
+
+    // Check connection
+    if($db === false){
+        die("ERROR: Could not connect. " . mysqli_connect_error());
+    }
+    
+    $opere = "SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' ";
+
+    // close connection
+    mysqli_close($db);
+
+    return $opere;
+
+}
+
 ?>

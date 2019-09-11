@@ -2,23 +2,24 @@
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
 include 'dbConfig.php';
- 
+include 'queries.php';
+
 // Check connection
 if($db === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
 }
 
 if(isset($_REQUEST["term"])){
-
     // Prepare a select statement
-    $sql = "SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE ?";
-    
+    $sql = opere($codFotografia);
+    $sql = "SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' ";
+
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "s", $param_term);
+        mysqli_stmt_bind_param($stmt, "s", $codFotografia);
 
         // Set parameters
-        $param_term = $_REQUEST["term"] . '%';
+        $codFotografia = $_REQUEST["term"] . '%';
         
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
