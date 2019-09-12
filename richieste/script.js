@@ -477,7 +477,7 @@ const createHTMLTable = function (singoloUtente) {
                 else if (singoloUtente[i].Utente_tipologia == 'Proprietario') {
                     if (singoloUtente[i].id == singoloUtente[i].Acquirente) {
                         var flag = false;
-                        for (var j = 0; j < i; j++) {
+                        for (var j = 0; j <= i; j++) {
                             if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata)
                                 if (singoloUtente[j].Acquirente == singoloUtente[j].Venditore) {
                                     flag = true;
@@ -486,8 +486,11 @@ const createHTMLTable = function (singoloUtente) {
 
                         if (singoloUtente[i].Utente_tipologia == 'Proprietario' && flag == false)
                             for (var j = 0; j < i; j++)
-                                if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata)
-                                    arr.push(singoloUtente[i]);
+                                if (singoloUtente[i].Foto_acquistata == singoloUtente[j].Foto_acquistata) {
+                                    flag = false;
+                                    break;
+                                } else
+                                    flag = true;
 
                         if (flag == true && singoloUtente[i].Tipologia != 'Cessione')
                             for (var j = 0; j < arr.length; j++)

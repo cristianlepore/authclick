@@ -11,7 +11,7 @@ if($db === false){
 
 if(isset($_REQUEST["term"])){
     // Prepare a select statement
-    $sql = opere($codFotografia);
+    // $sql = opere($codFotografia);
     $sql = "SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' ";
 
     if($stmt = mysqli_prepare($db, $sql)){
