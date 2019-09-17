@@ -321,7 +321,6 @@ $(document).ready(function () {
 
                     document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
                     createHTMLTable(singoloUtente);
-
                 } else {
                     track.setUltimo = 0;
                     destroyHTMLTable();

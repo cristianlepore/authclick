@@ -31,6 +31,7 @@ if($stmt = mysqli_prepare($db, $sql)){
                 if($keywords == '%%')
                     $rows[]=$singleRow;
                 else if($keywords != '%%'){
+                    echo "ciao";
                     $keywords = $singleRow['Keywords'];
 
                     $str_arr = explode (",", $keywords);
