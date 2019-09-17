@@ -289,7 +289,7 @@
                     // COLONNA DI SINISTRA - PREVIEW DEL FILE
                     if($SubjectCode['foto']['name'] != ''){
                       $urlFoto=$SubjectCode['foto']['path'].$SubjectCode['foto']['name'];
-                      $urlFoto= "https://docs.google.com/gview?url=http://159.149.237.5/authclick/new/".$urlFoto."&embedded=true";
+                      $urlFoto= "https://docs.google.com/gview?url=http://159.149.239.22/authclick/new/".$urlFoto."&embedded=true";
                   ?>
                     <iframe style="width:85%;height:340px;" src="<?php echo $urlFoto; ?>"></iframe>
                   <?php
@@ -303,7 +303,7 @@
                       // COLONNA DI DESTRA - PREVIEW DEL FILE
                       if($SubjectCode['scheda']['name'] != ''){
                         $urlScheda=$SubjectCode['scheda']['path'].$SubjectCode['scheda']['name'];
-                        $urlScheda= "https://docs.google.com/gview?url=http://159.149.237.5/authclick/new/".$urlScheda."&embedded=true";
+                        $urlScheda= "https://docs.google.com/gview?url=http://159.149.239.22/authclick/new/".$urlScheda."&embedded=true";
                     ?>
                       <iframe style="width:85%;height:340px;" src="<?php echo $urlScheda; ?>"></iframe> 
                     <?php

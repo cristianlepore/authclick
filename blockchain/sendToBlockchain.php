@@ -114,13 +114,9 @@ while($row = mysqli_fetch_row($result)){
   $myObj->Mese_nascita = $row[26];
   $myObj->Anno_nascita = $row[27];
   $myObj->Luogo_nascita = $row[28];
-  $myObj->Giorno_morte = $row[29];
-  $myObj->Mese_morte = $row[30];
-  $myObj->Anno_morte = $row[31];
-  $myObj->Luogo_morte = $row[32];
-  $myObj->Nome_stampatore = $row[33];
-  $myObj->Cognome_stampatore = $row[34];
-  $myObj->Nome_committente = $row[35];
+  $myObj->Nome_stampatore = $row[29];
+  $myObj->Cognome_stampatore = $row[30];
+  $myObj->Nome_committente = $row[31];
 
   // JSON DA INVIARE SU BLOCKCHAIN
   $myJSON = json_encode($myObj);

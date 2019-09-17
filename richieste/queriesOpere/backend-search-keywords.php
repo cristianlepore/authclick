@@ -1,8 +1,7 @@
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-include 'dbConfig.php';
-include 'queries.php';
+include '../../dbConfig.php';
 
 // Check connection
 if($db === false){
@@ -11,18 +10,17 @@ if($db === false){
 
 if(isset($_REQUEST["term"])){
 
-    $codFotografia = $_REQUEST["term"] . '%';
+    $titolo = $_REQUEST["titolo"] . '%';
+    $codFotografia = $_REQUEST["codFotografia"] . '%';
+    $keywordsFotografia = '%' . $_REQUEST["term"] . '%';
+
     // Prepare a select statement
-    // $sql = opere($codFotografia);
-    $sql = " SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' ";
+    $sql = " SELECT DISTINCT `Keywords` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' AND `Fotografia`.`Titolo` LIKE '$titolo' AND `Fotografia`.`Keywords` LIKE '$keywordsFotografia' ";
 
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
-        mysqli_stmt_bind_param($stmt, "s", $codFotografia);
+        mysqli_stmt_bind_param($stmt, "s", $titolo);
 
-        // Set parameters
-        $codFotografia = $_REQUEST["term"] . '%';
-        
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
@@ -31,8 +29,20 @@ if(isset($_REQUEST["term"])){
             if(mysqli_num_rows($result) > 0){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
-                    // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-                    echo "<p class='w3-left' style='width:100%;'>" . $row["Codice_identificativo"] . "</p>";
+
+                    $keywords = $row['Keywords'];
+
+                    $str_arr = explode (",", $keywords);
+
+                    for($i = 0; $i < count($str_arr); $i++){
+                        $str_arr[$i] = strtoupper(trim($str_arr[$i]));
+
+                        if(strpos($str_arr[$i], strtoupper($_REQUEST["term"])) === 0){
+                            echo "<p>" . $row["Keywords"] . "</p>";
+                            break;
+                        }
+                    }
+
                 }
             } else{
                 ;

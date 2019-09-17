@@ -1,8 +1,7 @@
 <?php
 /* Attempt MySQL server connection. Assuming you are running MySQL
 server with default setting (user 'root' with no password) */
-include 'dbConfig.php';
-include 'queries.php';
+include '../../dbConfig.php';
 
 // Check connection
 if($db === false){
@@ -12,17 +11,16 @@ if($db === false){
 if(isset($_REQUEST["term"])){
 
     $codFotografia = $_REQUEST["term"] . '%';
+    $titolo = $_REQUEST["titolo"] . '%';
+    $keywordsFotografia = '%' . $_REQUEST["keywordsFotografia"] . '%';
+
     // Prepare a select statement
-    // $sql = opere($codFotografia);
-    $sql = " SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' ";
+    $sql = " SELECT DISTINCT `Codice_identificativo` FROM `Fotografia` WHERE Codice_identificativo LIKE '$codFotografia' AND `Fotografia`.`Titolo` LIKE '$titolo' AND `Fotografia`.`Keywords` LIKE '$keywordsFotografia' ";
 
     if($stmt = mysqli_prepare($db, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "s", $codFotografia);
 
-        // Set parameters
-        $codFotografia = $_REQUEST["term"] . '%';
-        
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
@@ -32,7 +30,7 @@ if(isset($_REQUEST["term"])){
                 // Fetch result rows as an associative array
                 while($row = mysqli_fetch_array($result, MYSQLI_ASSOC)){
                     // SE IL NOME COMPARE DUE VOLTE, LO PROPONGO UNA VOLTA SOLTANTO
-                    echo "<p class='w3-left' style='width:100%;'>" . $row["Codice_identificativo"] . "</p>";
+                    echo "<p>" . $row["Codice_identificativo"] . "</p>";
                 }
             } else{
                 ;

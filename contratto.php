@@ -280,6 +280,7 @@ $(document).ready(function(){
           
           // STAMPO LA LISTA DEI CONTRATTI
           $.get("show-contracts.php", {code:inputVal}).done(function(data){
+
             // FACCIO IL PARSING DEL JSON E LO STAMPO
             var listaContratti = JSON.parse(data);
             var singoloContratto = JSON.parse(listaContratti.contratto);
@@ -288,8 +289,11 @@ $(document).ready(function(){
             if(singoloContratto==""){
               document.getElementById("contratti").innerHTML = "";
               document.getElementById("storicoTrasferimenti").innerHTML = "";
+              $('#codIdentificativo').css("color", "red");
             }else{
               document.getElementById("contratti").innerHTML = "";
+              $('#codIdentificativo').css("color", "darkgreen");
+
 
               // RICREO LA TABELLA CHE È STATA DISTRUTTA PRIMA
               var tabella = '<table id="contratti" style="overflow-x:auto;"><tr><th>Numero</th><th>Contratto</th><th>Tipologia</th><th>Data trasferimento</th><th>Fine cessione</th><th>Proprietario</th><th>ID proprietario</th><th></th></tr></table>';
@@ -509,15 +513,15 @@ function on(i,codiceIdentificativo, idTrasferimento, path, nomeFile, nomeProprie
       if(myJson.Mese_stampa != '')
         myJson.Mese_stampa += ' / ';
 
-      // PREPARO I MESSAGGI DA STAMPARE
-      var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
-      var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ myJson.Nome + "</td></tr><tr><td>Cognome</td><td>"+ myJson.Cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ myJson.Luogo_nascita + "</td></tr><tr><td>Data di nascita</td><td>"+ myJson.Giorno_nascita + myJson.Mese_nascita + myJson.Anno_nascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ myJson.Luogo_morte + "</td></tr><tr><td>Data del decesso</td><td>"+ myJson.Giorno_morte + myJson.Mese_morte + myJson.Anno_morte +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ myJson.Titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ myJson.Giorno_scatto + myJson.Mese_scatto + myJson.Anno_scatto + "</td></tr><tr><td>Data di stampa</td><td>"+ myJson.Giorno_stampa + myJson.Mese_stampa + myJson.Anno_stampa + "</td></tr><tr><td>Nome stampatore</td><td>"+ myJson.Nome_stampatore +"</td></tr><tr><td>Cognome stampatore</td><td>"+ myJson.Cognome_stampatore +"</td></tr><tr><td>Nome committente</td><td>"+ myJson.Nome_committente +"</td></tr><tr><td>Lunghezza</td><td>"+ myJson.Lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ myJson.Larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ myJson.Tecnica_scatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ myJson.Tecnica_stampa + "</td></tr><tr><td>Supporto</td><td>"+ myJson.Supporto + "</td></tr><tr><td>Open edition</td><td>"+ myJson.Open_edition + "</td></tr><tr><td>Tiratura</td><td>"+ myJson.Tiratura + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ myJson.Note_tiratura + "</td></tr><tr><td>Artist's proof</td><td>"+ myJson.Artist_proof + "</td></tr><tr><td>Esemplare</td><td>"+ myJson.Esemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ myJson.Note_esemplare + "</td></tr><tr><td>Timbro</td><td>"+ myJson.Timbro + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ myJson.Annotazioni_timbro + "</td></tr><tr><td>Firma</td><td>"+ myJson.Firma + "</td></tr><tr><td>Annotazioni firma</td><td>"+ myJson.Annotazioni_firma + "</td></tr><tr><td>Annotazioni</td><td>"+ myJson.Annotazioni + "</td></tr></table></div><br>"
-      var scheda = "<br><hr class='horizontalLine'><div><button class='w3-button w3-center' style='background-color:white;color:black;'><a href="+ myJson.Path_scheda +" target='_blank'><i class='fa fa-download'></i></a></button><b>SCHEDA</b></div><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://159.149.237.5/authclick/new/"+ myJson.Path_scheda +"&embedded=true'></iframe>";
-      var contratto = "<br><hr class='horizontalLine'><div><button class='w3-button w3-center' style='background-color:white;color:black;'><a href="+ path +" target='_blank'><i class='fa fa-download'></i></a></button><b>CONTRATTO</b></div><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://159.149.237.5/authclick/new/"+ path +"&embedded=true'></iframe>";
-      var downloadBtn = "<button class='w3-button' style='background-color:white;color:black;' onclick='createTableFromHTML()')><i class='fa fa-download'></i></button>";
-      // VISUALIZZO A SCHERMO I MESSAGGI
-      document.getElementById("text").innerHTML = downloadBtn + messageToPrint + autentica + scheda + contratto;
+      var pathScheda = JSON.stringify(myJson.Path_scheda);
       
+      // PREPARO I MESSAGGI DA STAMPARE
+      var messageToPrint = "<button class='w3-button' style='margin:5px;color:black;' onclick='createTableFromHTML()')><i class='fa fa-download'></i><b> INFORMAZIONI RIASSUNTIVE</b></button><br><hr class='horizontalLine'>";
+      var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ myJson.Nome + "</td></tr><tr><td>Cognome</td><td>"+ myJson.Cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ myJson.Luogo_nascita + "</td></tr><tr><td>Data di nascita</td><td>"+ myJson.Giorno_nascita + myJson.Mese_nascita + myJson.Anno_nascita +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ myJson.Titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ myJson.Giorno_scatto + myJson.Mese_scatto + myJson.Anno_scatto + "</td></tr><tr><td>Data di stampa</td><td>"+ myJson.Giorno_stampa + myJson.Mese_stampa + myJson.Anno_stampa + "</td></tr><tr><td>Nome stampatore</td><td>"+ myJson.Nome_stampatore +"</td></tr><tr><td>Cognome stampatore</td><td>"+ myJson.Cognome_stampatore +"</td></tr><tr><td>Nome committente</td><td>"+ myJson.Nome_committente +"</td></tr><tr><td>Lunghezza</td><td>"+ myJson.Lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ myJson.Larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ myJson.Tecnica_scatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ myJson.Tecnica_stampa + "</td></tr><tr><td>Supporto</td><td>"+ myJson.Supporto + "</td></tr><tr><td>Open edition</td><td>"+ myJson.Open_edition + "</td></tr><tr><td>Tiratura</td><td>"+ myJson.Tiratura + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ myJson.Note_tiratura + "</td></tr><tr><td>Artist's proof</td><td>"+ myJson.Artist_proof + "</td></tr><tr><td>Esemplare</td><td>"+ myJson.Esemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ myJson.Note_esemplare + "</td></tr><tr><td>Timbro</td><td>"+ myJson.Timbro + "</td></tr><tr><td>Annotazioni timbro</td><td>"+ myJson.Annotazioni_timbro + "</td></tr><tr><td>Firma</td><td>"+ myJson.Firma + "</td></tr><tr><td>Annotazioni firma</td><td>"+ myJson.Annotazioni_firma + "</td></tr><tr><td>Annotazioni</td><td>"+ myJson.Annotazioni + "</td></tr></table></div><br>"
+      var scheda = "<br><hr class='horizontalLine'><div><a href="+ myJson.Path_scheda +" target='_blank'><button class='w3-button w3-center' style='margin:5px;color:black;'><i class='fa fa-download'></i><b> SCHEDA</b></div></button></a><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://159.149.239.22/authclick/new/"+ myJson.Path_scheda +"&embedded=true'></iframe>";
+      var contratto = "<br><hr class='horizontalLine'><div><a href="+ path +" target='_blank'><button class='w3-button w3-center' style='margin:5px;color:black;'><i class='fa fa-download'></i><b> CONTRATTO</b></div></button></a><iframe style='width:100%;height:500px;' src='https://docs.google.com/gview?url=http://159.149.239.22/authclick/new/"+ path +"&embedded=true'></iframe>";
+      // VISUALIZZO A SCHERMO I MESSAGGI
+      document.getElementById("text").innerHTML = messageToPrint + autentica + scheda + contratto;
     });
 
   });
@@ -525,7 +529,7 @@ function on(i,codiceIdentificativo, idTrasferimento, path, nomeFile, nomeProprie
 }
 
 // CREO LA TABELLA AUTENTICA A PARTIRE DALL'HTML
-function createTableFromHTML(nomeProprietario) {
+function createTableFromHTML() {
   var sTable = document.getElementById('tabella').innerHTML;
 
   var style = "<style>";

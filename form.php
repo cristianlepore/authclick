@@ -95,7 +95,7 @@ foreach($files as $file){ // iterate files
     <a class="collapsible"><i class="fa fa-photo"></i> Fotografia</a>
     <div class="content" style="margin-left:30px;">
       <a style="font-size:14px;" href="#opera"><i>Titolo</i></a>
-      <a style="font-size:14px;" href="#titolo"><i>Data di scatto</i></a>
+      <a style="font-size:14px;" href="#titolo"><i>Data ripresa</i></a>
       <a style="font-size:14px;" href="#giornoScatto"><i>Data di stampa</i></a>
       <a style="font-size:14px;" href="#giornoScatto"><i>Nome stampatore</i></a>
       <a style="font-size:14px;" href="#nomeStampatore"><i>Cognome stampatore</i></a>
@@ -163,7 +163,7 @@ foreach($files as $file){ // iterate files
       <label for="luogoNascita"><i class="fa fa-institution"></i> Luogo di nascita</label>
     </div>
     <div class="search-boxLuogoNascita col-75">
-      <input type="text" style="text-transform: capitalize;" id="luogoNascita" autocomplete="off" name="luogoNascita" placeholder="es: Milano" required>
+      <input type="text" style="text-transform: capitalize;" id="luogoNascita" autocomplete="off" name="luogoNascita" placeholder="es: Milano">
       <div class="result" style="width:100%;"></div>
     </div>
   </div>
@@ -187,47 +187,11 @@ foreach($files as $file){ // iterate files
       </div>
       <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
       <div class="w3-col m3 w3-center">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoNascita" name="annoNascita" placeholder=" Anno -- yyyy" required>
+        <input type="numeric" style="width:80%;margin-top:8px;" id="annoNascita" name="annoNascita" placeholder=" Anno -- yyyy">
       </div>
     </div>
   </div>
   <br>
-  <hr class="horizontalLine">
-  <br>
-
-  <div class="row">
-    <div class="col-25">
-      <label for="luogoMorte"><i class="fa fa-institution"></i> Luogo di morte</label>
-    </div>
-    <div class="col-75">
-      <input type="text" style="text-transform: capitalize;" id="luogoMorte" name="luogoMorte" placeholder="es: Roma">
-    </div>
-  </div>
-  <br>
-
-  <div class="row">
-    <div class="col-25">
-      <label for="annoMorte"><i class="fa fa-calendar-times-o"></i> Data del decesso</label>
-      </div>
-      <div class="col-75">
-      <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
-      <div class="w3-col m3 w3-center">
-        <select style="width:80%;" id="giornoDecesso" name="giornoDecesso">
-          <option value="NULL"> Giorno </option>
-        </select>
-      </div>
-      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b> </div>
-      <div class="w3-col m3 w3-center">
-        <select style="width:80%;" id="meseDecesso" name="meseDecesso">
-          <option value="NULL"> Mese </option>
-        </select>
-      </div>
-      <div style="margin-top:12px;" class="w3-col m1 w3-center"> <b> &#47; </b></div>
-      <div class="w3-col m3 w3-center">
-        <input type="numeric" style="width:80%;margin-top:8px;" id="annoDecesso" name="annoDecesso" placeholder=" Anno -- yyyy">
-      </div>
-    </div>
-  </div>
   <hr class="horizontalLine">
   <br>
 
@@ -246,7 +210,6 @@ foreach($files as $file){ // iterate files
 
 
 <!-- INSERISCO INFORMAZIONI RELATIVE ALL'OPERA -->
-
 <div class="main" id="opera">
 <div class="container">
 <h3 class="w3-center"><i class="fa fa-photo"></i> INFORMAZIONI SULL'OPERA</h3>
@@ -265,7 +228,7 @@ foreach($files as $file){ // iterate files
 
   <div class="row">
     <div class="col-25">
-      <label for="dataScatto"><i class="fa fa-calendar-check-o"></i> Data di scatto</label>
+      <label for="dataScatto"><i class="fa fa-calendar-check-o"></i> Data ripresa</label>
     </div>
     <div class="col-75">
     <div style="margin-top:12px;" class="w3-col m1 w3-left"></div>
@@ -590,10 +553,6 @@ function validateform(){
   var giornoNascita=document.myForm.giornoNascita.value;
   var meseNascita=document.myForm.meseNascita.value;
   var annoNascita=document.myForm.annoNascita.value;  
-  var luogoMorte=document.myForm.luogoMorte.value; 
-  var giornoMorte=document.myForm.giornoDecesso.value;  
-  var meseMorte=document.myForm.meseDecesso.value;   
-  var annoMorte=document.myForm.annoDecesso.value;
 
   // INFORMAZIONI RELATIVE ALL'OPERA
   var titolo=document.myForm.titolo.value;
@@ -654,20 +613,6 @@ function validateform(){
     return false;
   }
 
-  // VERIFICO IL CONTENUTO DEI CAMPI OPZIONALI RELATIVI ALL'AUTORE.
-  if(luogoMorte!='' ){
-    if(!/^$|^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:[\s.]+[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/.test(luogoMorte)){
-      alert("Il campo LUOGO DI MORTE contiene caratteri non ammessi.");
-      return false; 
-    }
-
-    if(annoMorte==''){
-      alert("Completare anche il campo DATA DEL DECESSO.");
-      return false;
-    }
-
-  }
-
   if(annoNascita < 1901){
     alert("Puoi inserire solamente date a partire dal 1901.")
     return false;
@@ -710,11 +655,6 @@ function validateform(){
       return false;
     }else if(annoNascita > annoMorte){
       alert("ATTENZIONE, la data del decesso non può essere antecedente alla data di nascita.");
-      return false;
-    }
-
-    if(luogoMorte==''){
-      alert("Completare anche il campo LUOGO DI MORTE.");
       return false;
     }
 
@@ -1275,31 +1215,35 @@ function on(){
   luogoNascita=luogoNascita.charAt(0).toUpperCase() + luogoNascita.slice(1);
 
   var giornoNascita=document.myForm.giornoNascita.value;
+  if(giornoNascita != '')
+    giornoNascita = giornoNascita + ' / ';
   var meseNascita=document.myForm.meseNascita.value;
-  if(meseNascita!='')
+  if(meseNascita!='') {
     meseNascita=parseInt(document.myForm.meseNascita.value)+1;
+    meseNascita = meseNascita + ' / ';
+  }
   var annoNascita=document.myForm.annoNascita.value;  
-  var luogoMorte=document.myForm.luogoMorte.value; 
-  luogoMorte=luogoMorte.charAt(0).toUpperCase() + luogoMorte.slice(1);
-
-  var giornoMorte=document.myForm.giornoDecesso.value;  
-  var meseMorte=document.myForm.meseDecesso.value;  
-  if(meseMorte!='')
-    meseMorte=parseInt(document.myForm.meseDecesso.value)+1;   
-  var annoMorte=document.myForm.annoDecesso.value;
   var keywordsAutore=document.myForm.keywords.value;
 
   // INFORMAZIONI RELATIVE ALL'OPERA
   var titolo=document.myForm.titolo.value;
   var giornoScatto=document.myForm.giornoScatto.value;
+  if(giornoScatto != '')
+    giornoScatto = giornoScatto + ' / ';
   var meseScatto=document.myForm.meseScatto.value;
-  if(meseScatto!='')
+  if(meseScatto!=''){
     meseScatto=parseInt(document.myForm.meseScatto.value)+1;   
+    meseScatto = meseScatto + ' / ';
+  }
   var annoScatto=document.myForm.annoScatto.value;    
   var giornoStampa=document.myForm.giornoStampa.value;
+  if(giornoStampa != '')
+    giornoStampa = giornoStampa + ' / ';
   var meseStampa=document.myForm.meseStampa.value;
-  if(meseStampa!='')
+  if(meseStampa!=''){
     meseStampa=parseInt(document.myForm.meseStampa.value)+1;   
+    meseStampa = meseStampa + ' / ';
+  }
   var annoStampa=document.myForm.annoStampa.value;
 
   var nomeStampatore=document.myForm.nomeStampatore.value;
@@ -1362,7 +1306,7 @@ function on(){
   document.getElementById("overlay").style.display = "block";
 
   var messageToPrint = "<b>Informazioni riassuntive -- AUTENTICA</b><br><hr class='horizontalLine'>";
-  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita +"/"+ meseNascita +"/"+ annoNascita +"</td></tr><tr><td>Luogo di morte</td><td>"+ luogoMorte + "</td></tr><tr><td>Data del decesso</td><td>"+ giornoMorte +"/"+ meseMorte +"/"+ annoMorte +"</td><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data di scatto</td><td>"+ giornoScatto +"/"+ meseScatto +"/"+ annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa +"/"+ meseStampa +"/"+ annoStampa + "</td></tr><tr><td>Nome stampatore</td><td>"+ nomeStampatore +"</td></tr><tr><td>Cognome stampatore</td><td>"+ cognomeStampatore +"</td></tr><tr><td>Nome committente</td><td>"+ nomeCommittente +"</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition +"</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Timbro</td><td>"+ timbro +"</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td></tr><tr><td>Firma</td><td>"+ firma +"</td></tr><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
+  var autentica = "<div id='tabella'><div class='w3-center'><b>Autore</b></div><table><td>Nome</td><td>"+ name + "</td></tr><tr><td>Cognome</td><td>"+ cognome + "</td></tr><tr><td>Luogo di nascita</td><td>"+ luogoNascita + "</td></tr><tr><td>Data di nascita</td><td>"+ giornoNascita + meseNascita + annoNascita +"</td></tr><tr><td>Keywords autore</td><td>" + keywordsAutore +"</td></tr><tr></table><br><div class='w3-center'><b>Opera</b></div><table><tr><td>Titolo</td><td>"+ titolo + "</td></tr><tr><td>Data ripresa</td><td>"+ giornoScatto + meseScatto + annoScatto + "</td></tr><tr><td>Data di stampa</td><td>"+ giornoStampa + meseStampa + annoStampa + "</td></tr><tr><td>Nome stampatore</td><td>"+ nomeStampatore +"</td></tr><tr><td>Cognome stampatore</td><td>"+ cognomeStampatore +"</td></tr><tr><td>Nome committente</td><td>"+ nomeCommittente +"</td></tr><tr><td>Lunghezza</td><td>"+ lunghezza + "</td></tr><tr><td>Larghezza</td><td>"+ larghezza + "</td></tr><tr><td>Tecnica di scatto</td><td>"+ tecnicaScatto + "</td></tr><tr><td>Tecnica di stampa</td><td>"+ tecnicaStampa + "</td></tr><tr><td>Supporto</td><td>"+ supporto + "</td></tr><tr><td>Open edition</td><td>"+ openEdition +"</td></tr><tr><td>Tiratura</td><td>"+ numeroCopie + "</td></tr><tr><td>Note aggiuntive tiratura</td><td>"+ noteNumeroCopie + "</td></tr><tr><td>Esemplare</td><td>"+ numeroEsemplare + "</td></tr><tr><td>Note aggiuntive esemplare</td><td>"+ noteNumeroEsemplare + "</td></tr><tr><td>Timbro</td><td>"+ timbro +"</td></tr><tr><td>Annotazioni timbro</td><td>"+ noteTimbro + "</td></tr><tr><td>Firma</td><td>"+ firma +"</td></tr><tr><td>Annotazioni firma</td><td>"+ noteFirma + "</td></tr><tr><td>Annotazioni</td><td>"+ annotazioni + "</td></tr><tr><td>Keywords opera</td><td>"+ keywordsOpera +"</td></tr></table></div><br>"
   document.getElementById("text").innerHTML = messageToPrint + autentica;
 }
 

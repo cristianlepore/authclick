@@ -115,9 +115,9 @@
                             </div>
                         </div>
                         <div class="w3-col m3">
-                            <div class="search-boxLuogoNascita">
-                                <input type="text" id="luogoNascita" style="text-transform: capitalize; width:80%;"
-                                    autocomplete="off" placeholder="Luogo nascita">
+                            <div class="search-boxKeywordsAutoreProprietario">
+                                <input type="text" id="keywordsAutoreProprietario" style="width:80%;" autocomplete="on"
+                                    placeholder="Keywords autore / proprietario">
                             </div>
                         </div>
                     </div>
@@ -195,43 +195,59 @@
                     <p class="w3-opacity w3-center"><i>Ambiti di ricerca</i></p>
 
                     <div class="w3-row w3-padding-16">
-                        <div class="w3-row w3-padding-16">
-                            <div class="w3-col m12">
-                                <div class="search-boxCodFotografia">
-                                    <input type="text" id="codFotografia"
-                                        style="align-self: middle; text-transform: uppercase; width:30%;"
-                                        autocomplete="off" placeholder="Codice fotografia. Es: MRT564">
-                                </div>
+                        <div class="w3-col m4">
+                            <div class="search-boxCodFotografia">
+                                <input type="text" id="codFotografia"
+                                    style="align-self: middle; text-transform: uppercase; width:80%;" autocomplete="off"
+                                    placeholder="Codice fotografia. Es: MRT564">
                             </div>
                         </div>
-                        <hr class="horizontalLine">
-                        <br>
 
-                        <div id="legenda" style="display: none;">
-                            <fieldset style="text-align: left; width: 20em;">
-                                <legend><b>Legenda</b></legend>
-                                <div class="w3-col m12">
-                                    <div class="w3-col m6">Autore dell'opera<div class="square1"></div>
-                                    </div>
-                                    <div class="w3-col m6">Proprietario<div class="square2"></div>
-                                    </div>
+                        <div class="w3-col m4">
+                            <div class="search-boxTitolo">
+                                <input type="text" id="titolo" style="align-self: middle; width:80%;" autocomplete="off"
+                                    placeholder="Titolo fotografia. Es: Tramonto">
+                            </div>
+                        </div>
+
+                        <div class="w3-col m4">
+                            <div class="search-boxKeywordsOpera">
+                                <input type="text" id="keywordsFotografia" style="align-self: middle; width:80%;"
+                                    autocomplete="off" placeholder="Keywords fotografia">
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="horizontalLine">
+                    <br>
+
+                    <div id="legendaOpera" style="display: none;">
+                        <fieldset style="text-align: left; width: 20em;">
+                            <legend><b>Legenda</b></legend>
+                            <div class="w3-col m12">
+                                <div class="w3-col m6">Autore opera<div class="square1"></div>
                                 </div>
-                            </fieldset>
-                        </div>
+                            </div>
+                        </fieldset>
+                    </div>
 
-                        <h4 id="risultati"><i class="fa fa-eye"></i> MOSTRA RISULTATI</h4>
-                        <div id="divTabella" style="overflow-x:auto;">
-                            <table id="tabellaAutoriAcquirenti">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nome</th>
-                                        <th>Cognome</th>
-                                        <th>ALTRO...</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                    <h4 id="risultati"><i class="fa fa-eye"></i> MOSTRA RISULTATI</h4>
+                    <div id="divTabellaOpere" style="overflow-x:auto;">
+                        <table id="tabellaOpere">
+                            <thead>
+                                <tr>
+                                    <th>Titolo</th>
+                                    <th>Codice identificativo</th>
+                                    <th>Data ripresa</th>
+                                    <th>Data stampa</th>
+                                    <th>Stampatore</th>
+                                    <th>Committente</th>
+                                    <th>Tecnica di ripresa</th>
+                                    <th>Supporto</th>
+                                    <th>Artist's proof</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -239,7 +255,8 @@
 
         <div class="w3-padding-32"></div>
 
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="scriptRicerceAutore.js"></script>
+        <script type="text/javascript" src="scriptRicerceOpera.js"></script>
 
 </body>
 
