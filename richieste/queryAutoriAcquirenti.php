@@ -16,7 +16,7 @@ $sql = autoriAcquirenti($nome, $cognome, $codFiscale, $keywords, $tipologia);
 if($stmt = mysqli_prepare($db, $sql)){
 
     // Bind variables to the prepared statement as parameters
-    mysqli_stmt_bind_param($stmt, "s", $param_term);
+    mysqli_stmt_bind_param($stmt, "s", $keywords);
 
     // Attempt to execute the prepared statement
     if(mysqli_stmt_execute($stmt)){
@@ -31,7 +31,6 @@ if($stmt = mysqli_prepare($db, $sql)){
                 if($keywords == '%%')
                     $rows[]=$singleRow;
                 else if($keywords != '%%'){
-                    echo "ciao";
                     $keywords = $singleRow['Keywords'];
 
                     $str_arr = explode (",", $keywords);

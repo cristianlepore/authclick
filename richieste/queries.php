@@ -147,6 +147,7 @@ function autoriAcquirenti($nome, $cognome, $codFiscale, $keywords, $tipologia){
 
 }
 
+
 function opere($codFotografia, $titolo, $keywordsFotografia) {
 
     include 'dbConfig.php';
@@ -157,7 +158,6 @@ function opere($codFotografia, $titolo, $keywordsFotografia) {
     }
 
 
-    
     $opere = "  SELECT DISTINCT `Open_edition`, `Artist_proof`, `Timbro`, `Annotazioni_timbro`, `Firma`, `Annotazioni_firma`,`Titolo`, `Lunghezza`, `Larghezza`, `Esemplare`, `Codice_identificativo`, `Tiratura`, `Tecnica_stampa`, `Giorno_stampa`, `Mese_stampa`, `Anno_stampa`, `Nome_stampatore`, `Cognome_stampatore`, `Nome_committente`, `Supporto`, `Giorno_scatto`, `Mese_scatto`, `Anno_scatto`, `Tecnica_scatto`, `Utente`.`Nome`, `Utente`.`Cognome`, `Utente`.`Codice_fiscale`, `Utente`.`Keywords` AS `Keywords_autore`, `Fotografia`.`Keywords` AS `Keywords_fotografia`
                 FROM `Fotografia`
                 LEFT JOIN `Utente`

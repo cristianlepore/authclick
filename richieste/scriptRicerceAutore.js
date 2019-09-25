@@ -310,17 +310,16 @@ $(document).ready(function () {
         if (inputVal.length) {
             // PRENDO IL VALORE DEL COGNOME DA PASSARGLI
             $.get("queryAutoriAcquirenti.php", { cognome: cognome, nome: nome, codFiscale: codFiscale, luogoNascita: "", tipologia: tipologia, keywords: inputVal }).done(function (data) {
-                let myJson = JSON.parse(data);
-                var singoloUtente = JSON.parse(myJson.Dati_utente);
-                if (singoloUtente == '') {
-                    track.setUltimo = 0;
-                    destroyHTMLTable();
-                } else if (data != '') {
+                if (data != '') {
                     let myJson = JSON.parse(data);
                     var singoloUtente = JSON.parse(myJson.Dati_utente);
-
-                    document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
-                    createHTMLTable(singoloUtente);
+                    if (singoloUtente == '') {
+                        track.setUltimo = 0;
+                        destroyHTMLTable();
+                    } else {
+                        document.getElementById("tabellaAutoriAcquirenti").innerHTML = "";
+                        createHTMLTable(singoloUtente);
+                    }
                 } else {
                     track.setUltimo = 0;
                     destroyHTMLTable();
