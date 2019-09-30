@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 01, 2019 at 02:19 PM
+-- Generation Time: Sep 30, 2019 at 02:13 PM
 -- Server version: 8.0.16
--- PHP Version: 7.2.21
+-- PHP Version: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -236,25 +236,25 @@ ALTER TABLE `Utente`
 -- AUTO_INCREMENT for table `File`
 --
 ALTER TABLE `File`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=423;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=547;
 
 --
 -- AUTO_INCREMENT for table `Fotografia`
 --
 ALTER TABLE `Fotografia`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=713;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=791;
 
 --
 -- AUTO_INCREMENT for table `Trasferimento`
 --
 ALTER TABLE `Trasferimento`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=700;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=812;
 
 --
 -- AUTO_INCREMENT for table `Utente`
 --
 ALTER TABLE `Utente`
-  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1209;
+  MODIFY `id` bigint(30) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1301;
 
 --
 -- Constraints for dumped tables
